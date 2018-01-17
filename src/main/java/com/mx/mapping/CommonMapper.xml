@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.common.dao.ICommonDao">
+
+    <resultMap id="SelectBeanResultMap" type="com.mx.common.pojo.SelectBean">
+        <result column="key" property="key" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 执行sql字符串 -->
+    <update id="operateBySql" parameterType="String">
+       ${_parameter}
+    </update>
+
+    <!-- 删除表数据 -->
+    <delete id="deleteRows" parameterType="map">
+        DELETE FROM
+          ${tableName}
+        WHERE
+          ${conditions}
+    </delete>
+
+    <!-- 获得select下拉列表 -->
+    <select id="getSelectList" parameterType="map" resultMap="SelectBeanResultMap">
+        SELECT
+          ${key} AS key,
+          ${value} AS value
+        FROM
+          ${tableName}
+        <where>
+            <if test="condition != null and condition != ''">
+                ${condition}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

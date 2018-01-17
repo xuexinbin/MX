@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<!-- 关联对象都会延迟加载 默认false -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<!-- 默认SIMPLE普通的执行器；REUSE 执行器会重用预处理语句 -->
+		<setting name="defaultExecutorType" value="REUSE" />
+		<!-- 等待数据库响应的秒数 -->
+		<setting name="defaultStatementTimeout" value="25" />
+		<setting name="logImpl" value="LOG4J2" />
+	</settings>
+	
+</configuration>

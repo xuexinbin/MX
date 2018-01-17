@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- 运行口令：mybatis-generator:generate -->
+<generatorConfiguration>
+    <!-- 数据库连接的信息：驱动类、连接地址、用户名、密码  -->
+    <properties resource="jdbc.properties"></properties>
+    <!-- classPathEntry:数据库的JDBC驱动的jar包地址 -->
+    <classPathEntry
+            location="F:\respository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"/>
+    <context id="MySqlTables" targetRuntime="MyBatis3">
+        <!-- 指定生成的java文件的编码,没有直接生成到项目时中文可能会乱码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 这里的type里写的是你的实现类的类全路径 -->
+        <commentGenerator type="com.mx.common.util.MxCommentGenerator">
+        </commentGenerator>
+
+
+        <!--数据库连接的信息 -->
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}" password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和
+            NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <!-- 生成bean配置 -->
+        <javaModelGenerator targetPackage="com.mx.generator.pojo" targetProject="./src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="com.mx.common.pojo.BaseBean"/>
+        </javaModelGenerator>
+
+        <!-- 生成xml配置 -->
+        <sqlMapGenerator targetPackage="com.mx.generator.mapping" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成dao的配置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mx.generator.dao" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- tableName:用于自动生成代码的数据库表；domainObjectName:对应于数据库表的javaBean类名；不需要生成Example类 -->
+        <table schema="" tableName="sys_department" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <!-- 忽略列，不生成bean 字段 -->
+            <ignoreColumn column="update_time" />
+            <ignoreColumn column="add_time" />
+        </table>
+        <table schema="" tableName="sys_user" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <!-- 忽略列，不生成bean 字段 -->
+            <ignoreColumn column="update_time" />
+            <ignoreColumn column="add_time" />
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.system.dao.DepartmentMapper">
+    <resultMap id="BaseResultMap" type="com.mx.generator.pojo.SysDepartment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="leader_user_id" property="leaderUserId" jdbcType="INTEGER"/>
+        <result column="enable" property="enable" jdbcType="TINYINT"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 获得部门列表grid数据 -->
+    <select id="getDepartmentGridData" resultMap="BaseResultMap" parameterType="com.mx.generator.pojo.SysDepartment">
+        SELECT
+          id,
+          name,
+          parent_id,
+          leader_user_id,
+          enable,
+          memo
+        FROM
+          sys_department
+  </select>
+
+    <!-- 编辑部门 -->
+    <update id="editDepartment" parameterType="com.mx.generator.pojo.SysDepartment">
+        UPDATE
+          sys_department
+        SET
+          name = #{name},
+          parent_id = #{parentId},
+          leader_user_id = #{leaderUserId},
+          enable = #{enable},
+          memo = #{memo},
+          update_user_id = #{updateUserId}
+        WHERE
+          id = #{id}
+    </update>
+
+    <!-- 新增部门 -->
+    <insert id="addDepartment" parameterType="java.util.List">
+        INSERT INTO
+        sys_department
+        (name,
+        parent_id,
+        leader_user_id,
+        enable,
+        memo,
+        update_user_id,
+        add_user_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.name},
+            #{item.parentId},
+            #{item.leaderUserId},
+            #{item.enable},
+            #{item.memo},
+            #{item.updateUserId},
+            #{item.addUserId})
+        </foreach>
+    </insert>
+
+    <!-- 删除部门 -->
+    <delete id="deleteDepartmentByIds" parameterType="string">
+        DELETE FROM
+          sys_department
+        WHERE
+          id IN (${_parameter})
+    </delete>
+</mapper>

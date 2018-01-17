@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+    
+    <!-- 自动扫描 -->  
+    <context:component-scan base-package="com.mx" />
+    
+    <!-- 引入jdbc配置文件 -->  
+    <bean id="propertyConfigurer"  
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+        <property name="location" value="classpath:jdbc.properties" />  
+    </bean>  
+  
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <!-- 初始化连接大小 -->  
+        <property name="initialSize" value="${jdbc.initialSize}"></property>
+        <!-- 连接池最大数量 -->  
+        <property name="maxActive" value="${jdbc.maxActive}"></property>
+        <!-- 连接池最大空闲 -->  
+        <property name="maxIdle" value="${jdbc.maxIdle}"></property>
+        <!-- 连接池最小空闲 -->  
+        <property name="minIdle" value="${jdbc.minIdle}"></property>
+        <!-- 获取连接最大等待时间 -->  
+        <property name="maxWait" value="${jdbc.maxWait}"></property>
+	    <property name="validationQuery" value="SELECT 1" />
+	    <property name="testOnBorrow" value="true"/>
+    </bean>
+    
+    <!-- 数据源事务管理 -->  
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 使用annotation注解方式配置事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!-- 自动扫描mapping.xml文件 -->
+        <property name="mapperLocations" value="classpath:com/mx/mapping/*.xml"></property>
+	    <!-- 分页插件 -->
+        <property name="plugins">
+          <array>
+            <bean class="com.github.pagehelper.PageInterceptor">
+              <property name="properties">
+                <value>
+                  helperDialect=mysql
+                  <!-- 将 RowBounds中的 offset参数当成 pageNum使用，可以用页码和页面大小两个参数进行分页。 -->
+                  offsetAsPageNum=true
+                  <!-- 使用 RowBounds分页会进行 count查询。 -->
+                  rowBoundsWithCount=true
+                  <!-- 分页合理化参数，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。默认false时，直接根据参数进行查询。 -->
+                  reasonable=true
+                  <!-- 为了支持startPage(Object params)方法，增加了该参数来配置参数映射，用于从对象中根据属性名取值 -->
+                  params=pageNum=pageNum;pageSize=pageSize;count=countSql;reasonable=reasonable;pageSizeZero=pageSizeZero;
+                  <!-- 支持通过 Mapper 接口参数来传递分页参数，默认值false，分页插件会从查询方法的参数值中，自动根据上面 params 配置的字段中取值，查找到合适的值时就会自动分页 -->
+                  supportMethodsArguments=false
+                  <!-- 默认值为 false。设置为 true 时，允许在运行时根据多数据源自动识别对应方言的分页 -->
+                  autoRuntimeDialect=false
+                  <!-- 使用运行时动态数据源或没有设置 helperDialect 属性自动获取数据库类型时，会自动获取一个数据库连接， 通过该属性来设置是否关闭获取的这个连接 -->
+                  closeConn=false
+                </value>
+                
+              </property>
+            </bean>
+          </array>
+        </property>
+    </bean>
+    
+    <!-- 采用自动扫描方式创建mapper bean(批量更新模式) -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mx.*.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    
+</beans>
