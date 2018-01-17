@@ -1,0 +1,52 @@
+.error-msg,.empty-msg{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size:30px;
+    color:#ccc;
+    top:40%;
+}
+
+.bggreen{
+    background: green;
+}
+.bgred{
+    background: #e83c3c;
+}
+.bghui{
+    background: #cccccc;
+}
+.bgpink{
+    background: pink;
+}
+
+
+.input-block-level{font-weight: normal!important;}
+.datagrid-column-menu div{display: flex; justify-content: space-between;}
+.sui-btn-toolbar{padding:9px 0px!important;margin: 0px!important;text-align: right}
+.height100{height:100%}
+.sui-nav.nav-tabs.tab-navbar{width:100%!important}
+.sui-nav.nav-tabs.tab-navbar li{position: relative}
+
+.panel-block {height:100%;border:1px solid #ddd;margin-right:-15px}
+.panel-block .title{font-size:14px;color:#222;font-weight:bolder;padding:10px;display: flex;justify-content: space-between;align-items: center}
+.panel-block ul,.panel li{width:100%;border-left:5px solid #fff}
+.panel-block li a{color:#222;width:100%;text-decoration: none;}
+.panel-block li.active,.panel-block li:hover{border-left:5px solid #e83c3c;color:#222;text-decoration: none;background:#eee;font-weight:bolder;}
+.panel-block li{display: flex;padding:0px 5px; justify-content: space-between;height: 40px;line-height: 40px;align-items: center;cursor: pointer}
+.numbermark{line-height:20px;font-weight:normal;width:30px!important;height:20px;border-radius: 10px;text-align:center;background: #e83c3c;color:#fff;font-size:12px!important;}
+.panel-block .icon-button{margin-left:5px;font-size:20px;cursor: pointer}
+.panel-block .icon-button:hover,.panel-block li.active .icon_button{color:#e83c3c;font-weight: bolder;margin-left:5px}
+.flex-column{display: flex; flex-direction: column;justify-content:space-between}
+.panel-block ul.info li{align-items: baseline;line-height: 32px;height: auto}
+.panel-block li .h{color:#666;width:35%;}
+.panel-block li .c{width: 80%; line-height: 25px;}
+.search {padding: 0px 5px;font-size:12px!important;}
+.search .block {margin-bottom:5px}
+
+.tabletag{
+    padding: 2px;color: white;
+    border-radius: 2px;
+}
+.bggreen{background: green!important;}
+.bgred{background: #e83c3c!important;}
