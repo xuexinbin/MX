@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.system.dao.UserMapper">
+    <resultMap id="UserResultMap" type="com.mx.system.model.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="number" jdbcType="VARCHAR" property="number"/>
+        <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+        <result column="true_name" jdbcType="VARCHAR" property="trueName"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="mail" jdbcType="VARCHAR" property="mail"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="enablef" jdbcType="TINYINT" property="enablef"/>
+        <result column="deletef" jdbcType="TINYINT" property="deletef"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
+        <result column="join_time" jdbcType="TIMESTAMP" property="joinTime"/>
+        <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime"/>
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="login_times" jdbcType="INTEGER" property="loginTimes"/>
+        <result column="update_user_id" jdbcType="INTEGER" property="updateUserId"/>
+        <result column="add_user_id" jdbcType="INTEGER" property="addUserId"/>
+    </resultMap>
+    <resultMap id="DepartmentResultMap" type="com.mx.system.model.Department">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="leader_user_id" property="leaderUserId" jdbcType="INTEGER"/>
+        <result column="enable" property="enable" jdbcType="TINYINT"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+        <result column="leaderUserTrueName" property="leaderUserTrueName" jdbcType="VARCHAR"/>
+        <result column="parentName" property="parentName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 获得用户管理grid数据 -->
+    <select id="getUserGridData" resultMap="UserResultMap" parameterType="com.mx.system.model.User">
+        SELECT
+          su.id,
+          su.user_name,
+          su.password,
+          su.number,
+          su.department_id,
+          su.true_name,
+          su.sex,
+          su.mail,
+          su.phone,
+          su.avatar,
+          su.enablef,
+          su.memo,
+          sd.name
+        FROM
+          sys_user su
+          LEFT JOIN sys_department sd ON su.department_id = sd.id
+        WHERE
+          su.deletef = 0
+  </select>
+
+    <!-- 添加用户  -->
+    <insert id="addUser" parameterType="com.mx.system.model.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user (
+        user_name,
+        password,
+        number,
+        department_id,
+        true_name,
+        sex,
+        mail,
+        phone,
+        birthday,
+        join_time,
+        memo,
+        enablef,
+        update_user_id,
+        add_user_id)
+        VALUES (
+        #{userName},
+        #{password},
+        #{number},
+        #{departmentId},
+        #{trueName},
+        #{sex},
+        #{mail},
+        #{phone},
+        #{birthday},
+        #{joinTime},
+        #{memo},
+        #{enablef},
+        #{updateUserId},
+        #{addUserId})
+    </insert>
+
+    <!-- 编辑用户  -->
+    <insert id="editUser" parameterType="com.mx.system.model.User">
+        UPDATE
+            sys_user
+        SET
+            user_name = #{userName},
+            password = #{password},
+            number = #{number},
+            department_id = #{departmentId},
+            true_name = #{trueName},
+            sex = #{sex},
+            mail = #{mail},
+            phone = #{phone},
+            avatar = #{avatar},
+            birthday = #{birthday},
+            join_time = #{joinTime},
+            memo = #{memo},
+            enablef = #{enablef},
+            update_user_id = #{updateUserId}
+        WHERE
+            id = #{id}
+    </insert>
+
+    <!-- 获得用户详细信息 -->
+    <select id="getUserInfoById" resultMap="UserResultMap" parameterType="Integer">
+        SELECT
+            su.id,
+            su.user_name,
+            su.number,
+            su.department_id,
+            su.true_name,
+            su.sex,
+            su.mail,
+            su.phone,
+            su.avatar,
+            su.enablef,
+            su.memo
+        FROM
+            sys_user su
+        WHERE
+            su.deletef = 0
+            AND su.id = #{id}
+    </select>
+
+
+    <!-- 编辑部门 -->
+    <update id="editDepartment" parameterType="com.mx.generator.pojo.SysDepartment">
+        UPDATE
+          sys_department
+        SET
+          name = #{name},
+          parent_id = #{parentId},
+          leader_user_id = #{leaderUserId},
+          enable = #{enable},
+          memo = #{memo},
+          update_user_id = #{updateUserId}
+        WHERE
+          id = #{id}
+    </update>
+
+    <!-- 新增部门 -->
+    <insert id="addDepartment" parameterType="java.util.List">
+        INSERT INTO
+        sys_department
+        (name,
+        parent_id,
+        leader_user_id,
+        enable,
+        memo,
+        update_user_id,
+        add_user_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.name},
+            #{item.parentId},
+            #{item.leaderUserId},
+            #{item.enable},
+            #{item.memo},
+            #{item.updateUserId},
+            #{item.addUserId})
+        </foreach>
+    </insert>
+
+    <!-- 删除部门 -->
+    <delete id="deleteDepartmentByIds" parameterType="string">
+        DELETE FROM
+          sys_department
+        WHERE
+          id IN (${_parameter})
+    </delete>
+</mapper>

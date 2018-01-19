@@ -7613,7 +7613,8 @@
         beforeDelete    : null,     // Function - before delete method, return true execute delete method
         beforeSave      : null,     // Function - before save method, arguments($trs, datas)
         afterSave       : null,     // Function - after save method, arguments($trs, datas)
-        afterDelete     : null      // Function - after delete method
+        afterDelete     : null,      // Function - after delete method
+        afterLoad       : null       // Function- after loadGrid -> add by mx
     }
     
     Datagrid.renderItem = function(value, data, items, itemattr) {
@@ -7781,6 +7782,16 @@
                 }
                 
                 that.$element.data('allData', that.allData)
+            },
+            afterLoad:function() {
+                var afterLoad = options.afterLoad
+
+                if (afterLoad) {
+                    if (typeof afterLoad === 'string') afterLoad = afterLoad.toFunc()
+                    if (typeof afterLoad === 'function') {
+                        afterLoad.call(that)
+                    }
+                }
             },
             // Correct colspan
             setColspan: function(column, colspanNum) {
@@ -8584,7 +8595,9 @@
                             if (xmlData.length) tools.createTrsByData(xmlData, refreshFlag)
                         } else {
                             BJUI.debug('BJUI.Datagrid: The options \'dataType\' is incorrect!')
-                        } 
+                        }
+
+                        that.tools.afterLoad()
                     },
                     errCallback: function(json) {
                         if (json && json[BJUI.keys.statusCode]) {
@@ -10309,7 +10322,12 @@
                             that.$toolbar_add = $(btnHtml).attr('data-icon', 'plus').addClass('btn-blue').text(options.addName || BJUI.getRegional('datagrid.add'))
                                 .appendTo($group)
                                 .on('click', function(e) {
-                                    that.add()
+                                    // 添加按钮：自定义方法
+                                    if (typeof options.addFunction === 'function') {
+                                        options.addFunction()
+                                    } else {
+                                        that.add()
+                                    }
                                 })
                         } else if (n === 'edit') {
                             that.$toolbar_edit = $(btnHtml).attr('data-icon', 'edit').addClass('btn-green').text(options.editName || BJUI.getRegional('datagrid.edit'))

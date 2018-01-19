@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 部门管理 Dao
+ * 用户管理 Dao
  *
  * @author mx
  */
 @Repository
-public interface DepartmentMapper {
+public interface UserMapper {
 
     /**
      * 获得部门列表grid数据
@@ -53,4 +53,29 @@ public interface DepartmentMapper {
      */
     void deleteDepartmentByIds(String ids);
 
+    /**
+     * 获得用户管理grid数据
+     * @param user 查询信息
+     * @return list
+     */
+    List<User> getUserGridData(User user);
+
+    /**
+     * 添加用户
+     * @param user 用户信息
+     */
+    void addUser(User user);
+
+    /**
+     * 编辑用户
+     * @param user 用户信息
+     */
+    void editUser(User user);
+
+    /**
+     * 获得用户详细信息
+     * @param id 用户id
+     * @return user
+     */
+    User getUserInfoById(Integer id);
 }

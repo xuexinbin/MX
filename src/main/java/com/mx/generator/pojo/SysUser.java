@@ -7,14 +7,9 @@ public class SysUser extends BaseBean {
     private Integer id;
 
     /**
-     * 用户登录名
+     * 真实姓名
      */
-    private String userName;
-
-    /**
-     * 登录密码
-     */
-    private String password;
+    private String trueName;
 
     /**
      * 工号
@@ -27,9 +22,19 @@ public class SysUser extends BaseBean {
     private Integer departmentId;
 
     /**
-     * 真实姓名
+     * 角色Id ','拼接
      */
-    private String trueName;
+    private String roleIds;
+
+    /**
+     * 用户登录名
+     */
+    private String userName;
+
+    /**
+     * 登录密码
+     */
+    private String password;
 
     /**
      * 性别，0女1男
@@ -52,19 +57,9 @@ public class SysUser extends BaseBean {
     private String avatar;
 
     /**
-     * 是否禁用0正常，1禁用
+     * 出生日期
      */
-    private Byte enablef;
-
-    /**
-     * 是否删除／离职，0正常，1删除离职
-     */
-    private Byte deletef;
-
-    /**
-     * 备注
-     */
-    private String memo;
+    private Date birthday;
 
     /**
      * 入职时间
@@ -86,6 +81,21 @@ public class SysUser extends BaseBean {
      */
     private Integer loginTimes;
 
+    /**
+     * 备注
+     */
+    private String memo;
+
+    /**
+     * 是否禁用0正常，1禁用
+     */
+    private Byte enablef;
+
+    /**
+     * 是否删除／离职，0正常，1删除离职
+     */
+    private Byte deletef;
+
     public Integer getId() {
         return id;
     }
@@ -95,35 +105,19 @@ public class SysUser extends BaseBean {
     }
 
     /**
-     * 获得用户登录名
-     * @return user_name 用户登录名
+     * 获得真实姓名
+     * @return true_name 真实姓名
      */
-    public String getUserName() {
-        return userName;
+    public String getTrueName() {
+        return trueName;
     }
 
     /**
-     * 设置用户登录名
-     * @param userName 用户登录名
+     * 设置真实姓名
+     * @param trueName 真实姓名
      */
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
-
-    /**
-     * 获得登录密码
-     * @return password 登录密码
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * 设置登录密码
-     * @param password 登录密码
-     */
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setTrueName(String trueName) {
+        this.trueName = trueName == null ? null : trueName.trim();
     }
 
     /**
@@ -159,19 +153,51 @@ public class SysUser extends BaseBean {
     }
 
     /**
-     * 获得真实姓名
-     * @return true_name 真实姓名
+     * 获得角色Id ','拼接
+     * @return role_ids 角色Id ','拼接
      */
-    public String getTrueName() {
-        return trueName;
+    public String getRoleIds() {
+        return roleIds;
     }
 
     /**
-     * 设置真实姓名
-     * @param trueName 真实姓名
+     * 设置角色Id ','拼接
+     * @param roleIds 角色Id ','拼接
      */
-    public void setTrueName(String trueName) {
-        this.trueName = trueName == null ? null : trueName.trim();
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds == null ? null : roleIds.trim();
+    }
+
+    /**
+     * 获得用户登录名
+     * @return user_name 用户登录名
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * 设置用户登录名
+     * @param userName 用户登录名
+     */
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    /**
+     * 获得登录密码
+     * @return password 登录密码
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * 设置登录密码
+     * @param password 登录密码
+     */
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     /**
@@ -239,51 +265,19 @@ public class SysUser extends BaseBean {
     }
 
     /**
-     * 获得是否禁用0正常，1禁用
-     * @return enablef 是否禁用0正常，1禁用
+     * 获得出生日期
+     * @return birthday 出生日期
      */
-    public Byte getEnablef() {
-        return enablef;
+    public Date getBirthday() {
+        return birthday;
     }
 
     /**
-     * 设置是否禁用0正常，1禁用
-     * @param enablef 是否禁用0正常，1禁用
+     * 设置出生日期
+     * @param birthday 出生日期
      */
-    public void setEnablef(Byte enablef) {
-        this.enablef = enablef;
-    }
-
-    /**
-     * 获得是否删除／离职，0正常，1删除离职
-     * @return deletef 是否删除／离职，0正常，1删除离职
-     */
-    public Byte getDeletef() {
-        return deletef;
-    }
-
-    /**
-     * 设置是否删除／离职，0正常，1删除离职
-     * @param deletef 是否删除／离职，0正常，1删除离职
-     */
-    public void setDeletef(Byte deletef) {
-        this.deletef = deletef;
-    }
-
-    /**
-     * 获得备注
-     * @return memo 备注
-     */
-    public String getMemo() {
-        return memo;
-    }
-
-    /**
-     * 设置备注
-     * @param memo 备注
-     */
-    public void setMemo(String memo) {
-        this.memo = memo == null ? null : memo.trim();
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     /**
@@ -348,5 +342,53 @@ public class SysUser extends BaseBean {
      */
     public void setLoginTimes(Integer loginTimes) {
         this.loginTimes = loginTimes;
+    }
+
+    /**
+     * 获得备注
+     * @return memo 备注
+     */
+    public String getMemo() {
+        return memo;
+    }
+
+    /**
+     * 设置备注
+     * @param memo 备注
+     */
+    public void setMemo(String memo) {
+        this.memo = memo == null ? null : memo.trim();
+    }
+
+    /**
+     * 获得是否禁用0正常，1禁用
+     * @return enablef 是否禁用0正常，1禁用
+     */
+    public Byte getEnablef() {
+        return enablef;
+    }
+
+    /**
+     * 设置是否禁用0正常，1禁用
+     * @param enablef 是否禁用0正常，1禁用
+     */
+    public void setEnablef(Byte enablef) {
+        this.enablef = enablef;
+    }
+
+    /**
+     * 获得是否删除／离职，0正常，1删除离职
+     * @return deletef 是否删除／离职，0正常，1删除离职
+     */
+    public Byte getDeletef() {
+        return deletef;
+    }
+
+    /**
+     * 设置是否删除／离职，0正常，1删除离职
+     * @param deletef 是否删除／离职，0正常，1删除离职
+     */
+    public void setDeletef(Byte deletef) {
+        this.deletef = deletef;
     }
 }

@@ -1,10 +1,11 @@
 package com.mx.common.dao;
 
 import com.mx.common.pojo.SelectBean;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
-
+@Repository
 public interface ICommonDao {
 
     /**
@@ -24,7 +25,7 @@ public interface ICommonDao {
 
     /**
      * 获得select下拉列表
-     * @param map tableName 表名；key 显示text；value 值；conditions 查询条件
+     * @param map tableName 表名；text 显示值；value 值；conditions 查询条件
      * @return list
      */
     List<SelectBean> getSelectList(HashMap<String, Object> map);

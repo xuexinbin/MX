@@ -3,7 +3,7 @@
 <mapper namespace="com.mx.common.dao.ICommonDao">
 
     <resultMap id="SelectBeanResultMap" type="com.mx.common.pojo.SelectBean">
-        <result column="key" property="key" jdbcType="VARCHAR"/>
+        <result column="text" property="text" jdbcType="VARCHAR"/>
         <result column="value" property="value" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -23,13 +23,13 @@
     <!-- 获得select下拉列表 -->
     <select id="getSelectList" parameterType="map" resultMap="SelectBeanResultMap">
         SELECT
-          ${key} AS key,
+          ${text} AS text,
           ${value} AS value
         FROM
           ${tableName}
         <where>
-            <if test="condition != null and condition != ''">
-                ${condition}
+            <if test="conditions != null and conditions != ''">
+                ${conditions}
             </if>
         </where>
     </select>

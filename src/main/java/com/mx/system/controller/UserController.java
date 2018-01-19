@@ -1,56 +1,72 @@
 package com.mx.system.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mx.common.pojo.SelectBean;
 import com.mx.common.service.ICommonService;
 import com.mx.system.model.Department;
+import com.mx.system.model.User;
 import com.mx.system.service.IDepartmentService;
+import com.mx.system.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * 部门管理controller
+ * 用户管理controller
  *
  * @author mx
  */
 @Controller
-@RequestMapping("/system/department")
-public class DepartmentController {
+@RequestMapping("/system/user")
+public class UserController {
 
     @Autowired
-    IDepartmentService departmentService;
+    IUserService userService;
 
     @Autowired
     ICommonService commonService;
 
     /**
-     * 部门管理-初始页面
+     * 用户管理-初始页面
      *
      * @return jsp
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String getDepartmentView() {
-        return "system/department";
+    public String getUserView() {
+        return "system/user";
+    }
+    /**
+     * 新增/编辑用户dialog
+     *
+     * @return jsp
+     */
+    @RequestMapping(value = "editUserDialog", method = RequestMethod.GET)
+    public String editUserDialog() {
+        return "system/editUserDialog";
     }
 
     /**
-     * 获得部门列表grid数据
+     * 获得用户管理grid数据
      *
      * @return json字符串
      */
     @ResponseBody
-    @RequestMapping(value = "/getDepartmentGridData", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
-    public String getDepartmentGridData(Department department) {
-        // 获取部门列表grid数据
-        List<Department> deptList = departmentService.getDepartmentGridData(department);
+    @RequestMapping(value = "/getUserGridData", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+    public String getUserGridData(User user) {
+        // 获取用户列表grid数据
+        List<User> deptList = userService.getUserGridData(user);
         return JSON.toJSONString(deptList);
     }
 
@@ -62,7 +78,7 @@ public class DepartmentController {
      */
     @RequestMapping(value = "/editDepartment", method = RequestMethod.POST)
     public ModelAndView editDepartment(String json) {
-        departmentService.editDepartment(json);
+        userService.editDepartment(json);
         return new ModelAndView(new MappingJackson2JsonView(), new HashMap<>());
     }
 
@@ -105,6 +121,32 @@ public class DepartmentController {
         List<SelectBean> list = commonService.getSelectList("sys_user", "true_name", "id", conditions);
         list.add(0, new SelectBean("无", ""));
         return JSON.toJSONString(list);
+    }
+
+    /**
+     * 更新用户
+     * @param file 用户头像
+     * @param user 用户信息
+     * @return model
+     */
+    @RequestMapping(value = "/editUser", method = RequestMethod.POST)
+    public ModelAndView editUser(@RequestParam(value = "file", required = false) CommonsMultipartFile file) throws IOException {
+        //userService.editUser(file, user);
+        return new ModelAndView(new MappingJackson2JsonView(), new HashMap<>());
+    }
+
+    /**
+     * 获得用户详细信息
+     *
+     * @param id 用户id
+     * @return model
+     */
+    @RequestMapping(value = "/getUserInfoById", method = RequestMethod.POST)
+    public ModelAndView getUserInfoById(Integer id) {
+        User userInfo = userService.getUserInfoById(id);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("userInfo", userInfo);
+        return new ModelAndView(new MappingJackson2JsonView(), resultMap);
     }
 
 

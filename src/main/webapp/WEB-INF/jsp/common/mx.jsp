@@ -74,6 +74,7 @@
     <link href="B-JUI/plugins/uploadify/css/uploadify.css" rel="stylesheet">
     <script src="B-JUI/plugins/uploadify/scripts/jquery.uploadify.min.js"></script>
     <script src="B-JUI/plugins/download/jquery.fileDownload.js"></script>
+    <script src='js/plugins/md5.js'></script>
     <script src="js/mx.js"></script>
     <link href="css/common.css" rel="stylesheet">
     <!-- init -->
@@ -177,7 +178,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
-                <li style="padding: 10px 2px;color: white;">&nbsp;<i class="fa fa-user"></i>&nbsp;&nbsp;MX&nbsp;&nbsp;
+                <li style="padding: 10px 2px;color: white;">&nbsp;<i class="fa fa-user-circle"></i>&nbsp;&nbsp;MX&nbsp;&nbsp;
                 </li>
                 <li style="padding: 10px 0px; color: white;">|</li>
                 <li class="dropdown">

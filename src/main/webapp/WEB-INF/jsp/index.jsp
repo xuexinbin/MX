@@ -147,6 +147,7 @@
     <script src="assets/prettify.js"></script>
     <link href="assets/ZeroClipboard.css" rel="stylesheet">
     <script src="assets/ZeroClipboard.js"></script>
+    <script src='js/plugins/md5.js'></script>
     <style>
         #bjui-navbar .navbar-header a{color: white;}
     </style>
@@ -176,7 +177,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
-                <li style="padding: 10px 2px;color: white;">&nbsp;<i class="fa fa-user"></i>&nbsp;&nbsp;MX&nbsp;&nbsp;
+                <li style="padding: 10px 2px;color: white;">&nbsp;<i class="fa fa-user-circle-o"></i>&nbsp;&nbsp;MX&nbsp;&nbsp;
                 </li>
                 <li style="padding: 10px 0px; color: white;">|</li>
                 <li class="dropdown">

@@ -1,3 +1,4 @@
+
 .error-msg,.empty-msg{
     position: absolute;
     width: 100%;
@@ -37,7 +38,6 @@
 .numbermark{line-height:20px;font-weight:normal;width:30px!important;height:20px;border-radius: 10px;text-align:center;background: #e83c3c;color:#fff;font-size:12px!important;}
 .panel-block .icon-button{margin-left:5px;font-size:20px;cursor: pointer}
 .panel-block .icon-button:hover,.panel-block li.active .icon_button{color:#e83c3c;font-weight: bolder;margin-left:5px}
-.flex-column{display: flex; flex-direction: column;justify-content:space-between}
 .panel-block ul.info li{align-items: baseline;line-height: 32px;height: auto}
 .panel-block li .h{color:#666;width:35%;}
 .panel-block li .c{width: 80%; line-height: 25px;}
@@ -50,3 +50,12 @@
 }
 .bggreen{background: green!important;}
 .bgred{background: #e83c3c!important;}
+
+/* 覆盖webupload式样 */
+.webuploader-pick {
+    padding: 2px 8px;
+    color: #777;
+    border: 1px solid #777;
+    background: white;
+    border-radius: 3px;
+}

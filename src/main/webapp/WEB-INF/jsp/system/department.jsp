@@ -1,9 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="row height100">
-    <div class="col-md-12 height100 flex-column">
-        <table id="department_grid" style="flex:auto"></table>
-    </div>
+<div class="bjui-pageContent">
+    <table id="department_grid" class="table table-bordered"></table>
 </div>
 
 <script type="text/javascript">
@@ -16,25 +14,46 @@
                     name: 'name',
                     label: '部门名称',
                     width: 150,
-                    align: 'center'
+                    align: 'center',
+                    rule: 'required;length(1~10)'
                 },
                 {
                     name: 'leaderUserId',
                     label: '负责人',
                     width: 150,
-                    align: 'center'
+                    align: 'center',
+                    type: 'select',
+                    items: function () {
+                        return $.getJSON('system/department/getUserList');
+                    },
+                    itemattr: {value: 'value', label: 'text'},
+                    render: function (value, data) {
+                        return data.leaderUserTrueName;
+                    }
                 },
                 {
                     name: 'parentId',
                     label: '所属部门',
                     width: 150,
-                    align: 'center'
+                    align: 'center',
+                    type: 'select',
+                    items: function () {
+                        return $.getJSON('system/department/getDepartmentList');
+                    },
+                    itemattr: {value: 'value', label: 'text'},
+                    render: function (value, data) {
+                        if (value==0) {
+                            return "无";
+                        }
+                        return data.parentName;
+                    }
                 },
                 {
                     name: 'memo',
                     label: '备注',
                     width: 150,
-                    align: 'center'
+                    align: 'center',
+                    rule: 'length(0~30)'
                 },
                 {
                     name: 'enable',
@@ -61,6 +80,7 @@
             ];
 
             $('#department_grid').datagrid({
+                fullGrid: true,
                 height: '100%',
                 gridTitle: '部门列表',
                 editMode: 'inline',
@@ -74,15 +94,24 @@
                 delPK: 'id',
                 editUrl: 'system/department/editDepartment',
                 paging: {pageSize: 30},
-                showCheckboxcol: true,
+                showCheckboxcol: false,
                 linenumberAll: true,
                 local: 'local',
                 dataUrl: 'system/department/getDepartmentGridData',
                 columns: columns,
-                tableWidth: '100%',
                 afterSave: function ($trs, datas) {
                     // 提示成功，关闭dialog
                     BJUI.alertmsg('ok', '保存成功！', {});
+                    $("#department_grid").datagrid('refresh', true);
+                },
+                isTree: 'name',
+                treeOptions: {
+                    expandAll: true,
+                    add: false,
+                    keys: {
+                        key: 'id',
+                        parentKey: 'parentId'
+                    }
                 }
             });
         }();

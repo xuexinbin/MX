@@ -11,18 +11,34 @@
         <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
         <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="DepartmentResultMap" type="com.mx.system.model.Department">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="leader_user_id" property="leaderUserId" jdbcType="INTEGER"/>
+        <result column="enable" property="enable" jdbcType="TINYINT"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+        <result column="leaderUserTrueName" property="leaderUserTrueName" jdbcType="VARCHAR"/>
+        <result column="parentName" property="parentName" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <!-- 获得部门列表grid数据 -->
-    <select id="getDepartmentGridData" resultMap="BaseResultMap" parameterType="com.mx.generator.pojo.SysDepartment">
+    <select id="getDepartmentGridData" resultMap="DepartmentResultMap" parameterType="com.mx.system.model.Department">
         SELECT
-          id,
-          name,
-          parent_id,
-          leader_user_id,
-          enable,
-          memo
+          sd.id,
+          sd.name,
+          sd.parent_id,
+          sd.leader_user_id,
+          sd.enable,
+          sd.memo,
+          sd2.name parentName,
+          su.true_name leaderUserTrueName
         FROM
-          sys_department
+          sys_department sd
+          LEFT JOIN sys_department sd2 ON sd.parent_id = sd2.id
+          LEFT JOIN sys_user su ON sd.leader_user_id = su.id AND su.deletef = 0
   </select>
 
     <!-- 编辑部门 -->

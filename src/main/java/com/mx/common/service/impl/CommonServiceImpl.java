@@ -11,7 +11,6 @@ import com.mx.common.exception.WebBusinessException;
 import com.mx.common.service.ICommonService;
 import com.mx.common.util.CommonUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -75,13 +74,34 @@ public class CommonServiceImpl implements ICommonService {
     }
 
     @Override
-    public List<SelectBean> getSelectList(String tableName, String key, String value, String conditions) {
+    public List<SelectBean> getSelectList(String tableName, String text, String value, String conditions) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("tableName", tableName);
-        map.put("key", key);
+        map.put("text", text);
         map.put("value", value);
         map.put("conditions", conditions);
         return commonDao.getSelectList(map);
+    }
+
+    @Override
+    public String getSelectJson(String tableName, String text, String value, String conditions) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("tableName", tableName);
+        map.put("text", text);
+        map.put("value", value);
+        map.put("conditions", conditions);
+        List<SelectBean> list = commonDao.getSelectList(map);
+        if (list.size() ==0) {
+            return "[]";
+        }
+        StringBuilder json = new StringBuilder();
+        json.append("[");
+        for (SelectBean bean : list) {
+            json.append("{").append(bean.getValue()).append(":").append(bean.getText()).append("},");
+        }
+        json.append("]");
+        json.substring(0, json.length() - 1);
+        return json.toString();
     }
 
 }

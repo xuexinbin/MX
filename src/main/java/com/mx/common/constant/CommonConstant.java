@@ -8,7 +8,7 @@ package com.mx.common.constant;
 public class CommonConstant {
 
 	/** 头像图片保存路径 */
-	public static final String UPLOAD_AVATAR_FOLDER = "/uploadImg/avatar";
+	public static final String UPLOAD_AVATAR_FOLDER = "uploadImg/avatar";
 	/** 订单客户素材保存路径 */
 	public static final String UPLOAD_ORDER_CUSTOMER_FOLDER = "/uploadImg/order/customer";
 	/** 获得服务器图片的地址前缀  */

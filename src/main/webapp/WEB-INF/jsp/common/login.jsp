@@ -13,7 +13,7 @@
     <link href="css/plugins/loading/line-scale.css" rel="stylesheet">
     <script src="B-JUI/js/jquery-1.11.3.min.js"></script>
     <script src="B-JUI/js/bjui-all.js"></script>
-    <script type='text/javascript' src='js/md5.js' charset='utf-8'></script>
+    <script type='text/javascript' src='js/plugins/md5.js' charset='utf-8'></script>
     <!-- title图片 -->
     <link rel="shortcut icon" href="img/logo.png">
     <style>

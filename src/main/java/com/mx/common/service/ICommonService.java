@@ -55,12 +55,22 @@ public interface ICommonService {
     /**
      * 获得select下拉列表
      * @param tableName 表名
-     * @param key 显示text->列名
+     * @param text 显示值->列名
      * @param value 值->列名
      * @param conditions 查询条件->为空：无条件查询
-     * @return
+     * @return list
      */
-    List<SelectBean> getSelectList(String tableName, String key, String value, String conditions);
+    List<SelectBean> getSelectList(String tableName, String text, String value, String conditions);
+
+    /**
+     * 获得select下拉列表
+     * @param tableName 表名
+     * @param text 显示值->列名
+     * @param value 值->列名
+     * @param conditions 查询条件->为空：无条件查询
+     * @return json ->eg：[{0:aa},{1:bb}]
+     */
+    String getSelectJson(String tableName, String text, String value, String conditions);
 
 
 }

@@ -30,7 +30,7 @@ public class FrameController {
     private static Logger logger = LogManager.getLogger(FrameController.class);
 
     @Autowired
-    private IFrameService systemService;
+    private IFrameService frameService;
 
     /**
      * 登录页面
@@ -72,7 +72,7 @@ public class FrameController {
      */
     @RequestMapping(value = "frame/logining", method = RequestMethod.POST)
     public void logining(String userName, String password, HttpServletResponse response) {
-        SysUser sysUserInfo = systemService.logining(userName, password);
+        SysUser sysUserInfo = frameService.logining(userName, password);
         ResponseFormat rf = new ResponseFormat();
         if (sysUserInfo == null) {
             rf.setErrorInfo(ErrorCodeEnum.USER_NOT_EXSIT);

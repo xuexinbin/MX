@@ -1,94 +1,37 @@
 package com.mx.system.model;
 
+import com.mx.generator.pojo.SysDepartment;
+
 /**
  * 部门基础信息bean
- * @author mx
  *
+ * @author mx
  */
-public class Department {
-    private Integer id;
+public class Department extends SysDepartment {
 
-    private Integer addUserId;
+    /**
+     * 父部门名称
+     */
+    private String parentName;
 
-    private Integer updateUserId;
-
-    /** 部门名称 */
-    private String departmentName;
-
-    /** 上级部门id，默认0为根部门  */
-    private Integer parentId;
-
-    /** 负责人id，关联user表 */
-    private Integer leaderUserId;
-    
-    /** 负责人真实姓名 */
+    /**
+     * 负责人真实姓名
+     */
     private String leaderUserTrueName;
-    
-    /** 部门人数  */
-    private Integer userCount;
 
-    public Integer getId() {
-        return id;
+    public String getParentName() {
+        return parentName;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
-    public Integer getAddUserId() {
-        return addUserId;
+    public String getLeaderUserTrueName() {
+        return leaderUserTrueName;
     }
 
-    public void setAddUserId(Integer addUserId) {
-        this.addUserId = addUserId;
+    public void setLeaderUserTrueName(String leaderUserTrueName) {
+        this.leaderUserTrueName = leaderUserTrueName;
     }
-
-    public Integer getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(Integer updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName == null ? null : departmentName.trim();
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public Integer getLeaderUserId() {
-        return leaderUserId;
-    }
-
-    public void setLeaderUserId(Integer leaderUserId) {
-        this.leaderUserId = leaderUserId;
-    }
-
-	public String getLeaderUserTrueName() {
-		return leaderUserTrueName;
-	}
-
-	public void setLeaderUserTrueName(String leaderUserTrueName) {
-		this.leaderUserTrueName = leaderUserTrueName;
-	}
-
-	public Integer getUserCount() {
-		return userCount;
-	}
-
-	public void setUserCount(Integer userCount) {
-		this.userCount = userCount;
-	}
-    
 }

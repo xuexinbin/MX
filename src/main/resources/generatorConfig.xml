@@ -63,5 +63,13 @@
             <ignoreColumn column="update_time" />
             <ignoreColumn column="add_time" />
         </table>
+        <table schema="" tableName="sys_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <!-- 忽略列，不生成bean 字段 -->
+            <ignoreColumn column="update_time" />
+            <ignoreColumn column="add_time" />
+        </table>
+
     </context>
 </generatorConfiguration>
