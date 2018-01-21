@@ -1,3 +1,10 @@
+/*
+ * v20180120 【add】表格保存:判断数据是否修改优化
+ *           【add】grid翻页判断是否有修改的数据
+ *           【modify】分页数量修改页面不刷新修复
+ *
+ */
+
 /*!
  * B-JUI  V1.31 (http://b-jui.com)
  * Git@OSC (http://git.oschina.net/xknaan/B-JUI)
@@ -385,7 +392,8 @@
             delMsg    : '确定要删除该行吗？',
             delMsgM   : '确定要删除选中行？',
             errorData : '未获取到正确的数据！',
-            failData  : '请求datagrid数据失败！'
+            failData  : '请求datagrid数据失败！',
+            changedDataMsg : '当前表格数据已修改，是否继续执行该操作？'
         })
         
         BJUI.setRegional('findgrid', {
@@ -637,7 +645,8 @@
         delMsg    : 'Sure you want to delete this row?',
         delMsgM   : 'Sure you want to delete selected rows?',
         errorData : 'Did not get the correct data!',
-        failData  : 'Request data failed!'
+        failData  : 'Request data failed!',
+        changedDataMsg : 'Grid data has been changed, do you want to continue?'
     })
     
     BJUI.setRegional('findgrid', {
@@ -13008,12 +13017,16 @@
             var $num = $(this)
             
             if (!$num.hasClass('active')) {
-                that.jumpPage($num.text())
+                // modify by mx for grid翻页判断是否有修改的数据 on 20180120
+                //that.jumpPage($num.text())
+                that.checkChangedData("pagenum", $num.text());
             }
             
             e.preventDefault()
         }).on('click.datagrid.refresh', 'button.btn-refresh', function() {
-            that.refresh()
+            // modify by mx for grid翻页判断是否有修改的数据 on 20180120
+            //that.refresh()
+            that.checkChangedData("refresh");
         }).on('bjui.datagrid.paging.jump', function(e) {
             var pageCurrent = that.paging.pageCurrent, interval = tools.getPageInterval(that.paging.pageCount, pageCurrent, paging.showPagenum), pageNums = []
             
@@ -13041,36 +13054,46 @@
             setPageSize(pageSize)
         }).on('change', 'div.paging-pagesize > select', function() {
             var pageSize = $(this).val()
-            
-            that.jumpPage(null, pageSize)
+            //that.jumpPage(null, pageSize)
+            // modify by mx for grid翻页判断是否有修改的数据 on 20180120
+            that.checkChangedData("pageSize", pageSize);
         })
         
         $jumpto.find('input').on('keyup', function(e) {
             if (e.which === BJUI.keyCode.ENTER) {
                 var page = $(this).val()
-                
-                if (page) that.jumpPage(page)
+                //if (page)that.jumpPage(page)
+                if (page) that.checkChangedData("jumpto", page);
             }
         })
         
         $first.on('click', function() {
             if (that.paging.pageCurrent > 1) 
-                that.jumpPage(1)
+                //that.jumpPage(1)
+                // modify by mx for grid翻页判断是否有修改的数据 on 20180120
+                that.checkChangedData("first");
         })
         
         $prev.on('click', function() {
             if (that.paging.pageCurrent > 1)
-                that.jumpPage(that.paging.pageCurrent - 1)
+                //that.jumpPage(that.paging.pageCurrent - 1)
+                // modify by mx for grid翻页判断是否有修改的数据 on 20180120
+                that.checkChangedData("prev");
         })
         
         $next.on('click', function() {
             if (that.paging.pageCurrent < that.paging.pageCount)
-                that.jumpPage(that.paging.pageCurrent + 1)
+                // that.jumpPage(that.paging.pageCurrent + 1)
+                // modify by mx for grid翻页判断是否有修改的数据 on 20180120
+                that.checkChangedData("next");
+
         })
         
         $last.on('click', function() {
             if (that.paging.pageCurrent < that.paging.pageCount)
-                that.jumpPage(that.paging.pageCount)
+                //that.jumpPage(that.paging.pageCount)
+                // modify by mx for grid翻页判断是否有修改的数据 on 20180120
+                that.checkChangedData("last");
         })
     }
     
@@ -13090,7 +13113,8 @@
             pageSize = parseInt(pageSize, 10)
             
             if (that.options.local != 'remote') {
-                if (paging.pageSize > paging.total) return
+                // modify by mx for 分页数量修改页面不刷新修复 on 20180121
+                // if (paging.pageSize > paging.total) return
             }
         }
         
@@ -13724,8 +13748,9 @@
         } else {
             $tr = that.$tbody.find('> tr.'+ that.classnames.tr_edit)
         }
-        
-        if (!$tr.length) {
+        // modify by mx for 判断表格数据是否修改 on 2018/1/20
+        //if (!$tr.length) {
+        if (that.$tbody.find("." + that.classnames.td_changed).length < 1) {
             that.$grid.alertmsg('info', BJUI.getRegional('datagrid.saveMsg'))
             return
         }
@@ -13915,7 +13940,7 @@
                             if ($el.val() == val) $td.removeClass(that.classnames.td_changed)
                             changeData[op.name] = $el.val()
                         })
-                    
+
                     break
                 case 'select':
                     $el.change(function() {
@@ -15042,8 +15067,58 @@
         
         $(window).on(BJUI.eventType.resizeGrid, $.proxy(_resizeGrid, that))
     }
-    
-    
+
+    // add by mx for grid翻页判断是否有修改的数据 on 20180120
+    /* checkData: okCall数据未发生修改执行 */
+    Datagrid.prototype.checkChangedData = function(type, param) {
+        var that = this;
+        var fn = function(type) {
+            switch (type) {
+                case "refresh":
+                    that.refresh();
+                    break;
+                case "next":
+                    that.jumpPage(that.paging.pageCurrent + 1);
+                    break;
+                case "prev":
+                    that.jumpPage(that.paging.pageCurrent - 1);
+                    break;
+                case "last":
+                    that.jumpPage(that.paging.pageCount);
+                    break;
+                case "first":
+                    that.jumpPage(1);
+                    break;
+                case "jumpto":
+                    that.jumpPage(param)
+                    break;
+                case "pageSize":
+                    that.jumpPage(null, param)
+                    break;
+                case "pagenum":
+                    that.jumpPage(param)
+                    break;
+            }
+        };
+        if (that.$tbody.find("." + that.classnames.td_changed).length > 0) {
+            BJUI.alertmsg('confirm', BJUI.getRegional('datagrid.changedDataMsg'), {
+                okCall: function() {
+                    fn(type);
+                },
+                cancelCall: function() {
+                    if (type == "pageSize") {
+                        // 取消修改每页数量，还原select框
+                        var pagesizeSelect = that.$boxP.find(".paging-pagesize select")[0];
+                        $(pagesizeSelect).val(that.paging.pageSize);
+                        $(pagesizeSelect).selectpicker('refresh');
+                    }
+                }
+            })
+        } else {
+            fn(type);
+        }
+
+    }
     // DATAGRID PLUGIN DEFINITION
     // =======================
     

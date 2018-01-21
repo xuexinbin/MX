@@ -174,28 +174,31 @@
                             // block为分块数据。
 
                             // file为分块对应的file对象。
-                            var file = block.file;
+                            //var file = block.file;
 
 
                             // 修改data可以控制发送哪些携带数据。
-                            data.uid = 123;
+                            //data.uid = 123;
                         });
                         // 保存用户
                         $("#editUserDialog_saveBtn").click(function () {
-                            uploader.upload();
-                            return;
-                            $("#editUserDialog_password").val(hex_md5($("#editUserDialog_password").val()));
-                            BJUI.ajax('ajaxform', {
-                                url: 'system/user/editUser',
-                                form: $.CurrentDialog.find('form'),
-                                validate: true,
-                                loadingmask: true,
-                                okCallback: function (json, options) {
-                                    // 提示成功，关闭dialog
-                                    BJUI.alertmsg('ok', '保存成功！', {});
-                                    $("#user_grid").datagrid('refresh', true);
-                                }
-                            })
+
+                            if (uploader.getFiles().length > 0) {
+                                uploader.upload();
+                            } else {
+                                $("#editUserDialog_password").val(hex_md5($("#editUserDialog_password").val()));
+                                BJUI.ajax('ajaxform', {
+                                    url: 'system/user/editUser',
+                                    form: $.CurrentDialog.find('form'),
+                                    validate: true,
+                                    loadingmask: true,
+                                    okCallback: function (json, options) {
+                                        // 提示成功，关闭dialog
+                                        BJUI.alertmsg('ok', '保存成功！', {});
+                                        $("#user_grid").datagrid('refresh', true);
+                                    }
+                                })
+                            }
 
                         });
 

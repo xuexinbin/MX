@@ -88,7 +88,7 @@
                 selectMult: true,
                 filterThead: false,
                 columnMenu: false,
-                toolbarItem: "add, del, cancel, save",
+                toolbarItem: "add, cancel, save",
                 delUrl: 'system/department/deleteDepartmentByIds',
                 delType: 'POST',
                 delPK: 'id',

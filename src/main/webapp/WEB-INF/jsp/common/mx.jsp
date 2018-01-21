@@ -143,6 +143,16 @@
             $('#bjui-navbar').find('> div').attr('class', bjui_index_container)
             $('#bjui-body-box').find('> div').attr('class', bjui_index_container)
         }
+
+        function mx_loginOut() {
+            window.location.href = "/login";
+            BJUI.ajax('doajax', {
+                url: 'frame/loginOut',
+                loadingmask: false,
+                okCallback: function (res, options) {}
+            });
+        }
+
     </script>
     <!-- highlight && ZeroClipboard -->
     <link href="assets/prettify.css" rel="stylesheet">
@@ -188,19 +198,19 @@
                     <ul class="dropdown-menu" role="menu" id="bjui-themes">
                         <li>
                             <a href="javascript:;" class="theme_purple" data-toggle="theme" data-theme="purple">&nbsp;<i
-                                    class="fa fa-tree"></i> 紫罗兰</a></li>
+                                    class="fa fa-leaf"></i> 紫罗兰</a></li>
                         <li>
                             <a href="javascript:;" class="theme_blue" data-toggle="theme"
-                               data-theme="blue">&nbsp;<i class="fa fa-tree"></i> 天空蓝</a></li>
+                               data-theme="blue">&nbsp;<i class="fa fa-cloud"></i> 天空蓝</a></li>
                         <li><a href="javascript:;" class="theme_green" data-toggle="theme" data-theme="green">&nbsp;<i
-                                class="fa fa-tree"></i> 绿草如茵</a></li>
+                                class="fa fa-sun-o"></i> 绿草如茵</a></li>
                     </ul>
                 </li>
                 <li style="padding: 10px 0px; color: white;">|</li>
                 <li><a>&nbsp;<i class="fa fa-cog"></i>&nbsp;设置&nbsp;<i
                         class="fa fa-caret-down" style="color: black;"></i></a></li>
                 <li style="padding: 10px 0px; color: white;">|</li>
-                <li><a href="login.html" title="退出登录">&nbsp;<i class="fa fa-sign-out"></i>注销</a></li>
+                <li><a href="javascript:;" onclick="mx_loginOut()" title="退出登录">&nbsp;<i class="fa fa-sign-out"></i>注销</a></li>
                 <li style="padding: 10px 0px; color: white;">|</li>
                 <li><a href="javascript:;" onclick="bjui_index_exchange()" title="横向收缩/充满屏幕"><i
                         class="fa fa-exchange"></i></a></li>
