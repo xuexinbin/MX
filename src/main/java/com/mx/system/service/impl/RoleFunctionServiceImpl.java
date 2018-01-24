@@ -1,15 +1,20 @@
 package com.mx.system.service.impl;
 
 import com.mx.common.constant.CommonConstant;
+import com.mx.common.dao.CommonMapper;
+import com.mx.common.service.ICommonService;
 import com.mx.common.util.SessionManager;
+import com.mx.generator.pojo.SysFunction;
+import com.mx.generator.pojo.SysRole;
+import com.mx.generator.pojo.SysRoleFunction;
 import com.mx.system.dao.RoleFunctionMapper;
-import com.mx.system.dao.RoleMapper;
 import com.mx.system.model.Function;
 import com.mx.system.model.Role;
 import com.mx.system.model.RoleFunction;
 import com.mx.system.service.IRoleFunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,45 +24,36 @@ import java.util.List;
  *
  * @author mx
  */
-@Service("roleFunctionService")
-// TODO 事务 @Transactional
+@Service
+@Transactional
 public class RoleFunctionServiceImpl implements IRoleFunctionService {
-
-    @Autowired
-    RoleMapper roleMapper;
 
     @Autowired
     RoleFunctionMapper roleFunctionMapper;
 
+    @Autowired
+    ICommonService commonService;
+
     @Override
-    public List<Role> getRoleList() {
-        return roleMapper.getRoleList();
+    public List<SysRole> getRoleList() {
+        return roleFunctionMapper.getRoleList();
     }
 
     @Override
-    public void editRole(Role role) {
-        // session获得userId
-        Integer userId=(int) SessionManager.getInstance().getValue(CommonConstant.SESSION_USER_ID);
-        role.setAddUserId(userId);
-        role.setUpdateUserId(userId);
+    public void editRole(SysRole role) {
         // 自主添加
-        role.setRoleType((byte) 1);
+        role.setType((byte) 1);
         // id为空添加，否则编辑
         if (role.getId() == null) {
-            roleMapper.addRole(role);
+            roleFunctionMapper.addRole(role);
         } else {
-            roleMapper.editRole(role);
+            roleFunctionMapper.editRole(role);
         }
     }
 
     @Override
-    public void delRoleById(int id) {
-        roleMapper.delRoleById(id);
-    }
-
-    @Override
-    public List<Function> getFunctionList(Integer functionType) {
-        return roleFunctionMapper.getFunctionList(functionType);
+    public List<SysFunction> getFunctionList(Integer type) {
+        return roleFunctionMapper.getFunctionList(type);
     }
 
     @Override
@@ -67,24 +63,21 @@ public class RoleFunctionServiceImpl implements IRoleFunctionService {
 
     @Override
     public void editRoleFunctions(Integer roleId, String functionIds) {
-        // session获得userId
-        Integer userId=(int) SessionManager.getInstance().getValue(CommonConstant.SESSION_USER_ID);
         // 删除已有权限
-        roleFunctionMapper.deleteRoleFunctionsByRoleId(roleId);
+        //roleFunctionMapper.deleteRoleFunctionsByRoleId(roleId);
+        commonService.deleteRows("sys_role_function", "role_id", roleId);
 
         if (functionIds == null || functionIds.length() == 0) {
             return;
         }
         // 批量添加
         String[] ids = functionIds.split(",");
-        List<RoleFunction> list = new ArrayList<>();
+        List<SysRoleFunction> list = new ArrayList<>();
         for (String id : ids) {
-            RoleFunction masterFunctionEntity = new RoleFunction();
-            masterFunctionEntity.setAddUserId(userId);
-            masterFunctionEntity.setUpdateUserId(userId);
-            masterFunctionEntity.setFunctionId(Integer.parseInt(id));
-            masterFunctionEntity.setRoleId(roleId);
-            list.add(masterFunctionEntity);
+            SysRoleFunction roleFunction = new SysRoleFunction();
+            roleFunction.setFunctionId(Integer.parseInt(id));
+            roleFunction.setRoleId(roleId);
+            list.add(roleFunction);
         }
         roleFunctionMapper.addRoleFunctions(list);
     }

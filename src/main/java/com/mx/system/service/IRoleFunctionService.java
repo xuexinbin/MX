@@ -1,8 +1,8 @@
 package com.mx.system.service;
 
 
-import com.mx.system.model.Function;
-import com.mx.system.model.Role;
+import com.mx.generator.pojo.SysFunction;
+import com.mx.generator.pojo.SysRole;
 
 import java.util.List;
 
@@ -12,29 +12,22 @@ public interface IRoleFunctionService {
      *
      * @return list
      */
-    List<Role> getRoleList();
+    List<SysRole> getRoleList();
 
     /**
      * 编辑角色
      *
      * @param role 角色信息
      */
-    void editRole(Role role);
-
-    /**
-     * 删除角色
-     *
-     * @param id 角色id
-     */
-    void delRoleById(int id);
+    void editRole(SysRole role);
 
     /**
      * 获得菜单列表
      *
-     * @param functionType 0菜单 1权限 null全部
+     * @param type 0菜单 1权限 null全部
      * @return list
      */
-    List<Function> getFunctionList(Integer functionType);
+    List<SysFunction> getFunctionList(Integer type);
 
     /**
      * 获得角色权限 str

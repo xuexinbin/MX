@@ -11,10 +11,6 @@ fieldset{border-color:#c3ced5;}
 #bjui-top .nav > li > a:focus{background-color:#37424f;}
 #bjui-navbar{background-color:#1f73b6;}
 #bjui-navbar .navbar-header button:hover{background-color:#16669e !important;}
-/* -- mx add start --*/
-#bjui-navbar .navbar-header {background-color: #236da8;}
-#bjui-navbar .navbar-header:hover{background-color: #175a8e;}
-/* -- mx add end --*/
 #bjui-navbar .navbar-nav > li > a{color:#fff;}
 #bjui-navbar .navbar-nav > li.active > a,
 #bjui-navbar .navbar-nav > li > a:hover,
@@ -208,3 +204,10 @@ ul.tmpTargetzTree{background-color:#d9e7f2;}
 /* uploadify */
 .uploadify-button{color:#222 !important; background-color:#f3f8fc !important; border-color:#c3ced5 !important;}
 .uploadify:hover .uploadify-button{color:#fff !important; background-color:#c3ced5 !important; border-color:#c3ced5 !important;}
+
+/* -- mx add start --*/
+#bjui-navbar .navbar-header {background-color: #236da8;}
+#bjui-navbar .navbar-header:hover{background-color: #175a8e;}
+.panel-block li.active,.panel-block li:hover{border-left: 3px solid #16669e;}
+.panel-block .title{background-color: #f3f8fc;}
+/* -- mx add end --*/

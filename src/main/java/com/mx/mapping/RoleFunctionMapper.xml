@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.system.dao.RoleFunctionMapper">
+    <resultMap id="RoleFunctionResultMap" type="com.mx.generator.pojo.SysRoleFunction">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="function_id" property="functionId" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="FunctionResultMap" type="com.mx.generator.pojo.SysFunction">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="RoleResultMap" type="com.mx.generator.pojo.SysRole">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 获得菜单列表 -->
+    <select id="getFunctionList" resultMap="FunctionResultMap" parameterType="java.lang.Integer">
+        SELECT
+            id,
+            parent_id,
+            name,
+            url,
+            sort,
+            type
+        FROM
+            sys_function
+        <if test="_parameter != null">
+            WHERE
+            type = #{_parameter}
+        </if>
+    </select>
+
+    <!-- 获得角色权限 str -->
+    <select id="getRoleFunctions" resultType="string" parameterType="java.lang.Integer">
+        SELECT
+            GROUP_CONCAT(function_id)
+        FROM
+            sys_role_function
+        WHERE
+            role_id = #{roleId}
+    </select>
+
+    <!-- 添加角色权限list -->
+    <insert id="addRoleFunctions" parameterType="java.util.List">
+        INSERT INTO
+        sys_role_function (add_user_id, update_user_id, role_id, function_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.addUserId},#{item.updateUserId},#{item.roleId},#{item.functionId})
+        </foreach>
+    </insert>
+
+    <!-- 获得角色列表 -->
+    <select id="getRoleList" resultMap="RoleResultMap">
+        SELECT
+            id,
+            name,
+            type
+        FROM
+          sys_role
+        ORDER BY
+          type asc
+    </select>
+
+    <!-- 新增角色   -->
+    <insert id="addRole" parameterType="com.mx.generator.pojo.SysRole">
+        INSERT INTO sys_role (
+        add_user_id,
+        update_user_id,
+        name,
+        type)
+        VALUES (
+        #{addUserId},
+        #{updateUserId},
+        #{name},
+        #{type})
+    </insert>
+
+    <!-- 编辑角色  -->
+    <update id="editRole" parameterType="com.mx.generator.pojo.SysRole">
+        UPDATE sys_role
+        SET
+        update_user_id = #{updateUserId},
+        name = #{name}
+        WHERE
+        id = #{id}
+    </update>
+</mapper>

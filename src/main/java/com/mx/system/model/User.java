@@ -29,11 +29,6 @@ public class User extends SysUser {
      */
     private String roleName;
 
-    /**
-     * 模糊查询：工号／姓名／ 登录名／手机号
-     */
-    private String likeStr;
-
     @Override
     public Date getBirthday() {
         return birthday;
@@ -68,14 +63,6 @@ public class User extends SysUser {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    public String getLikeStr() {
-        return likeStr;
-    }
-
-    public void setLikeStr(String likeStr) {
-        this.likeStr = likeStr;
     }
 
 }

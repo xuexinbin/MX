@@ -42,6 +42,15 @@ public interface ICommonService {
      * @return int
      */
     int deleteRows(String tableName, String column, String key);
+    /**
+     * 删除表数据
+     *
+     * @param tableName 表名
+     * @param column    条件列名(和表字段相同): 一个条件
+     * @param key       字符串(逗号拼接1,2,3)
+     * @return int
+     */
+    int deleteRows(String tableName, String column, Integer key);
 
     /**
      * 更新表格的deletef为1

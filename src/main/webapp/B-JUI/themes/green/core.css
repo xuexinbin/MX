@@ -204,3 +204,10 @@ ul.tmpTargetzTree{background-color:#eef4ee;}
 /* uploadify */
 .uploadify-button{color:#222 !important; background-color:#f5fdf5 !important; border-color:#b5d2b5 !important;}
 .uploadify:hover .uploadify-button{color:#FFF !important; background-color:#b5d2b5 !important; border-color:#b5d2b5 !important;}
+
+/* -- mx add start --*/
+#bjui-navbar .navbar-header {background-color: #3e893e;}
+#bjui-navbar .navbar-header:hover{background-color: #377b37;}
+.panel-block li.active,.panel-block li:hover{border-left: 3px solid #348134;}
+.panel-block .title{background-color: #f5fdf5;}
+/* -- mx add end --*/

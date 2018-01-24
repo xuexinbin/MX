@@ -1,6 +1,9 @@
 package com.mx.system.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.mx.common.service.ICommonService;
+import com.mx.generator.pojo.SysFunction;
+import com.mx.generator.pojo.SysRole;
 import com.mx.system.model.Function;
 import com.mx.system.model.Role;
 import com.mx.system.service.IRoleFunctionService;
@@ -22,24 +25,27 @@ import java.util.Map;
  * @author mx
  */
 @Controller
-@RequestMapping("/roleFunction")
+@RequestMapping("/system/roleFunction")
 public class RoleFunctionController {
 
     @Autowired
     IRoleFunctionService roleFunctionService;
+
+    @Autowired
+    ICommonService commonService;
 
     /**
      * 角色及权限管理-初始页面
      *
      * @return jsp
      */
-    @RequestMapping(value = "/roleFunction", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String getRoleFunctionView() {
         return "system/roleFunction";
     }
 
     /**
-     * 编辑角色而dialog
+     * 编辑角色dialog
      *
      * @return jsp
      */
@@ -55,7 +61,7 @@ public class RoleFunctionController {
      */
     @RequestMapping(value = "/getRoleList", method = RequestMethod.POST)
     public ModelAndView getRoleList() {
-        List<Role> roleList = roleFunctionService.getRoleList();
+        List<SysRole> roleList = roleFunctionService.getRoleList();
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("roleList", roleList);
         return new ModelAndView(new MappingJackson2JsonView(), resultMap);
@@ -68,7 +74,7 @@ public class RoleFunctionController {
      * @return model
      */
     @RequestMapping(value = "/editRole", method = RequestMethod.POST)
-    public ModelAndView editRole(Role role) {
+    public ModelAndView editRole(SysRole role) {
         roleFunctionService.editRole(role);
         return new ModelAndView(new MappingJackson2JsonView(), new HashMap<>());
     }
@@ -80,8 +86,8 @@ public class RoleFunctionController {
      * @return model
      */
     @RequestMapping(value = "/delRoleById", method = RequestMethod.POST)
-    public ModelAndView delDepartmentById(int id) {
-        roleFunctionService.delRoleById(id);
+    public ModelAndView delDepartmentById(String id) {
+        commonService.deleteRows("sys_role", "id", id);
         return new ModelAndView(new MappingJackson2JsonView(), new HashMap<>());
     }
 
@@ -92,9 +98,9 @@ public class RoleFunctionController {
      */
     @ResponseBody
     @RequestMapping(value = "/getFunctionList", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
-    public String getFunctionList(Integer functionType) {
+    public String getFunctionList(Integer type) {
         // 获得菜单列表
-        List<Function> functionList = roleFunctionService.getFunctionList(functionType);
+        List<SysFunction> functionList = roleFunctionService.getFunctionList(type);
         return JSON.toJSONString(functionList);
     }
 
@@ -121,6 +127,5 @@ public class RoleFunctionController {
         roleFunctionService.editRoleFunctions(roleId, functionIds);
         return new ModelAndView(new MappingJackson2JsonView(), new HashMap<>());
     }
-
 
 }

@@ -8,12 +8,12 @@ public class SysRole extends BaseBean {
     /**
      * 角色名
      */
-    private String roleName;
+    private String name;
 
     /**
      * 角色类型0 系统默认 1自主添加
      */
-    private Byte roleType;
+    private Byte type;
 
     public Integer getId() {
         return id;
@@ -25,33 +25,33 @@ public class SysRole extends BaseBean {
 
     /**
      * 获得角色名
-     * @return role_name 角色名
+     * @return name 角色名
      */
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
     /**
      * 设置角色名
-     * @param roleName 角色名
+     * @param name 角色名
      */
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     /**
      * 获得角色类型0 系统默认 1自主添加
-     * @return role_type 角色类型0 系统默认 1自主添加
+     * @return type 角色类型0 系统默认 1自主添加
      */
-    public Byte getRoleType() {
-        return roleType;
+    public Byte getType() {
+        return type;
     }
 
     /**
      * 设置角色类型0 系统默认 1自主添加
-     * @param roleType 角色类型0 系统默认 1自主添加
+     * @param type 角色类型0 系统默认 1自主添加
      */
-    public void setRoleType(Byte roleType) {
-        this.roleType = roleType;
+    public void setType(Byte type) {
+        this.type = type;
     }
 }

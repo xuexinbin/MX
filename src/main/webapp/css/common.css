@@ -31,16 +31,15 @@
 
 .panel-block {height:100%;border:1px solid #ddd;margin-right:-15px}
 .panel-block .title{font-size:14px;color:#222;font-weight:bolder;padding:10px;display: flex;justify-content: space-between;align-items: center}
-.panel-block ul,.panel li{width:100%;border-left:5px solid #fff}
-.panel-block li a{color:#222;width:100%;text-decoration: none;}
-.panel-block li.active,.panel-block li:hover{border-left:5px solid #e83c3c;color:#222;text-decoration: none;background:#eee;font-weight:bolder;}
+.panel-block ul {margin:0;padding:0px;width:100%;}
 .panel-block li{display: flex;padding:0px 5px; justify-content: space-between;height: 40px;line-height: 40px;align-items: center;cursor: pointer}
+.panel-block li a{color:#222;text-decoration: none;}
+.panel-block li.active,.panel-block li:hover{color:#222;text-decoration: none;background:#f5f5f5;}
+.panel-block li i{font-size: 18px;margin-right: 8px;}
+.panel-block li .fa-pencil-square-o:hover{color:#428bca;}
+.panel-block li .fa-minus-circle:hover{color:red;}
 .numbermark{line-height:20px;font-weight:normal;width:30px!important;height:20px;border-radius: 10px;text-align:center;background: #e83c3c;color:#fff;font-size:12px!important;}
-.panel-block .icon-button{margin-left:5px;font-size:20px;cursor: pointer}
-.panel-block .icon-button:hover,.panel-block li.active .icon_button{color:#e83c3c;font-weight: bolder;margin-left:5px}
 .panel-block ul.info li{align-items: baseline;line-height: 32px;height: auto}
-.panel-block li .h{color:#666;width:35%;}
-.panel-block li .c{width: 80%; line-height: 25px;}
 .search {padding: 0px 5px;font-size:12px!important;}
 .search .block {margin-bottom:5px}
 

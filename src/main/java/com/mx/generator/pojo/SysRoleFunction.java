@@ -1,11 +1,9 @@
-package com.mx.system.model;
+package com.mx.generator.pojo;
 
-public class RoleFunction {
+import com.mx.common.pojo.BaseBean;
+
+public class SysRoleFunction extends BaseBean {
     private Integer id;
-
-    private Integer addUserId;
-
-    private Integer updateUserId;
 
     private Integer roleId;
 
@@ -17,22 +15,6 @@ public class RoleFunction {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getAddUserId() {
-        return addUserId;
-    }
-
-    public void setAddUserId(Integer addUserId) {
-        this.addUserId = addUserId;
-    }
-
-    public Integer getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(Integer updateUserId) {
-        this.updateUserId = updateUserId;
     }
 
     public Integer getRoleId() {

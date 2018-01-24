@@ -1,8 +1,13 @@
 package com.mx.system.dao;
 
+import com.mx.generator.pojo.SysFunction;
+import com.mx.generator.pojo.SysRole;
+import com.mx.generator.pojo.SysRoleFunction;
 import com.mx.system.model.Function;
+import com.mx.system.model.Role;
 import com.mx.system.model.RoleFunction;
 import com.mx.system.model.UserRole;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,7 +16,29 @@ import java.util.List;
  *
  * @author mx
  */
+@Repository
 public interface RoleFunctionMapper {
+
+    /**
+     * 获得角色列表
+     *
+     * @return list
+     */
+    List<SysRole> getRoleList();
+
+    /**
+     * 编辑角色
+     *
+     * @param role 角色信息
+     */
+    void editRole(SysRole role);
+
+    /**
+     * 添加角色
+     *
+     * @param role 角色信息
+     */
+    void addRole(SysRole role);
 
     /**
      * 获得角色权限 str
@@ -26,34 +53,14 @@ public interface RoleFunctionMapper {
      *
      * @param list 角色list
      */
-    void addRoleFunctions(List<RoleFunction> list);
-
-    /**
-     * 删除角色的权限
-     *
-     * @param roleId 角色id
-     */
-    void deleteRoleFunctionsByRoleId(Integer roleId);
+    void addRoleFunctions(List<SysRoleFunction> list);
 
     /**
      * 获得菜单列表
      *
-     * @param functionType 0菜单 1权限 null全部
+     * @param type 0菜单 1权限 null全部
      * @return list
      */
-    List<Function> getFunctionList(Integer functionType);
+    List<SysFunction> getFunctionList(Integer type);
 
-    /**
-     * 删除用户角色
-     *
-     * @param id 角色id
-     */
-    void deleteUserRole(Integer id);
-
-    /**
-     * 添加用户角色list
-     *
-     * @param userRoleList 角色ist
-     */
-    void addUserRoles(List<UserRole> userRoleList);
 }

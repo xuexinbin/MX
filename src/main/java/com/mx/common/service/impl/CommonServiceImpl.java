@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @Transactional
@@ -62,6 +63,11 @@ public class CommonServiceImpl implements ICommonService {
         String conditions = column + " IN (" + key + ")";
         map.put("conditions", conditions);
         return commonDao.deleteRows(map);
+    }
+
+    @Override
+    public int deleteRows(String tableName, String column, Integer key) {
+        return deleteRows(tableName, column, key.toString());
     }
 
     @Override
