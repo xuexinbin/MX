@@ -12,6 +12,16 @@
        ${_parameter}
     </update>
 
+    <!-- 更新表格的deletef为1 -->
+    <update id="updateDeletef" parameterType="map">
+        UPDATE
+          ${tableName}
+        SET
+          deletef = 1
+        WHERE
+          id IN (${ids})
+    </update>
+
     <!-- 删除表数据 -->
     <delete id="deleteRows" parameterType="map">
         DELETE FROM

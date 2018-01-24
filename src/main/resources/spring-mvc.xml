@@ -35,7 +35,13 @@
             </list>
         </property>
     </bean>
-    
+
+    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes" value="application/json;charset=UTF-8" />
+        <property name="objectMapper" ref="jsonObjectMapper" />
+    </bean>
+    <bean id="jsonObjectMapper" class="com.mx.common.util.json.JsonObjectMapper"></bean>
+
     <!-- 定义跳转的文件的前后缀 ，视图模式controller配置-->  
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
         <property name="prefix" value="/WEB-INF/jsp/" />  

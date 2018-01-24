@@ -3,17 +3,25 @@
 <div class="bjui-pageHeader" style="background-color:#fefefe; border-bottom:none;">
     <form data-toggle="ajaxsearch" data-options="{searchDatagrid:$.CurrentNavtab.find('#user_grid')}">
         <fieldset>
-            <legend style="font-weight:normal;">高级搜索：</legend>
+            <legend style="font-weight:normal;">搜索</legend>
             <div style="margin:0; padding:1px 5px 5px;">
-                <span>用户名：</span>
-                <input type="text" name="name" class="form-control" size="15">
+                <span>模糊匹配：</span>
+                <input type="text" name="likeStr" class="form-control" size="25" placeholder="工号／姓名／登录名／手机号">
 
-                <span>所属部门：</span>
-                <input type="text" name="obj.name" class="form-control" size="15">
+                <span>&nbsp;所属部门：</span>
+                <select id="user_departmentId" name="departmentId" data-toggle="selectpicker"
+                        data-width="160">
+                </select>
 
-                <div class="btn-group">
-                    <button type="submit" class="btn-green" data-icon="search">开始搜索！</button>
-                    <button type="reset" class="btn-orange" data-icon="times">重置</button>
+                <span>&nbsp;状态：</span>
+                <select name="enablef" data-toggle="selectpicker" data-width="80">
+                    <option value="" selected="">全部</option>
+                    <option value="0">启用</option>
+                    <option value="1">禁用</option>
+                </select>
+                <div class="btn-group" style="float: right">
+                    <button type="submit" class="btn-green" data-icon="search">查询</button>
+                    <button type="button" class="btn-orange" data-toggle="reset" data-icon="undo">重置</button>
                 </div>
             </div>
         </fieldset>
@@ -25,10 +33,22 @@
 
 <script type="text/javascript">
     //@ sourceURL=user.js
-
     $(function () {
         void function () {
             var columns = [
+                {
+                    name: 'avatar',
+                    label: '头像',
+                    align: 'center',
+                    width: 80,
+                    quicksort: false,
+                    render: function (value, data) {
+                        if (value == null || value == "") {
+                            return '<i class="fa fa-picture-o" style="font-size: 37px;color: rgba(217, 231, 242, 0.58);"></i>';
+                        }
+                        return '<img src="' + value + '" height="40" width="40" style="border-radius:3px;border: 1px solid #ddd;"/>';
+                    }
+                },
                 {
                     name: 'number',
                     label: '编号',
@@ -42,17 +62,8 @@
                     align: 'center'
                 },
                 {
-                    name: 'departmentId',
-                    label: '所属部门',
-                    width: 150,
-                    align: 'center',
-                    render: function (value, data) {
-                        return data.departmentName;
-                    }
-                },
-                {
-                    name: 'phone',
-                    label: '手机',
+                    name: 'userName',
+                    label: '登录名',
                     width: 150,
                     align: 'center'
                 },
@@ -65,10 +76,31 @@
                     items: [{0: '女'}, {1: '男'}]
                 },
                 {
+                    name: 'departmentId',
+                    label: '所属部门',
+                    width: 150,
+                    align: 'center',
+                    render: function (value, data) {
+                        return data.departmentName == null ? "无" : data.departmentName;
+                    }
+                },
+                {
+                    name: 'phone',
+                    label: '手机',
+                    width: 150,
+                    align: 'center'
+                },
+                {
                     name: 'joinTime',
                     label: '入职时间',
                     width: 150,
-                    align: 'center'
+                    align: 'center',
+                    render: function (value, data) {
+                        if (value == null || value == "") {
+                            return;
+                        }
+                        return new Date(value).formatDate('yyyy-MM-dd');
+                    }
                 },
                 {
                     name: 'memo',
@@ -77,7 +109,7 @@
                     align: 'center'
                 },
                 {
-                    name: 'enable',
+                    name: 'enablef',
                     label: '状态',
                     width: 70,
                     align: 'center',
@@ -101,9 +133,10 @@
             ];
 
             var addFunction = function (selectedId) {
+                var isEdit = typeof selectedId === "string" && selectedId != null ? true : false;
                 var postData = {};
                 var title = "";
-                if (typeof selectedId === "string" && selectedId != null) {
+                if (isEdit) {
                     postData = {id: selectedId}
                     title = '编辑用户信息';
                 } else {
@@ -120,81 +153,61 @@
                     height: 500,
                     url: 'system/user/editUserDialog',
                     onLoad: function ($dialog) {
-                        // 头像文件选中
-                        var uploader = WebUploader.create({
-                            auto: false,
+                        // 图片上传插件
+                        var uploader = $("#editUserDialog_avatarPicker").initUpload({
                             server: 'system/user/editUser',
-                            pick: '#user_avatarPicker',
-                            swf: BJUI.PLUGINPATH + 'webuploader/Uploader.swf',
-                            duplicate: false,
-                            mxUpload: true
-                        });
-                        // 当有文件添加进来的时候
-                        uploader.on('fileQueued', function (file) {
-                            if (file.size > 1024*1024) {
-                                BJUI.alertmsg('error', '图片不能超过1M，请重新选择！')
-                                return;
+                            thumbPick: "#editUserDialog_avatar",
+                            uploadBeforeSend: function (block, data) {
+                                data.id = $("#editUserDialog_id").val();
+                                data.trueName = $("#editUserDialog_trueName").val();
+                                data.number = $("#editUserDialog_number").val();
+                                data.sex = $("#editUserDialog_sex").val();
+                                data.birthday = $("#editUserDialog_birthday").val();
+                                data.phone = $("#editUserDialog_phone").val();
+                                data.mail = $("#editUserDialog_mail").val();
+                                data.joinTime = $("#editUserDialog_joinTime").val();
+                                data.departmentId = $("#editUserDialog_departmentId").val();
+                                data.roleIds = $("#editUserDialog_roleIds").val();
+                                data.userName = $("#editUserDialog_userName").val();
+                                data.password = $("#editUserDialog_password").val();
+                                data.enablef = $("#editUserDialog_enablef0")[0].checked ? 0 : 1;
+                                data.memo = $("#editUserDialog_memo").val();
+                            },
+                            uploadSuccess: function (file, response) {
+                                BJUI.alertmsg('ok', MX.msg.saveSuccess, {});
+                                $("#editUserDialog_form").setChanged(false);
+                                $("#user_grid").datagrid('refresh', true);
                             }
-                            // 判断文件格式：使用accept影响打开选中框的速度
-                            var imgReg = /^(jpg|jpeg|png|bmp)$/;
-                            if (!imgReg.test(file.ext)) {
-                                BJUI.alertmsg('error', '请选择图片文件！')
-                                return;
-                            }
-                            // 创建缩略图
-                            uploader.makeThumb(file, function (error, src) {
-                                if (error) {
-                                    $("#user_avatar").html('<span>预览失败</span>');
-                                    return;
-                                }
-                                $("#user_avatar").html('<img>');
-                                $("#user_avatar img").attr("src", src);
-                            }, 100, 100);
+                        })
+
+                        // 密码md5加密
+                        $("#editUserDialog_password").on("change", function () {
+                            this.value = hex_md5(this.value);
                         });
 
-                        uploader.on("uploadComplete", function () {
-                            uploader.reset()
-                        });
-
-                        uploader.on( 'uploadBeforeSend', function( block, data ) {
-                            // block为分块数据。
-
-                            // file为分块对应的file对象。
-                            var file = block.file;
-
-
-                            // 修改data可以控制发送哪些携带数据。
-                            data.uid = 123;
-                            data.a = 11;
-                            data.b = 22;
-                            data.c = 33;
-                        });
-
-                        uploader.on( 'startUpload', function( block, data ) {
-                            // block为分块数据。
-
-                            // file为分块对应的file对象。
-                            //var file = block.file;
-
-
-                            // 修改data可以控制发送哪些携带数据。
-                            //data.uid = 123;
-                        });
                         // 保存用户
                         $("#editUserDialog_saveBtn").click(function () {
-
-                            if (uploader.getFiles().length > 0) {
+                            // 校验失败 return
+                            if (!$('#editUserDialog_form').isValid()) {
+                                return;
+                            }
+                            // 数据未修改 return
+                            if (!$("#editUserDialog_form").formHasChanged()) {
+                                BJUI.alertmsg('info', MX.msg.dataNoChange, {});
+                                return;
+                            }
+                            // 存在需要上传的文件：使用webupload上传 否则ajaxform
+                            if (uploader.getFiles("inited").length > 0) {
                                 uploader.upload();
                             } else {
-                                $("#editUserDialog_password").val(hex_md5($("#editUserDialog_password").val()));
                                 BJUI.ajax('ajaxform', {
                                     url: 'system/user/editUser',
                                     form: $.CurrentDialog.find('form'),
                                     validate: true,
                                     loadingmask: true,
                                     okCallback: function (json, options) {
-                                        // 提示成功，关闭dialog
-                                        BJUI.alertmsg('ok', '保存成功！', {});
+                                        BJUI.alertmsg('ok', MX.msg.saveSuccess, {});
+                                        $("#editUserDialog_form").setChanged(false);
                                         $("#user_grid").datagrid('refresh', true);
                                     }
                                 })
@@ -202,7 +215,7 @@
 
                         });
 
-                        if (selectedId != null) {
+                        if (isEdit) {
                             // 获得员工信息
                             BJUI.ajax('doajax', {
                                 url: 'system/user/getUserInfoById',
@@ -211,42 +224,63 @@
                                 },
                                 loadingmask: true,
                                 okCallback: function (res, options) {
+                                    if (res == null && res.userInfo == null) {
+                                        return;
+                                    }
                                     var userInfo = res.userInfo;
+                                    // 初始化下拉框
+                                    $('#editUserDialog_departmentId').initSelect(res.deptList);
+                                    $('#editUserDialog_roleIds').initSelect(res.roleList);
+
                                     // 头像
                                     if (userInfo.avatar != null && userInfo.avatar != "") {
-                                        // r=Math.random() 去缓存
-                                        $("#editUserDialog_avatar")[0].setAttribute("src", "/hr/getImg?url=" + userInfo.avatar + "&r=" + Math.random())
+                                        $("#editUserDialog_avatar").html("<img src='" + userInfo.avatar + "' height='100' width='100'/>")
                                     }
                                     // 员工信息赋值
                                     $("#editUserDialog_id").val(userInfo.id);
                                     // 真实姓名
                                     $("#editUserDialog_trueName").val(userInfo.trueName);
-                                    // 邮箱
-                                    $("#editUserDialog_mail").val(userInfo.mail);
-                                    // 性别
-                                    $("#editUserDialog_sex").selectpicker('val', userInfo.sex);
-                                    // 手机
-                                    $("#editUserDialog_phone").val(userInfo.phone);
                                     // 工号
                                     $("#editUserDialog_number").val(userInfo.number);
+                                    // 性别
+                                    $("#editUserDialog_sex").selectpicker('val', userInfo.sex);
+                                    // 出生日期
+                                    if (userInfo.birthday != null) {
+                                        $("#editUserDialog_birthday").val(new Date(userInfo.birthday).formatDate('yyyy-MM-dd'));
+                                    }
+                                    // 手机
+                                    $("#editUserDialog_phone").val(userInfo.phone);
+                                    // 邮箱
+                                    $("#editUserDialog_mail").val(userInfo.mail);
                                     // 入职时间
                                     if (userInfo.joinTime != null) {
                                         $("#editUserDialog_joinTime").val(new Date(userInfo.joinTime).formatDate('yyyy-MM-dd'));
+                                    }
+                                    // 部门
+                                    $("#editUserDialog_departmentId").selectpicker("val", userInfo.departmentId);
+                                    // 所属角色
+                                    if (userInfo.roleIds != null) {
+                                        $("#editUserDialog_roleIds").selectpicker('val', userInfo.roleIds.split(","));
                                     }
                                     // 登录用户名
                                     $("#editUserDialog_userName").val(userInfo.userName);
                                     // 登录密码
                                     $("#editUserDialog_password").val(userInfo.password);
-                                    // 部门
-                                    $("#editUserDialog_departmentId").val(userInfo.departmentId);
                                     // 启用
                                     $("#editUserDialog_enablef").val(userInfo.enablef);
                                     userInfo.enablef == 0 ? $("#editUserDialog_enablef0").iCheck('check')
                                         : $("#editUserDialog_enablef1").iCheck('check');
                                     // 备注
                                     $("#editUserDialog_memo").val(userInfo.memo);
+
+                                    // 是否修改校验
+                                    $("#editUserDialog_form").formChangedCheck();
                                 }
                             });
+                        } else {
+                            $('#editUserDialog_departmentId').loadSelect("system/department/getDepartmentList");
+                            $('#editUserDialog_roleIds').loadSelect("system/user/getRoleList");
+                            $("#editUserDialog_form").formChangedCheck();
                         }
 
                     }
@@ -270,10 +304,9 @@
                 addName: "新增用户",
                 delName: "删除用户",
                 addFunction: addFunction,
-                delUrl: 'system/department/deleteDepartmentByIds',
+                delUrl: 'system/user/deleteUserByIds',
                 delType: 'POST',
                 delPK: 'id',
-                editUrl: 'system/department/editDepartment',
                 paging: {pageSize: 30},
                 showCheckboxcol: true,
                 linenumberAll: true,
@@ -281,17 +314,18 @@
                 dataUrl: 'system/user/getUserGridData',
                 columns: columns,
                 //tableWidth: '100%',
-                //toolbarCustom: toolBarHtml,
                 afterSave: function ($trs, datas) {
                     // 提示成功，关闭dialog
                     BJUI.alertmsg('ok', '保存成功！', {});
                 },
                 afterLoad: function () {
-                    //console.log(99999);
                 }
             });
 
-            //点击打开编辑画面
+            // 初始化下拉框
+            $('#user_departmentId').loadSelect("system/department/getSearhDepartmentList");
+
+            // 点击打开编辑画面事件
             $.CurrentNavtab.on("click", ".user-editUserDialog", editFunction);
         }();
     });

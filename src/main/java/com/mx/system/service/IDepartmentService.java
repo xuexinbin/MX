@@ -1,6 +1,5 @@
 package com.mx.system.service;
 
-import com.mx.generator.pojo.SysDepartment;
 import com.mx.system.model.Department;
 
 import java.util.List;

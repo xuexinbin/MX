@@ -5,19 +5,21 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+
 @Repository
 public interface ICommonDao {
 
     /**
      * 通过sql操作mysql
      *
-     * @param sql
-     * @return
+     * @param sql sql
+     * @return int
      */
     int operateBySql(String sql);
 
     /**
      * 删除表数据
+     *
      * @param map 表名；列；条件
      * @return 删除数量
      */
@@ -25,8 +27,17 @@ public interface ICommonDao {
 
     /**
      * 获得select下拉列表
+     *
      * @param map tableName 表名；text 显示值；value 值；conditions 查询条件
      * @return list
      */
     List<SelectBean> getSelectList(HashMap<String, Object> map);
+
+    /**
+     * 更新表格的deletef为1
+     *
+     * @param map 表名；条件
+     * @return int
+     */
+    int updateDeletef(HashMap<String, String> map);
 }

@@ -3,7 +3,6 @@ package com.mx.system.model;
 import com.mx.generator.pojo.SysUser;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class User extends SysUser {
@@ -29,11 +28,6 @@ public class User extends SysUser {
      * 角色名称
      */
     private String roleName;
-
-    /**
-     * 角色  ,拼接
-     */
-    private String roles;
 
     /**
      * 模糊查询：工号／姓名／ 登录名／手机号
@@ -74,14 +68,6 @@ public class User extends SysUser {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
     }
 
     public String getLikeStr() {

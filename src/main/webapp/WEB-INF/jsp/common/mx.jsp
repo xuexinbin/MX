@@ -74,8 +74,12 @@
     <link href="B-JUI/plugins/uploadify/css/uploadify.css" rel="stylesheet">
     <script src="B-JUI/plugins/uploadify/scripts/jquery.uploadify.min.js"></script>
     <script src="B-JUI/plugins/download/jquery.fileDownload.js"></script>
-    <script src='js/plugins/md5.js'></script>
+    <script src='js/common/plugins/md5.js'></script>
+
+    <script src="js/common/common.js"></script>
     <script src="js/mx.js"></script>
+    <script src="js/common/extend.js"></script>
+    <script src="js/common/event.js"></script>
     <link href="css/common.css" rel="stylesheet">
     <!-- init -->
     <script type="text/javascript">
@@ -103,6 +107,7 @@
                 debug: true,    // [可选]调试模式 [true|false，默认false]
                 theme: 'blue' // 若有Cookie['bjui_theme'],优先选择Cookie['bjui_theme']。皮肤[五种皮肤:default, orange, purple, blue, red, green]
             });
+
 
         })
 

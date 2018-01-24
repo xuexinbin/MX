@@ -14,7 +14,7 @@
         <!-- 指定生成的java文件的编码,没有直接生成到项目时中文可能会乱码 -->
         <property name="javaFileEncoding" value="UTF-8"/>
         <!-- 这里的type里写的是你的实现类的类全路径 -->
-        <commentGenerator type="com.mx.common.util.MxCommentGenerator">
+        <commentGenerator type="com.mx.common.util.other.MxCommentGenerator">
         </commentGenerator>
 
 

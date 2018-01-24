@@ -1,24 +1,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="bjui-pageContent">
     <form id="editUserDialog_form" class="bjui-row col-2" enctype="multipart/form-data">
-        <input id="editUserDialog_id" name="editUserDialog_id" type="hidden">
+        <input id="editUserDialog_id" name="id" type="hidden">
         <div id="editUserDialog_pic">
             <label class="row-label">头像图片：</label>
             <div class="row-input" style="width: 100px;">
-                <div id="user_avatar" class="file-item thumbnail" style="margin-bottom: 0px;width: 80px;height: 80px;">
+                <div id="editUserDialog_avatar" class="file-item thumbnail" style="margin-bottom: 0px;width: 80px;height: 80px;">
+
                     <i class="fa fa-picture-o"
                        style="padding: 5px 3px;font-size: 60px;color: rgba(217, 231, 242, 0.58);"></i>
+                    <img>
                 </div>
             </div>
             <div class="row-input">
-                <div id="user_avatarPicker"><i class="fa fa-file-image-o"></i>&nbsp;选择图片</div>
+                <div id="editUserDialog_avatarPicker"><i class="fa fa-file-image-o"></i>&nbsp;选择图片</div>
             </div>
             <br>
         </div>
 
         <label for="editUserDialog_trueName" class="row-label">真实姓名：</label>
-        <div class="row-input">
-            <input id="editUserDialog_trueName" name="trueName" type="text" data-rule="length(2~6)"
+        <div class="row-input required">
+            <input id="editUserDialog_trueName" name="trueName" type="text" data-rule="required;length(2~6)"
                    placeholder="请输入真实姓名">
         </div>
 
@@ -67,7 +69,7 @@
 
         <label class="row-label">所属角色：</label>
         <div class="row-input">
-            <select id="editUserDialog_Role" name="roleId" data-toggle="selectpicker"
+            <select id="editUserDialog_roleIds" name="roleIds" data-toggle="selectpicker" multiple
                     data-width="160">
             </select>
         </div>

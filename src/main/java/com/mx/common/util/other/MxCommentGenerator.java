@@ -1,4 +1,4 @@
-package com.mx.common.util;
+package com.mx.common.util.other;
 
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
+import com.mx.common.util.CommonUtil;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;

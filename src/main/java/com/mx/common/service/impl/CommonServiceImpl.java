@@ -1,15 +1,14 @@
 package com.mx.common.service.impl;
 
-import com.mx.common.pojo.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mx.common.constant.ErrorConstant;
 import com.mx.common.dao.ICommonDao;
 import com.mx.common.exception.WebBusinessException;
+import com.mx.common.pojo.*;
 import com.mx.common.service.ICommonService;
 import com.mx.common.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +65,14 @@ public class CommonServiceImpl implements ICommonService {
     }
 
     @Override
+    public int updateDeletef(String tableName, String ids) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("tableName", tableName);
+        map.put("ids", ids);
+        return commonDao.updateDeletef(map);
+    }
+
+    @Override
     public int deleteRows(String tableName, String conditions) {
         HashMap<String, String> map = new HashMap<>();
         map.put("tableName", tableName);
@@ -91,7 +98,7 @@ public class CommonServiceImpl implements ICommonService {
         map.put("value", value);
         map.put("conditions", conditions);
         List<SelectBean> list = commonDao.getSelectList(map);
-        if (list.size() ==0) {
+        if (list.size() == 0) {
             return "[]";
         }
         StringBuilder json = new StringBuilder();

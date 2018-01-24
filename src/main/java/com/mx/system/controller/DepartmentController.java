@@ -94,6 +94,20 @@ public class DepartmentController {
     }
 
     /**
+     * 获得部门下拉列表
+     *
+     * @return json
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getSearhDepartmentList", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
+    public String getSearhDepartmentList() {
+        String conditions = "enable=0";
+        List<SelectBean> list = commonService.getSelectList("sys_department", "name", "id", conditions);
+        list.add(0, new SelectBean("全部", ""));
+        return JSON.toJSONString(list);
+    }
+
+    /**
      * 获得用户下拉列表
      *
      * @return json

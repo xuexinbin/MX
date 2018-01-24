@@ -1,12 +1,12 @@
 package com.mx.system.dao;
 
 
-import com.mx.generator.pojo.SysDepartment;
-import com.mx.system.model.Department;
 import com.mx.system.model.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户管理 Dao
@@ -17,63 +17,37 @@ import java.util.List;
 public interface UserMapper {
 
     /**
-     * 获得部门列表grid数据
-     *
-     * @param department 查询信息
-     * @return list
-     */
-    List<Department> getDepartmentGridData(Department department);
-
-    /**
-     * 新增部门
-     *
-     * @param list 部门信息list
-     */
-    void addDepartment(List<SysDepartment> list);
-
-    /**
-     * 编辑部门
-     *
-     * @param dept 部门信息
-     */
-    void editDepartment(SysDepartment dept);
-
-    /**
-     * 删除部门
-     *
-     * @param id 部门id
-     * @return id
-     */
-    int delDepartmentById(int id);
-
-
-    /**
-     * 删除部门
-     * @param ids
-     */
-    void deleteDepartmentByIds(String ids);
-
-    /**
      * 获得用户管理grid数据
-     * @param user 查询信息
+     *
+     * @param map 查询信息
      * @return list
      */
-    List<User> getUserGridData(User user);
+    List<User> getUserGridData(Map<String,String> map);
 
     /**
      * 添加用户
+     *
      * @param user 用户信息
      */
     void addUser(User user);
 
     /**
      * 编辑用户
+     *
      * @param user 用户信息
      */
     void editUser(User user);
 
     /**
+     * 编辑用户头像地址
+     *
+     * @param map 头像地址，用户id
+     */
+    void editUserAvatar(HashMap<String, Object> map);
+
+    /**
      * 获得用户详细信息
+     *
      * @param id 用户id
      * @return user
      */

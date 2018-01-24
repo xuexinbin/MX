@@ -21,12 +21,9 @@ public class GridUtil {
      */
     public static List getGridInsertList(List<? extends BaseBean> list) {
         List addList = new ArrayList<>();
-        Integer userId = SessionManager.getLoginUserId();
         //判断是否为新增数据
         list.forEach(bean -> {
-            //bean.setUpdateUserId(userId);
             if (bean.isAddFlag()) {
-              //  bean.setAddUserId(userId);
                 addList.add(bean);
             }
         });
@@ -54,12 +51,9 @@ public class GridUtil {
      */
     public static List getGridUpdateList(List<? extends BaseBean> list) {
         List updateList = new ArrayList<>();
-        Integer userId = SessionManager.getLoginUserId();
         //判断是否为编辑数据
         list.forEach(bean -> {
-//            bean.setUpdateUserId(userId);
             if (!bean.isAddFlag()) {
-//                bean.setAddUserId(userId);
                 updateList.add(bean);
             }
         });

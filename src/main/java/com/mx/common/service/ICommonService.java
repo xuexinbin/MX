@@ -10,10 +10,10 @@ public interface ICommonService {
     /**
      * 更新多行数据
      *
-     * @param tableId
-     * @param conditionCol
-     * @param updateData
-     * @return
+     * @param tableId      表名
+     * @param conditionCol 条件列
+     * @param updateData   更新数据
+     * @return int
      */
     int updateRows(String tableId, String conditionCol, String updateData);
 
@@ -37,11 +37,20 @@ public interface ICommonService {
      * 删除表数据
      *
      * @param tableName 表名
-     * @param column    条件列名(和表字段相同)
+     * @param column    条件列名(和表字段相同): 一个条件
      * @param key       字符串(逗号拼接1,2,3)
-     * @return
+     * @return int
      */
     int deleteRows(String tableName, String column, String key);
+
+    /**
+     * 更新表格的deletef为1
+     *
+     * @param tableName  表名
+     * @param ids 条件
+     * @return int
+     */
+    int updateDeletef(String tableName, String ids);
 
     /**
      * 删除表数据
@@ -54,9 +63,10 @@ public interface ICommonService {
 
     /**
      * 获得select下拉列表
-     * @param tableName 表名
-     * @param text 显示值->列名
-     * @param value 值->列名
+     *
+     * @param tableName  表名
+     * @param text       显示值->列名
+     * @param value      值->列名
      * @param conditions 查询条件->为空：无条件查询
      * @return list
      */
@@ -64,9 +74,10 @@ public interface ICommonService {
 
     /**
      * 获得select下拉列表
-     * @param tableName 表名
-     * @param text 显示值->列名
-     * @param value 值->列名
+     *
+     * @param tableName  表名
+     * @param text       显示值->列名
+     * @param value      值->列名
      * @param conditions 查询条件->为空：无条件查询
      * @return json ->eg：[{0:aa},{1:bb}]
      */
