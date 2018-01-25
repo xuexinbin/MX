@@ -4,8 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.mx.common.service.ICommonService;
 import com.mx.generator.pojo.SysFunction;
 import com.mx.generator.pojo.SysRole;
-import com.mx.system.model.Function;
-import com.mx.system.model.Role;
 import com.mx.system.service.IRoleFunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

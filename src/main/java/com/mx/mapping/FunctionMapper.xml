@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.system.dao.FunctionMapper">
+    <resultMap id="FunctionResultMap" type="com.mx.generator.pojo.SysFunction">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 获得菜单或功能列表grid数据 -->
+    <select id="getFunctionGridData" resultMap="FunctionResultMap" parameterType="map">
+        SELECT
+        id,
+        parent_id,
+        name,
+        url,
+        icon,
+        type,
+        sort
+        FROM
+        sys_function
+        <where>
+            <if test="type !=null">
+                type = #{type}
+            </if>
+        </where>
+        ORDER BY sort
+    </select>
+
+    <!-- 编辑菜单和功能 -->
+    <update id="editFunction" parameterType="com.mx.generator.pojo.SysFunction">
+        UPDATE
+          sys_function
+        SET
+          name = #{name},
+          parent_id = #{parentId},
+          url = #{url},
+          icon = #{icon},
+          type = #{type},
+          sort = #{sort},
+          update_user_id = #{updateUserId}
+        WHERE
+          id = #{id}
+    </update>
+
+    <!-- 新增菜单和功能 -->
+    <insert id="addFunction" parameterType="java.util.List">
+        INSERT INTO
+        sys_function
+        (name,
+        parent_id,
+        url,
+        icon,
+        type,
+        sort,
+        update_user_id,
+        add_user_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.name},
+            #{item.parentId},
+            #{item.url},
+            #{item.icon},
+            #{item.type},
+            #{item.sort},
+            #{item.updateUserId},
+            #{item.addUserId})
+        </foreach>
+    </insert>
+</mapper>

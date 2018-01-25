@@ -12,6 +12,8 @@
     <title>MX管理系统</title>
     <meta name="Keywords" content="MX"/>
     <meta name="Description" content="专业管理系统"/>
+    <!-- 共通变量定义 -->
+    <script src="js/common/common.js"></script>
     <!-- bootstrap - css -->
     <link href="B-JUI/themes/css/bootstrap.css" rel="stylesheet">
     <!-- core - css -->
@@ -76,7 +78,6 @@
     <script src="B-JUI/plugins/download/jquery.fileDownload.js"></script>
     <script src='js/common/plugins/md5.js'></script>
 
-    <script src="js/common/common.js"></script>
     <script src="js/mx.js"></script>
     <script src="js/common/extend.js"></script>
     <script src="js/common/event.js"></script>

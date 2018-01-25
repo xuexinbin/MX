@@ -2,6 +2,10 @@
  * v20180120 【add】表格保存:判断数据是否修改优化
  *           【add】grid翻页判断是否有修改的数据
  *           【modify】分页数量修改页面不刷新修复
+ * v20180124 【modify】reload表格column 修改窗口大小报错bug
+ *           【add】ajax添加共通错误处理//登录超时
+ *           【modify】gird select后台返回值回调 -> 重新渲染该列  注释此方法，采取下一个方法 itemsMapper: "parentList"
+ *           【add】表格可直接返回select列的items
  *
  */
 
@@ -4519,10 +4523,15 @@
         if (typeof msg === 'string' && msg.startsWith('{')) {
             this.ajaxdone(msg.toObj())
         } else {
-            BJUI.alertmsg('error', '<div>Http status: ' + xhr.status + ' ' + xhr.statusText + '</div>' 
-                + '<div>ajaxOptions: '+ ajaxOptions +' </div>'
-                + '<div>thrownError: '+ thrownError +' </div>'
-                + '<div>'+ msg +'</div>')
+            // modify by mx for 共通错误处理 on 20180125
+            var statusMsg = MX.status[xhr.status];
+            if (statusMsg == null) {
+                statusMsg =  '<div>Http status: ' + xhr.status + ' ' + xhr.statusText + '</div>'
+                    + '<div>ajaxOptions: '+ ajaxOptions +' </div>'
+                    + '<div>thrownError: '+ thrownError +' </div>'
+                    + '<div>'+ msg +'</div>';
+            }
+            BJUI.alertmsg('error',statusMsg)
         }
         
         if (failCallback) {
@@ -8167,8 +8176,20 @@
                                 var delayRender = function(index, label, trData, n) {
                                     $.when(n.items.call(that)).done(function(item) {
                                         n.items = item
-                                        
+
                                         that.delayRender --
+                                        // modify by mx for gird select后台返回值回调 -> 重新渲染该列
+                                        /*
+                                        var itemObj = {};
+                                        for (var i=0; i<item.length; i++) {
+                                            itemObj[item[i][n.itemattr.value]] = item[i][n.itemattr.label]
+                                        }
+                                        var tds = that.$tbody.find('> tr td[data-title="' + n.label+'"]');
+                                        var datas = that.data;
+                                        for (var i=0; i<tds.length; i++) {
+                                            $(tds[i]).html("<div>"+itemObj[datas[i][n.name]]+"</div>")
+                                        }
+                                        */
                                     })
                                 }
                                 
@@ -8579,6 +8600,23 @@
                     cache     : options.cache || false,
                     dataType  : dataType,
                     okCallback: function(response) {
+                        // add by mx for 表格可直接返回select列的items
+                        if (that.options.resultType === 'many') {
+                            var cols = that.columnModel;
+                            for (var i=0; i< cols.length; i++) {
+                                var itemList = response[cols[i].itemsMapper];
+                                if (itemList != null) {
+                                    for (var j=0; j< itemList.length; j++) {
+                                        var item = {};
+                                        item[itemList[j].value] = itemList[j].text;
+                                        cols[i].items[j] = item;
+                                    }
+                                }
+                            }
+
+                            response = response["data"]
+                        }
+
                         if (dataType === 'json' || dataType === 'jsonp') {
                             tools.createTrsByData(response, refreshFlag)
                         } else if (dataType === 'text') {
@@ -10726,7 +10764,8 @@
                     if (columnModel[i] === that.linenumberColumn) {
                         dataLength == 1 && (dataLength = 2)
                         $col.width(dataLength * 15)
-                    } else if (!columnModel[i].width || columnModel[i].width === 'auto' || that.isTemplate)
+                        // modify by mx for reload表格column 修改窗口大小报错bug on 20180124
+                    } else if (columnModel[i]!=null && (!columnModel[i].width || columnModel[i].width === 'auto' || that.isTemplate))
                         $col.width('')
                 })
                 
@@ -13751,8 +13790,8 @@
         // modify by mx for 判断表格数据是否修改 on 2018/1/20
         //if (!$tr.length) {
         if (that.$tbody.find("." + that.classnames.td_changed).length < 1) {
-            that.$grid.alertmsg('info', BJUI.getRegional('datagrid.saveMsg'))
-            return
+             that.$grid.alertmsg('info', BJUI.getRegional('datagrid.saveMsg'))
+             return
         }
         if ($tr.length == 1) {
             if ($tr.hasClass(that.classnames.tr_edit))
