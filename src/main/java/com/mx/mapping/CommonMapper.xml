@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mx.common.dao.ICommonDao">
-
     <resultMap id="SelectBeanResultMap" type="com.mx.common.pojo.SelectBean">
         <result column="text" property="text" jdbcType="VARCHAR"/>
         <result column="value" property="value" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="DictionaryResultMap" type="com.mx.generator.pojo.SysDictionary">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="enablef" property="enablef" jdbcType="TINYINT"/>
     </resultMap>
 
     <!-- 执行sql字符串 -->
@@ -17,7 +24,8 @@
         UPDATE
           ${tableName}
         SET
-          deletef = 1
+          deletef = 1,
+          update_user_id = #{updateUserId}
         WHERE
           id IN (${ids})
     </update>
@@ -45,4 +53,19 @@
     </select>
 
 
+    <!-- 获得字典值列表 -->
+    <select id="getDictionaryListByType" resultMap="DictionaryResultMap">
+        SELECT
+        id,
+        type,
+        name,
+        value,
+        sort,
+        enablef
+        FROM
+        sys_dictionary
+        WHERE
+        deletef = 0
+        ORDER BY sort
+    </select>
 </mapper>

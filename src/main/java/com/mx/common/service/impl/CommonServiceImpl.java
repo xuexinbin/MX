@@ -6,13 +6,13 @@ import com.mx.common.exception.WebBusinessException;
 import com.mx.common.pojo.*;
 import com.mx.common.service.ICommonService;
 import com.mx.common.util.CommonUtil;
+import com.mx.common.util.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Service
 @Transactional
@@ -72,9 +72,10 @@ public class CommonServiceImpl implements ICommonService {
 
     @Override
     public int updateDeletef(String tableName, String ids) {
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("tableName", tableName);
         map.put("ids", ids);
+        map.put("updateUserId", SessionManager.getLoginUserId());
         return commonDao.updateDeletef(map);
     }
 

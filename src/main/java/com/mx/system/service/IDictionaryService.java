@@ -1,10 +1,12 @@
 package com.mx.system.service;
 
 
+import com.mx.generator.pojo.SysDictionary;
 import com.mx.system.model.Dictionary;
 import com.mx.system.model.MasterDictionaryEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IDictionaryService {
 
@@ -13,29 +15,19 @@ public interface IDictionaryService {
      *
      * @return list
      */
-    List<MasterDictionaryEntity> getDictionaryType();
-
-    /**
-     * 获得字典值列表
-     *
-     * @param enablef        是否有效  null全部
-     * @param dictionaryCode 字典code
-     * @return list
-     */
-    List<MasterDictionaryEntity> getDictionarysByCode(Integer enablef, String dictionaryCode);
-
-    /**
-     * 删除字典值
-     *
-     * @param ids ids
-     */
-    void deleteDictionaryById(String ids);
+    List<SysDictionary> getDictionaryType();
 
     /**
      * 编辑字典值list
      *
-     * @param list list
+     * @param json 表格json
      */
-    void editDictionary(List<Dictionary> list);
+    void editDictionary(String json);
 
+    /**
+     * 获得字典值列表
+     * @param map type
+     * @return list
+     */
+    List<SysDictionary> getDictionaryGridData(Map<String, String> map);
 }

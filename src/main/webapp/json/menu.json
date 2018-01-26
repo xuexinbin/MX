@@ -14,7 +14,7 @@
         {"id":"system-2", "name":"部门管理", "icon":"users", "target":"navtab", "url":"system/department"},
         {"id":"system-3", "name":"角色管理", "icon":"key", "target":"navtab", "url":"system/roleFunction"},
         {"id":"system-8", "name":"菜单和功能管理", "icon":"server", "target":"navtab", "url":"system/function"},
-        {"id":"system-4", "name":"数据字典", "icon":"database", "target":"navtab", "url":"dictionary/dictionary"},
+        {"id":"system-4", "name":"数据字典", "icon":"database", "target":"navtab", "url":"system/dictionary"},
         {"id":"system-5", "name":"个人设置", "icon":"user-circle-o", "target":"navtab", "url":"personalSettings/personalSettings"},
         {"id":"system-6", "name":"系统消息", "icon":"bell-o", "target":"navtab", "url":"systemMessage/systemMessage"},
         {"id":"system-7", "name":"see code", "icon":"code", "target":"navtab", "url":"systemMessage/systemMessage"}

@@ -22,7 +22,9 @@ fieldset{border-color:#c3ced5;}
 #bjui-sidenav-box > .nav > li.active > a,
 #bjui-sidenav-box > .nav > li .nav > li > a:hover,
 #bjui-sidenav-box > .nav > li .nav > li.active > a,
-#bjui-sidenav-box .nav > li.open > a{border-right-color:#16669e !important;}
+#bjui-sidenav-box .nav > li.open > a{border-left-color:#16669e !important;}
+#bjui-sidenav-box > .nav > li .nav > li.active > a > i{color:#16669e }
+
 /* ------------- bootstrap ------------- */
 .btn-default{border-color:#c3ced5;}
 .btn-default.selectpicker{background-color:#fff;}

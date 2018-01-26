@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.system.dao.DictionaryMapper">
+    <resultMap id="DictionaryResultMap" type="com.mx.generator.pojo.SysDictionary">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="enablef" property="enablef" jdbcType="TINYINT"/>
+        <result column="deletef" property="deletef" jdbcType="TINYINT"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 获得字典类列表 -->
+    <select id="getDictionaryType" resultMap="DictionaryResultMap">
+        SELECT
+            DISTINCT
+            type
+        FROM
+            sys_dictionary
+        WHERE
+            deletef = 0
+        ORDER BY
+            sort
+    </select>
+
+    <!-- 获得字典值列表 -->
+    <select id="getDictionaryGridData" resultMap="DictionaryResultMap" parameterType="map">
+        SELECT
+            id,
+            type,
+            name,
+            value,
+            sort,
+            enablef
+        FROM
+            sys_dictionary
+        WHERE
+            deletef = 0
+            <if test="type !=null and type !=''">
+                AND type = #{type}
+            </if>
+        ORDER BY sort
+    </select>
+
+    <!-- 编辑字典 -->
+    <update id="editDictionary" parameterType="com.mx.generator.pojo.SysDictionary">
+        UPDATE
+          sys_dictionary
+        SET
+          type = #{type},
+          name = #{name},
+          value = #{value},
+          sort = #{sort},
+          enablef = #{enablef},
+          update_user_id = #{updateUserId}
+        WHERE
+          id = #{id}
+    </update>
+
+    <!-- 新增字典项 -->
+    <insert id="addDictionary" parameterType="java.util.List">
+        INSERT INTO
+        sys_dictionary
+        (type,
+        name,
+        value,
+        sort,
+        enablef,
+        update_user_id,
+        add_user_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.type},
+            #{item.name},
+            #{item.value},
+            #{item.sort},
+            #{item.enablef},
+            #{item.updateUserId},
+            #{item.addUserId})
+        </foreach>
+    </insert>
+</mapper>

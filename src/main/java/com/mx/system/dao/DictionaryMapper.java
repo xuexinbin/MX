@@ -1,17 +1,18 @@
 package com.mx.system.dao;
 
 
-import com.mx.system.model.Dictionary;
-import com.mx.system.model.MasterDictionaryEntity;
+import com.mx.generator.pojo.SysDictionary;
+import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 字典Dao
  *
  * @author mx
  */
+@Repository
 public interface DictionaryMapper {
 
     /**
@@ -19,34 +20,27 @@ public interface DictionaryMapper {
      *
      * @return list
      */
-    List<MasterDictionaryEntity> getDictionaryType();
-
-    /**
-     * 获得字典值列表
-     *
-     * @param map map
-     * @return list
-     */
-    List<MasterDictionaryEntity> getDictionarysByCode(HashMap<String, Object> map);
-
-    /**
-     * 删除字典值
-     *
-     * @param map map
-     */
-    void deleteDictionaryById(HashMap<String, Object> map);
+    List<SysDictionary> getDictionaryType();
 
     /**
      * 编辑字典值
      *
      * @param dictionary 字典信息
      */
-    void editDictionary(Dictionary dictionary);
+    void editDictionary(SysDictionary dictionary);
 
     /**
      * 添加字典值
      *
      * @param list 字典list
      */
-    void addDictionary(List<Dictionary> list);
+    void addDictionary(List<SysDictionary> list);
+
+    /**
+     * 获得字典值列表
+     *
+     * @param map name
+     * @return list
+     */
+    List<SysDictionary> getDictionaryGridData(Map<String, String> map);
 }

@@ -6,6 +6,7 @@
  *           【add】ajax添加共通错误处理//登录超时
  *           【modify】gird select后台返回值回调 -> 重新渲染该列  注释此方法，采取下一个方法 itemsMapper: "parentList"
  *           【add】表格可直接返回select列的items
+ *           【add】刷新方法，重载postData {xx:xx, filterFlag:filterFlag}
  *
  */
 
@@ -9957,7 +9958,11 @@
     
     Datagrid.prototype.refresh = function(filterFlag) {
         var that = this, options = that.options, tools = that.tools, isDom = that.isDom, pageInfo = BJUI.pageInfo, paging = that.paging, postData = {}
-        
+        // add by mx for 刷新方法，重载postData on 20180126
+        if (typeof filterFlag === "object") {
+            options.postData = filterFlag;
+            filterFlag = filterFlag.filterFlag;
+        }
         if (!options.dataUrl) {
             if (options.data && options.data.length) {
                 tools.initTbody(that.allData, true)

@@ -22,7 +22,8 @@ fieldset{border-color:#c7bbd8;}
 #bjui-sidenav-box > .nav > li.active > a,
 #bjui-sidenav-box > .nav > li .nav > li > a:hover,
 #bjui-sidenav-box > .nav > li .nav > li.active > a,
-#bjui-sidenav-box .nav > li.open > a{border-right-color:#573e7e !important;}
+#bjui-sidenav-box .nav > li.open > a{border-left-color:#573e7e !important;}
+#bjui-sidenav-box > .nav > li .nav > li.active > a > i{color:#573e7e }
 /* ------------- bootstrap ------------- */
 .btn-default{border-color:#c7bbd8;}
 .btn-default.selectpicker{background-color:#fff;}

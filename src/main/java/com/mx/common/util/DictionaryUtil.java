@@ -1,7 +1,7 @@
 package com.mx.common.util;
 
-import com.mx.common.dao.CommonMapper;
-import com.mx.system.model.MasterDictionaryEntity;
+import com.mx.common.dao.ICommonDao;
+import com.mx.generator.pojo.SysDictionary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class DictionaryUtil {
     private volatile static DictionaryUtil dictionaryUtil;
 
-    private static List<MasterDictionaryEntity> dictionaryList;
+    private static List<SysDictionary> dictionaryList;
 
     @PostConstruct
     public void init() {
@@ -21,24 +21,25 @@ public class DictionaryUtil {
     }
 
     @Autowired
-    CommonMapper commonMapper;
+    ICommonDao commonDao;
 
     /**
      * 获取字典列表
+     *
      * @param enablef 0有效 1失效 2全部
-     * @param dictionaryCode 字典分类编码
+     * @param type    字典分类编码
      * @return 字典列表
      */
-    public static List<MasterDictionaryEntity> getDictionaryListByCode(Integer enablef, String dictionaryCode) {
+    public static List<SysDictionary> getDictionaryListByCode(Integer enablef, String type) {
         if (dictionaryList == null) {
             // 获得字典列表
-            dictionaryList = dictionaryUtil.commonMapper.getDictionaryListByCode();
+            dictionaryList = dictionaryUtil.commonDao.getDictionaryListByType();
         }
 
-        ArrayList<MasterDictionaryEntity> resList = new ArrayList<>();
+        ArrayList<SysDictionary> resList = new ArrayList<>();
         // 遍历过滤
-        for (MasterDictionaryEntity item : dictionaryList) {
-            if ((int)item.getEnablef() == enablef && dictionaryCode.equals(item.getDictionaryCode())) {
+        for (SysDictionary item : dictionaryList) {
+            if ((int) item.getEnablef() == enablef && type.equals(item.getType())) {
                 resList.add(item);
             }
         }
@@ -50,6 +51,6 @@ public class DictionaryUtil {
      */
     public static void refreshDictionaryList() {
         // 获得字典列表
-        dictionaryList = dictionaryUtil.commonMapper.getDictionaryListByCode();
+        dictionaryList = dictionaryUtil.commonDao.getDictionaryListByType();
     }
 }

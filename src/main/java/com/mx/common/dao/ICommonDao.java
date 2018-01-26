@@ -1,6 +1,7 @@
 package com.mx.common.dao;
 
 import com.mx.common.pojo.SelectBean;
+import com.mx.generator.pojo.SysDictionary;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -36,8 +37,15 @@ public interface ICommonDao {
     /**
      * 更新表格的deletef为1
      *
-     * @param map 表名；条件
+     * @param map 表名；id；update_user_id
      * @return int
      */
-    int updateDeletef(HashMap<String, String> map);
+    int updateDeletef(HashMap<String, Object> map);
+
+    /**
+     * 获得字典值列表
+     *
+     * @return
+     */
+    List<SysDictionary> getDictionaryListByType();
 }

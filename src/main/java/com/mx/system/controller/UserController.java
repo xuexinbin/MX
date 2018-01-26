@@ -116,7 +116,7 @@ public class UserController {
     @RequestMapping(value = "/getUserInfoById", method = RequestMethod.POST)
     public ModelAndView getUserInfoById(Integer id) {
         User userInfo = userService.getUserInfoById(id);
-        List<SelectBean> roleList = commonService.getSelectList("sys_role", "role_name", "id", null);
+        List<SelectBean> roleList = commonService.getSelectList("sys_role", "name", "id", null);
         roleList.add(0, new SelectBean("", "0"));
         String conditions = "enable=0";
         List<SelectBean> deptList = commonService.getSelectList("sys_department", "name", "id", conditions);
@@ -137,7 +137,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/getRoleList", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
     public String getRoleList() {
-        List<SelectBean> list = commonService.getSelectList("sys_role", "role_name", "id", null);
+        List<SelectBean> list = commonService.getSelectList("sys_role", "name", "id", null);
         list.add(0, new SelectBean("", "0"));
         return JSON.toJSONString(list);
     }

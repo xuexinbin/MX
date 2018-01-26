@@ -136,7 +136,7 @@
                         // 角色点击事件
                         $("#roleFunction_roleList li").click(function (e) {
                             $("#roleFunction_roleList li").removeClass("active");
-                            $(this).parent().addClass("active");
+                            $(this).addClass("active");
                             // 右侧显示名称
                             $("#roleFunction_roleId").val(e.currentTarget.getAttribute("data-id"));
                             $("#roleFunction_treeRoleName").val(e.currentTarget.getAttribute("data-name"));

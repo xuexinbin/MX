@@ -1,16 +1,10 @@
 package com.mx.system.service.impl;
 
-import com.mx.common.constant.CommonConstant;
-import com.mx.common.dao.CommonMapper;
 import com.mx.common.service.ICommonService;
-import com.mx.common.util.SessionManager;
 import com.mx.generator.pojo.SysFunction;
 import com.mx.generator.pojo.SysRole;
 import com.mx.generator.pojo.SysRoleFunction;
 import com.mx.system.dao.RoleFunctionMapper;
-import com.mx.system.model.Function;
-import com.mx.system.model.Role;
-import com.mx.system.model.RoleFunction;
 import com.mx.system.service.IRoleFunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

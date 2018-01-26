@@ -150,12 +150,12 @@ fieldset .bjui-row{padding:0;}
 #bjui-sidenav{position:relative; background-color:#fff; overflow:auto;}
 #bjui-sidenav-box > .nav > li{border-bottom:0px #eee solid;}
 #bjui-sidenav-box > .nav > li.active > a{background-color:#f1f1f1;}
-#bjui-sidenav-box > .nav > li > a{padding-top:8px; padding-bottom:8px; color:#000; border-right:3px #fff solid; border-bottom:1px #fff solid;}
+#bjui-sidenav-box > .nav > li > a{padding-top:8px; padding-bottom:8px; color:#000; border-left:4px #fff solid; border-bottom:1px #fff solid;}
 #bjui-sidenav-box .nav > li.open > a,
 #bjui-sidenav-box > .nav > li > a:focus,
 #bjui-sidenav-box > .nav > li .nav > li > a:focus{background-color:#fff;}
 #bjui-sidenav-box > .nav > li .nav > li{margin-top:1px;}
-#bjui-sidenav-box > .nav > li .nav > li > a{border-right:2px #fff solid;}
+#bjui-sidenav-box > .nav > li .nav > li > a{border-left:3px #fff solid;}
 #bjui-sidenav-box > .nav > li > a:hover,
 #bjui-sidenav-box > .nav > li.active > a,
 #bjui-sidenav-box > .nav > li .nav > li > a:hover,
