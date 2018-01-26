@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -120,10 +121,8 @@
         function MainMenuClick(event, treeId, treeNode) {
             if (treeNode.target && treeNode.target == 'dialog' || treeNode.target == 'navtab')
                 event.preventDefault()
-
             if (treeNode.isParent) {
                 var zTree = $.fn.zTree.getZTreeObj(treeId)
-
                 zTree.expandNode(treeNode)
                 return
             }
@@ -142,6 +141,7 @@
 
         // 满屏开关
         var bjui_index_container = 'container_fluid';
+
         function bjui_index_exchange() {
             bjui_index_container = bjui_index_container == 'container_fluid' ? 'container' : 'container_fluid'
 
@@ -150,12 +150,14 @@
             $('#bjui-body-box').find('> div').attr('class', bjui_index_container)
         }
 
+        // 注销登录
         function mx_loginOut() {
             window.location.href = "/login";
             BJUI.ajax('doajax', {
                 url: 'frame/loginOut',
                 loadingmask: false,
-                okCallback: function (res, options) {}
+                okCallback: function (res, options) {
+                }
             });
         }
 
@@ -166,7 +168,9 @@
     <link href="assets/ZeroClipboard.css" rel="stylesheet">
     <script src="assets/ZeroClipboard.js"></script>
     <style>
-        #bjui-navbar .navbar-header a{color: white;}
+        #bjui-navbar .navbar-header a {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -194,7 +198,15 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
-                <li style="padding: 10px 2px;color: white;">&nbsp;<i class="fa fa-user-circle"></i>&nbsp;&nbsp;MX&nbsp;&nbsp;
+                <li>
+                    <a style="padding: 5px 10px;">
+                    <c:if test='${user.avatar == null}'>
+                        <i class="fa fa-user-circle"></i>&nbsp;&nbsp;${user.userName}&nbsp;&nbsp;
+                    </c:if>
+                    <c:if test='${user.avatar != null}'>
+                        <img height="30" weight="30" style="border-radius: 15px;" src="${user.avatar}">&nbsp;&nbsp;${user.userName}&nbsp;&nbsp;
+                    </c:if>
+                    </a>
                 </li>
                 <li style="padding: 10px 0px; color: white;">|</li>
                 <li class="dropdown">
@@ -216,7 +228,8 @@
                 <li><a>&nbsp;<i class="fa fa-cog"></i>&nbsp;设置&nbsp;<i
                         class="fa fa-caret-down" style="color: black;"></i></a></li>
                 <li style="padding: 10px 0px; color: white;">|</li>
-                <li><a href="javascript:;" onclick="mx_loginOut()" title="退出登录">&nbsp;<i class="fa fa-sign-out"></i>注销</a></li>
+                <li><a href="javascript:;" onclick="mx_loginOut()" title="退出登录">&nbsp;<i
+                        class="fa fa-sign-out"></i>注销</a></li>
                 <li style="padding: 10px 0px; color: white;">|</li>
                 <li><a href="javascript:;" onclick="bjui_index_exchange()" title="横向收缩/充满屏幕"><i
                         class="fa fa-exchange"></i></a></li>

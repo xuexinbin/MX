@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +49,8 @@ public class FrameController {
      * @return jsp
      */
     @RequestMapping(value = "admin", method = RequestMethod.GET)
-    public String adminIndex() {
+    public String adminIndex(ModelMap map) {
+        map.addAttribute("user", SessionManager.getLoginUser());
         return "common/mx";
     }
 
