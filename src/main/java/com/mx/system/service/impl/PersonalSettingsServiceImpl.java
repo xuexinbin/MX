@@ -2,15 +2,20 @@ package com.mx.system.service.impl;
 
 import com.mx.common.constant.CommonConstant;
 import com.mx.common.constant.ErrorCodeEnum;
+import com.mx.common.util.ImageUtil;
 import com.mx.common.util.SessionManager;
 import com.mx.common.util.response.ResponseFormat;
-import com.mx.system.dao.MasterUserEntityMapper;
+import com.mx.generator.pojo.SysUser;
 import com.mx.system.dao.PersonalSettingsMapper;
-import com.mx.system.model.MasterUserEntity;
+import com.mx.system.model.User;
 import com.mx.system.service.IPersonalSettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,26 +24,26 @@ import java.util.Map;
  *
  * @author mx
  */
-@Service("personalSettingsService")
-// TODO 事务 @Transactional
+@Service
+@Transactional
 public class PersonalSettingsServiceImpl implements IPersonalSettingsService {
 
-    @Autowired
-    MasterUserEntityMapper masterUserEntityMapper;
 
     @Autowired
     PersonalSettingsMapper personalSettingsMapper;
 
     @Override
-    public MasterUserEntity personalSettings(int id) {
-        return masterUserEntityMapper.selectByPrimaryKey(id);
+    public SysUser getUserInfo() {
+        return personalSettingsMapper.getUserInfo(SessionManager.getLoginUserId());
     }
 
     @Override
-    public void editUserInfo(MasterUserEntity user) {
-        // session获得userId
-        Integer userId=(int) SessionManager.getInstance().getValue(CommonConstant.SESSION_USER_ID);
-        user.setId(userId);
+    public void editUserInfo(CommonsMultipartFile file, User user) throws IOException {
+        Integer loginUserId = SessionManager.getLoginUserId();
+        String fileName = loginUserId.toString() + "_" + new Date().getTime();
+        String avatarUrl = ImageUtil.uploadImg(file, CommonConstant.UPLOAD_AVATAR_FOLDER, fileName);
+        user.setAvatar(avatarUrl);
+        user.setId(loginUserId);
         personalSettingsMapper.editUserInfo(user);
     }
 
@@ -46,21 +51,19 @@ public class PersonalSettingsServiceImpl implements IPersonalSettingsService {
     public ResponseFormat resetPassword(String oldPassword, String newPassword) {
         ResponseFormat data = new ResponseFormat();
         Map<String, Object> map = new HashMap<>();
-        // session获得userId
-        Integer userId=(int) SessionManager.getInstance().getValue(CommonConstant.SESSION_USER_ID);
-        map.put("id", userId);
+        map.put("id", SessionManager.getLoginUserId());
         map.put("password", oldPassword);
         map.put("newPassword", newPassword);
         // 判断原密码是否正确
-        MasterUserEntity user = personalSettingsMapper.getUserInfo(map);
+        SysUser user = personalSettingsMapper.getUserByPassword(map);
         if (user == null) {
             data.setErrorInfo(ErrorCodeEnum.PASSWORD_ERROR);
             return data;
+        } else {
+            // 重置新密码
+            personalSettingsMapper.editPassword(map);
+            return data;
         }
-        // 重置新密码
-        personalSettingsMapper.editPassword(map);
-        return data;
     }
-
 
 }

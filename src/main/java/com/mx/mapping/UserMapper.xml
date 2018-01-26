@@ -13,6 +13,7 @@
         <result column="mail" jdbcType="VARCHAR" property="mail"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
         <result column="enablef" jdbcType="TINYINT" property="enablef"/>
         <result column="deletef" jdbcType="TINYINT" property="deletef"/>
         <result column="memo" jdbcType="VARCHAR" property="memo"/>

@@ -2,24 +2,28 @@ package com.mx.system.service;
 
 
 import com.mx.common.util.response.ResponseFormat;
-import com.mx.system.model.MasterUserEntity;
+import com.mx.generator.pojo.SysUser;
+import com.mx.system.model.User;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.IOException;
 
 public interface IPersonalSettingsService {
 
     /**
      * 获得登录用户信息
      *
-     * @param id 用户id
      * @return user
      */
-    MasterUserEntity personalSettings(int id);
+    SysUser getUserInfo();
 
     /**
      * 编辑用户信息
      *
+     * @param file 头像流
      * @param user 用户信息
      */
-    void editUserInfo(MasterUserEntity user);
+    void editUserInfo(CommonsMultipartFile file, User user) throws IOException;
 
     /**
      * 密码重置

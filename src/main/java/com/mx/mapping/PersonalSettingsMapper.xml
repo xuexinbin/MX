@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.system.dao.PersonalSettingsMapper">
+    <resultMap id="UserResultMap" type="com.mx.system.model.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="true_name" jdbcType="VARCHAR" property="trueName"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="mail" jdbcType="VARCHAR" property="mail"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="update_user_id" jdbcType="INTEGER" property="updateUserId"/>
+        <result column="add_user_id" jdbcType="INTEGER" property="addUserId"/>
+    </resultMap>
+
+    <!-- 获得用户信息 -->
+    <select id="getUserByPassword" resultMap="UserResultMap" parameterType="map">
+        SELECT
+          id
+        FROM
+          sys_user
+        WHERE
+          id = #{id}
+          AND password = #{password}
+          AND deletef = 0
+          AND enablef = 0
+    </select>
+
+    <!-- 获得用户信息 -->
+    <select id="getUserInfo" resultMap="UserResultMap" parameterType="java.lang.Integer">
+    SELECT
+	    id,
+	    true_name,
+	    sex,
+	    mail,
+	    phone,
+	    avatar,
+	    birthday
+    FROM
+        sys_user
+    WHERE
+        id = #{id}
+        AND deletef = 0
+        AND enablef = 0
+  </select>
+
+    <!-- 编辑个人基础信息-->
+    <update id="editUserInfo" parameterType="com.mx.generator.pojo.SysUser">
+    UPDATE
+        sys_user
+    SET
+        true_name = #{trueName},
+        sex = #{sex},
+        mail = #{mail},
+        phone = #{phone},
+        birthday = #{birthday},
+        <if test="avatar != null and avatar != ''">
+          avatar = #{avatar},
+        </if>
+        update_user_id = #{id}
+    WHERE
+        id = #{id}
+  </update>
+
+    <!-- 密码重置 -->
+    <update id="editPassword" parameterType="map">
+    UPDATE
+        sys_user
+    SET
+        password = #{newPassword},
+        update_user_id = #{id}
+    WHERE
+        id = #{id}
+  </update>
+
+</mapper>

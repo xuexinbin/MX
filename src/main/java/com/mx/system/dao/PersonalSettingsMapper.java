@@ -1,6 +1,8 @@
 package com.mx.system.dao;
 
-import com.mx.system.model.MasterUserEntity;
+import com.mx.generator.pojo.SysUser;
+import com.mx.system.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import java.util.Map;
  *
  * @author mx
  */
+@Repository
 public interface PersonalSettingsMapper {
 
     /**
@@ -16,7 +19,7 @@ public interface PersonalSettingsMapper {
      *
      * @param user 个人信息
      */
-    void editUserInfo(MasterUserEntity user);
+    void editUserInfo(User user);
 
     /**
      * 密码重置
@@ -28,10 +31,16 @@ public interface PersonalSettingsMapper {
     /**
      * 获得用户信息
      *
-     * @param map map
+     * @param id 登录者id
      * @return user
      */
-    MasterUserEntity getUserInfo(Map<String, Object> map);
+    SysUser getUserInfo(Integer id);
 
-
+    /**
+     * 获得用户信息
+     *
+     * @param map id；密码
+     * @return user
+     */
+    SysUser getUserByPassword(Map<String, Object> map);
 }

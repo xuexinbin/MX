@@ -1,11 +1,9 @@
 package com.mx.system.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.mx.common.constant.CommonConstant;
-import com.mx.common.util.SessionManager;
 import com.mx.common.util.response.ResponseFormat;
 import com.mx.common.util.response.ResponseHandler;
-import com.mx.system.model.MasterUserEntity;
+import com.mx.generator.pojo.SysUser;
+import com.mx.system.model.User;
 import com.mx.system.service.IPersonalSettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +11,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -27,7 +25,7 @@ import java.util.HashMap;
  * @author mx
  */
 @Controller
-@RequestMapping("/personalSettings")
+@RequestMapping("/system/personalSettings")
 public class PersonalSettingsController {
 
     @Autowired
@@ -39,11 +37,9 @@ public class PersonalSettingsController {
      * @param map modelMap
      * @return jsp
      */
-    @RequestMapping(value = "/personalSettings", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String personalSettings(ModelMap map) {
-        // Session 获得登录者id
-        Integer userId = (int) SessionManager.getInstance().getValue(CommonConstant.SESSION_USER_ID);
-        MasterUserEntity user = personalSettingsService.personalSettings(userId);
+        SysUser user = personalSettingsService.getUserInfo();
         map.addAttribute("user", user);
         return "system/personalSettings";
     }
@@ -51,12 +47,13 @@ public class PersonalSettingsController {
     /**
      * 编辑个人基础信息
      *
+     * @param file 个头像流
      * @param user 个人信息
      * @return model
      */
     @RequestMapping(value = "/editUserInfo", method = RequestMethod.POST)
-    public ModelAndView editUserInfo(MasterUserEntity user) {
-        personalSettingsService.editUserInfo(user);
+    public ModelAndView editUserInfo(@RequestParam(value = "file", required = false) CommonsMultipartFile file, User user) throws IOException {
+        personalSettingsService.editUserInfo(file, user);
         return new ModelAndView(new MappingJackson2JsonView(), new HashMap<>());
     }
 
@@ -72,20 +69,4 @@ public class PersonalSettingsController {
         ResponseFormat data = personalSettingsService.resetPassword(oldPassword, newPassword);
         ResponseHandler.write(response, data);
     }
-
-    /**
-     * 上传头像
-     *
-     * @param uploadFile 头像
-     * @return json对象
-     */
-    @ResponseBody
-    @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
-    public JSONObject uploadImg(@RequestParam("file") MultipartFile uploadFile) {
-        // session获得userId
-        Integer userId=(int) SessionManager.getInstance().getValue(CommonConstant.SESSION_USER_ID);
-//        return departmentUserService.uploadImg(userId.toString(), uploadFile);
-        return null;
-    }
-
 }

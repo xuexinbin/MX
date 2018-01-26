@@ -30,7 +30,6 @@ public class ImageUtil {
     public static String uploadImg(CommonsMultipartFile file, String url, String fileName) throws IOException {
         String returnUrl = null;
         if (file != null && file.getSize() > 0) {
-            // 文件新名称：当前时间 + .png
             String newFileName = fileName + ".png";
             String miniFileName = fileName + "_mini.png";
             // 项目目录 /uploadImg/avatar
