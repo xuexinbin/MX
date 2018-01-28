@@ -2,8 +2,6 @@ package com.mx.system.service;
 
 
 import com.mx.generator.pojo.SysDictionary;
-import com.mx.system.model.Dictionary;
-import com.mx.system.model.MasterDictionaryEntity;
 
 import java.util.List;
 import java.util.Map;

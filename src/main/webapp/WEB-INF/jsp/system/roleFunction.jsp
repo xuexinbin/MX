@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="row height100">
-    <div class="col-md-2 height100" style="width: 20%;">
+    <div class="col-md-2 height100" style="width: 25%;">
         <div class="panel-block">
             <div class="title">
                 <span>角色列表</span>
@@ -13,7 +13,7 @@
             </ul>
         </div>
     </div>
-    <div class="col-md-10 height100 flex-column" style="width: 80%;">
+    <div class="col-md-10 height100 flex-column" style="width: 75%;">
         <div style="border: 1px solid #ddd;border-radius: 6px; height: 100%;">
             <div style="height:45px;padding: 10px 15px;border-bottom: 1px solid #ddd;">
                 <span style="color: #222;font-weight: bolder;">角色名称：</span>
@@ -116,7 +116,7 @@
 
                         for (var i = 0; i < roleList.length; i++) {
                             var tempStr = '<li data-id="' + roleList[i].id + '" data-name="' + roleList[i].name + '">'
-                                + '<a style="width: 70%;">'
+                                + '<a>'
                                 + roleList[i].name;
                             if (roleList[i].type == 0) {
                                 tempStr += "（系统默认）"
@@ -124,8 +124,8 @@
                             tempStr += '</a>';
                             if (roleList[i].type != 0) {
                                 tempStr += '<i id="' + roleList[i].id + '" data-name="' + roleList[i].name + '"'
-                                    + ' class="fa fa-pencil-square-o"></i>'
-                                    + '<i id="' + roleList[i].id + '" class="fa fa-minus-circle"></i>';
+                                    + ' class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;'
+                                    + '<i id="' + roleList[i].id + '" class="fa fa-minus-circle"></i>&nbsp;&nbsp;';
                             }
                             tempStr += '</li>';
 

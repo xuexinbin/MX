@@ -6,12 +6,15 @@
         {"id":"a-3", "name":"我的项目", "target":"navtab", "url":"/blank"},
         {"id":"a-4", "name":"我的审批", "target":"navtab", "url":"/blank"}
     ]},
+    {"name":"客户管理", "children":[
+      {"id":"customer-1", "name":"客户管理", "target":"navtab", "url":"customer/customer"}
+    ]},
     {"name":"供应商管理", "children":[
         {"id":"customer-1", "name":"供应商管理", "target":"navtab", "url":"supplier/supplier"}
     ]},
-    {"name":"系统管理", "icon":"cogs", "children":[
+    {"name":"系统管理", "icon":"cog", "children":[
         {"id":"system-1", "name":"用户管理", "icon":"user", "target":"navtab", "url":"system/user"},
-        {"id":"system-2", "name":"部门管理", "icon":"users", "target":"navtab", "url":"system/department"},
+        {"id":"system-2", "name":"部门管理", "icon":"sitemap", "target":"navtab", "url":"system/department"},
         {"id":"system-3", "name":"角色管理", "icon":"key", "target":"navtab", "url":"system/roleFunction"},
         {"id":"system-8", "name":"菜单和功能管理", "icon":"server", "target":"navtab", "url":"system/function"},
         {"id":"system-4", "name":"数据字典", "icon":"database", "target":"navtab", "url":"system/dictionary"},
@@ -19,7 +22,7 @@
         {"id":"system-6", "name":"系统消息", "icon":"bell-o", "target":"navtab", "url":"systemMessage/systemMessage"},
         {"id":"system-7", "name":"see code", "icon":"code", "target":"navtab", "url":"systemMessage/systemMessage"}
     ]},
-    {"name":"客户管理", "children":[
-        {"id":"customer-1", "name":"客户管理", "target":"navtab", "url":"customer/customer"}
+    {"name":"报表管理","icon":"bar-chart", "children":[
+      {"id":"report-1", "name":"报表","icon":"line-chart", "target":"navtab", "url":"report/common"}
     ]}
 ]

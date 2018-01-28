@@ -3,10 +3,6 @@ package com.mx.system.dao;
 import com.mx.generator.pojo.SysFunction;
 import com.mx.generator.pojo.SysRole;
 import com.mx.generator.pojo.SysRoleFunction;
-import com.mx.system.model.Function;
-import com.mx.system.model.Role;
-import com.mx.system.model.RoleFunction;
-import com.mx.system.model.UserRole;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

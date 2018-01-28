@@ -68,17 +68,20 @@
     <script src="B-JUI/plugins/bootstrapSelect/defaults-zh_CN.min.js"></script>
     <!-- icheck -->
     <script src="B-JUI/plugins/icheck/icheck.min.js"></script>
-    <!-- HighCharts -->
+    <!-- HighCharts
     <script src="B-JUI/plugins/highcharts/highcharts.js"></script>
     <script src="B-JUI/plugins/highcharts/highcharts-3d.js"></script>
     <script src="B-JUI/plugins/highcharts/themes/gray.js"></script>
+    -->
     <!-- other plugins -->
     <script src="B-JUI/plugins/other/jquery.autosize.js"></script>
     <link href="B-JUI/plugins/uploadify/css/uploadify.css" rel="stylesheet">
     <script src="B-JUI/plugins/uploadify/scripts/jquery.uploadify.min.js"></script>
     <script src="B-JUI/plugins/download/jquery.fileDownload.js"></script>
-    <script src='js/common/plugins/md5.js'></script>
 
+    <script src='js/common/plugins/echart/echarts.js'></script>
+    <!--<script src='js/common/plugins/echart/echarts.min.js'></script>-->
+    <script src='js/common/plugins/md5.js'></script>
     <script src="js/mx.js"></script>
     <script src="js/common/extend.js"></script>
     <script src="js/common/event.js"></script>
