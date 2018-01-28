@@ -7,6 +7,8 @@
  *           【modify】gird select后台返回值回调 -> 重新渲染该列  注释此方法，采取下一个方法 itemsMapper: "parentList"
  *           【add】表格可直接返回select列的items
  *           【add】刷新方法，重载postData {xx:xx, filterFlag:filterFlag}
+ *           【modify】选择字体不修改顶部显示
+ *           【modify】主题取消添加active
  *
  */
 
@@ -16850,7 +16852,8 @@
         classA      = classA.replace(/(theme[\s][a-z]*)/g, '')
         $themeA.removeClass().addClass(classA).addClass('theme').addClass(this.options.theme)
         $themeLis.find('li').removeClass('active')
-        this.$element.parent().addClass('active')
+        // modify by mx for 主题取消添加active
+        //this.$element.parent().addClass('active')
         this.cookie()
     }
     
@@ -16860,8 +16863,8 @@
     
     Theme.prototype.setFont = function(fontSize) {
         $('html').removeClass().addClass(fontSize)
-        
-        this.$element.closest('ul').prev().html(this.$element.html()).removeClass().addClass('dropdown-toggle bjui-fonts-tit '+ fontSize)
+        // modify by mx for 选择字体不修改顶部显示 on 20180127
+        //this.$element.closest('ul').prev().html(this.$element.html()).removeClass().addClass('dropdown-toggle bjui-fonts-tit '+ fontSize)
         
         $('body').find('table').each(function() {
             var $table = $(this), datagrid = $table.data('bjui.datagrid')

@@ -32,7 +32,7 @@
 .panel-block {height:100%;border:1px solid #ddd;margin-right:-15px}
 .panel-block .title{font-size:14px;color:#222;font-weight:bolder;padding:10px;display: flex;justify-content: space-between;align-items: center}
 .panel-block ul {margin:0;padding:0px;width:100%;}
-.panel-block li{display: flex;padding:0px 5px; justify-content: space-between;height: 40px;line-height: 40px;align-items: center;cursor: pointer}
+.panel-block li{border-left: 3px solid #fff;display: flex;padding:0px 5px; justify-content: space-between;height: 40px;line-height: 40px;align-items: center;cursor: pointer}
 .panel-block li a{width:100%;color:#222;text-decoration: none;}
 .panel-block li.active,.panel-block li:hover{color:#222;text-decoration: none;background:#f5f5f5;}
 .panel-block li i{font-size: 18px;margin-right: 8px;}
@@ -58,3 +58,10 @@
     background: white;
     border-radius: 3px;
 }
+/* 头部式样 */
+.header-user ul {width: 220px;padding: 0px;border: 1px solid #d9e7f2;}
+.header-user .header-user-msg {height: 100px;text-align: center;padding: 10px;color:rgba(255,255,255,0.8)}
+.header-menu .dropdown-menu {background-color:#f3f8fc;width: 180px;padding: 0px;border: 1px solid #d9e7f2;}
+.header-menu .dropdown-menu li a {margin-left: 25px;}
+.header-menu .dropdown-menu li div {width: 25px;font-weight: bold;color: black;border-right: 1px solid #c7c3c3;position: absolute;}
+.header-menu .dropdown-menu li {border-bottom: 1px solid #efeded;}

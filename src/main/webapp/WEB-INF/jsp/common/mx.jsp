@@ -140,11 +140,7 @@
         }
 
         // 满屏开关
-        var bjui_index_container = 'container_fluid';
-
-        function bjui_index_exchange() {
-            bjui_index_container = bjui_index_container == 'container_fluid' ? 'container' : 'container_fluid'
-
+        function bjui_index_exchange(bjui_index_container) {
             $('#bjui-top').find('> div').attr('class', bjui_index_container)
             $('#bjui-navbar').find('> div').attr('class', bjui_index_container)
             $('#bjui-body-box').find('> div').attr('class', bjui_index_container)
@@ -197,42 +193,74 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-
-                <li>
-                    <a style="padding: 5px 10px;">
-                    <c:if test='${user.avatar == null}'>
-                        <i class="fa fa-user-circle"></i>&nbsp;&nbsp;${user.userName}&nbsp;&nbsp;
-                    </c:if>
-                    <c:if test='${user.avatar != null}'>
-                        <img height="30" weight="30" style="border-radius: 15px;" src="${user.avatar}">&nbsp;&nbsp;${user.userName}&nbsp;&nbsp;
-                    </c:if>
+                <li class="header-user">
+                    <a href="#" style="padding: 5px 10px;" class="dropdown-toggle" data-toggle="dropdown" title="用户信息">
+                        <c:if test='${user.avatar == null}'>
+                            <i class="fa fa-user-circle"></i>&nbsp;&nbsp;${user.userName}&nbsp;
+                        </c:if>
+                        <c:if test='${user.avatar != null}'>
+                            <img height="30" weight="30" style="border-radius: 15px;"
+                                 src="${user.avatar}">&nbsp;&nbsp;${user.userName}&nbsp;
+                        </c:if>
                     </a>
-                </li>
-                <li style="padding: 10px 0px; color: white;">|</li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle theme" data-toggle="dropdown" title="切换皮肤">
-                        <i class="fa fa-tree"></i>&nbsp;主题&nbsp;<i class="fa fa-caret-down" style="color: black;"></i>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" id="bjui-themes">
-                        <li>
-                            <a href="javascript:;" class="theme_purple" data-toggle="theme" data-theme="purple">&nbsp;<i
-                                    class="fa fa-leaf"></i> 紫罗兰</a></li>
-                        <li>
-                            <a href="javascript:;" class="theme_blue" data-toggle="theme"
-                               data-theme="blue">&nbsp;<i class="fa fa-cloud"></i> 天空蓝</a></li>
-                        <li><a href="javascript:;" class="theme_green" data-toggle="theme" data-theme="green">&nbsp;<i
-                                class="fa fa-sun-o"></i> 绿草如茵</a></li>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="header-user-msg">
+                            <c:if test='${user.avatar == null}'>
+                                <i class="fa fa-user-circle"></i>
+                            </c:if>
+                            <c:if test='${user.avatar != null}'>
+                                <img height="60" weight="60"
+                                     style="border: 3px solid rgba(255,255,255,0.2);border-radius: 30px;"
+                                     src="${user.avatar}">
+                                <br>
+                                <span> ${user.userName} - ${user.roleIds}</span>
+                            </c:if>
+                        </li>
+                        <li style="padding: 10px;">
+                            <button type="button" class="btn-default" data-icon="cog" data-toggle="navtab"
+                                    data-options="{id:'system-5',url:'system/personalSettings'}">设置
+                            </button>
+                            <button type="button" onclick="mx_loginOut()" class="btn-default" data-icon="sign-out"
+                                    style="float: right;">注销
+                            </button>
+                        </li>
                     </ul>
                 </li>
-                <li style="padding: 10px 0px; color: white;">|</li>
-                <li><a>&nbsp;<i class="fa fa-cog"></i>&nbsp;设置&nbsp;<i
-                        class="fa fa-caret-down" style="color: black;"></i></a></li>
-                <li style="padding: 10px 0px; color: white;">|</li>
-                <li><a href="javascript:;" onclick="mx_loginOut()" title="退出登录">&nbsp;<i
-                        class="fa fa-sign-out"></i>注销</a></li>
-                <li style="padding: 10px 0px; color: white;">|</li>
-                <li><a href="javascript:;" onclick="bjui_index_exchange()" title="横向收缩/充满屏幕"><i
-                        class="fa fa-exchange"></i></a></li>
+                <li class="header-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-cogs"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="bjui-themes" style="width: 100%;">
+                            <div style="padding: 23px 4px;">主题</div>
+                            <a href="javascript:;" class="theme_purple" data-toggle="theme" data-theme="purple"
+                               style="color: #614789;">
+                                <i class="fa fa-leaf"></i> 紫罗兰</a>
+                            <a href="javascript:;" class="theme_blue" data-toggle="theme" data-theme="blue"
+                               style="color: #1f73b6;">
+                                <i class="fa fa-cloud"></i> 天空蓝</a>
+                            <a href="javascript:;" class="theme_green" data-toggle="theme" data-theme="green"
+                               style="color: #429342;">
+                                <i class="fa fa-sun-o"></i> 绿草如茵</a>
+                        </li>
+                        <li>
+                            <div style="padding: 8px 4px;">显示</div>
+                            <a href="javascript:;" onclick="bjui_index_exchange('container_fluid')" title="全屏">
+                                <i class="fa fa-arrows-alt"></i> 全屏
+                            </a>
+                            <a href="javascript:;" onclick="bjui_index_exchange('container')" title="收缩">
+                                <i class="fa fa-compress"></i> 收缩
+                            </a>
+                        </li>
+                        <li id="bjui-fonts">
+                            <div style="padding: 8px 4px;">字体</div>
+                            <a href="javascript:;" class="bjui-font-c" data-toggle="fonts">
+                                <i class="fa fa-font"></i>&nbsp;大</a>
+                            <a href="javascript:;" class="bjui-font-d" data-toggle="fonts">
+                                <i class="fa fa-font"></i>&nbsp;&nbsp;小</a>
+                        </li>
+                    </ul>
+
             </ul>
         </nav>
     </div>
