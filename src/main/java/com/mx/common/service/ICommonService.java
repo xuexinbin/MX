@@ -35,6 +35,7 @@ public interface ICommonService {
 
     /**
      * 删除表数据
+     * DELETE FROM tableName WHERE column IN (key)
      *
      * @param tableName 表名
      * @param column    条件列名(和表字段相同): 一个条件
@@ -42,8 +43,10 @@ public interface ICommonService {
      * @return int
      */
     int deleteRows(String tableName, String column, String key);
+
     /**
      * 删除表数据
+     * DELETE FROM tableName WHERE column IN (key)
      *
      * @param tableName 表名
      * @param column    条件列名(和表字段相同): 一个条件
@@ -54,15 +57,32 @@ public interface ICommonService {
 
     /**
      * 更新表格的deletef为1
+     * UPDATE tableName SET deletef = 1, update_user_id = session的userId
+     * WHERE id IN (ids)
      *
-     * @param tableName  表名
-     * @param ids 条件
+     * @param tableName 表名
+     * @param ids       条件
      * @return int
      */
     int updateDeletef(String tableName, String ids);
 
     /**
+     * 更新表格的某一列
+     * UPDATE tableName SET column = columnValue, update_user_id = session中用户
+     * WHERE conditionColumn IN (${ids})
+     *
+     * @param tableName   表名
+     * @param column      列名
+     * @param columnValue 列值
+     * @param conditionColumn 条件列
+     * @param ids         条件
+     * @return int
+     */
+    int updateColumn(String tableName, String column, String columnValue, String conditionColumn, String ids);
+
+    /**
      * 删除表数据
+     * DELETE FROM tableName WHERE conditions
      *
      * @param tableName  表名
      * @param conditions 删除条件

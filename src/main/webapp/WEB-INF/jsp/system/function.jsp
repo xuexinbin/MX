@@ -32,7 +32,7 @@
                     label: '菜单名称',
                     width: 150,
                     align: 'center',
-                    rule: 'required;length(1~10)'
+                    rule: 'required;length(~15)'
                 },
                 {
                     name: 'parentId',
@@ -43,23 +43,31 @@
                     items: [],
                     itemsMapper: "parentList"
                 }, {
+                    name: 'code',
+                    label: '编码',
+                    width: 120,
+                    align: 'center',
+                    rule: 'required;length(~15)'
+                }, {
                     name: 'sort',
                     label: '排序',
-                    width: 150,
+                    width: 100,
                     align: 'center',
                     rule: 'length(~2)'
                 }, {
                     name: 'url',
-                    label: 'url',
-                    width: 150,
-                    align: 'center',
-                    rule: 'length(~20)'
+                    label: '跳转路径',
+                    width: 200,
+                    rule: 'length(~40)'
                 }, {
                     name: 'icon',
                     label: '图标',
-                    width: 150,
+                    width: 50,
                     align: 'center',
-                    rule: 'length(~20)'
+                    rule: 'length(~20)',
+                    render: function(value, data) {
+                        return '<i class="fa fa-'+ value + '"></i>';
+                    }
                 },
                 {
                     label: '操作',
@@ -80,6 +88,12 @@
                     width: 150,
                     align: 'center',
                     rule: 'required;length(1~10)'
+                }, {
+                    name: 'code',
+                    label: '编码',
+                    width: 120,
+                    align: 'center',
+                    rule: 'required;length(~15)'
                 }, {
                     name: 'sort',
                     label: '排序',

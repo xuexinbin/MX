@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="TINYINT" />
@@ -13,7 +14,7 @@
     <result column="add_user_id" property="addUserId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, parent_id, name, url, icon, type, sort, update_user_id, add_user_id
+    id, parent_id, name, code, url, icon, type, sort, update_user_id, add_user_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,12 +30,12 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into sys_function (parent_id, name, url, 
-      icon, type, sort, update_user_id, 
-      add_user_id)
-    values (#{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{icon,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{sort,jdbcType=INTEGER}, #{updateUserId,jdbcType=INTEGER}, 
-      #{addUserId,jdbcType=INTEGER})
+    insert into sys_function (parent_id, name, code, 
+      url, icon, type, sort, 
+      update_user_id, add_user_id)
+    values (#{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{sort,jdbcType=INTEGER}, 
+      #{updateUserId,jdbcType=INTEGER}, #{addUserId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mx.generator.pojo.SysFunction" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -47,6 +48,9 @@
       </if>
       <if test="name != null" >
         name,
+      </if>
+      <if test="code != null" >
+        code,
       </if>
       <if test="url != null" >
         url,
@@ -73,6 +77,9 @@
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
@@ -103,6 +110,9 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
@@ -128,6 +138,7 @@
     update sys_function
     set parent_id = #{parentId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT},

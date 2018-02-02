@@ -30,6 +30,17 @@
           id IN (${ids})
     </update>
 
+    <!-- 更新表格的某一列为1 -->
+    <update id="updateColumn" parameterType="map">
+        UPDATE
+        ${tableName} t
+        SET
+        t.${column} = #{columnValue},
+        t.update_user_id = #{updateUserId}
+        WHERE
+        t.${conditionColumn} IN (${ids})
+    </update>
+
     <!-- 删除表数据 -->
     <delete id="deleteRows" parameterType="map">
         DELETE FROM

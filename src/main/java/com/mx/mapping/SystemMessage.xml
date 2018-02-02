@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.system.dao.SystemMessageMapper">
+    <resultMap id="SysMessageResultMap" type="com.mx.system.model.SystemMessage" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="TINYINT" />
+        <result column="top" property="top" jdbcType="TINYINT" />
+        <result column="important" property="important" jdbcType="TINYINT" />
+        <result column="level" property="level" jdbcType="TINYINT" />
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="read" property="read" jdbcType="TINYINT" />
+        <result column="userMessageId" property="userMessageId" jdbcType="INTEGER" />
+    </resultMap>
+    <resultMap id="UserResultMap" type="com.mx.generator.pojo.SysUser" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="true_name" property="trueName" jdbcType="VARCHAR" />
+    </resultMap>
+    <!-- 获得系统消息列表 -->
+    <select id="getSystemMessageGridData" resultMap="SysMessageResultMap" parameterType="map">
+        SELECT
+            <if test="addUserId!=null and addUserId != ''">
+                DISTINCT
+            </if>
+            <if test="addUserId==null || addUserId == ''">
+              um.id userMessageId,
+            </if>
+            um.read,
+            m.id,
+            m.title,
+            m.important,
+            m.type,
+            m.level,
+            m.top,
+            m.add_user_id,
+            m.add_time
+        FROM
+            sys_user_message um
+            INNER JOIN sys_message m ON um.message_id = m.id
+        WHERE
+            um.deletef = 0
+            <if test="userId!=null and userId != ''">
+                AND um.user_id = #{userId}
+            </if>
+            <if test="type!=null and type != ''">
+                AND m.type = #{type}
+            </if>
+            <if test="addUserId!=null and addUserId != ''">
+                AND um.add_user_id = #{addUserId}
+            </if>
+        ORDER BY m.top DESC, m.add_time DESC
+    </select>
+
+    <!-- 获得消息内容 -->
+    <select id="getMessage" resultMap="SysMessageResultMap" parameterType="integer">
+        SELECT
+            m.id,
+            m.title,
+            m.content,
+            m.author,
+            m.important,
+            m.type,
+            m.level,
+            m.top,
+            m.add_user_id,
+            m.add_time
+        FROM
+            sys_message m
+        WHERE
+            m.id = #{id}
+    </select>
+
+    <!-- 添加消息 -->
+    <insert id="addMessage" parameterType="com.mx.system.model.SystemMessage" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        sys_message
+        (title,
+        content,
+        author,
+        type,
+        top,
+        important,
+        level,
+        update_user_id,
+        add_user_id)
+        VALUES
+        (#{title},
+        #{content},
+        #{author},
+        #{type},
+        #{top},
+        #{important},
+        #{level},
+        #{addUserId},
+        #{updateUserId})
+    </insert>
+
+    <!-- 新增用户消息 -->
+    <insert id="addUserMessage" parameterType="java.util.List">
+        INSERT INTO
+        sys_user_message
+        (message_id,
+        user_id,
+        add_user_id,
+        update_user_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.messageId},
+            #{item.userId},
+            #{item.addUserId},
+            #{item.updateUserId})
+        </foreach>
+    </insert>
+
+    <!-- 获得消息接收列表 -->
+    <select id="getMessageUser" resultMap="UserResultMap">
+        SELECT
+        id,
+        true_name
+        FROM
+        sys_user
+        WHERE
+        enablef = 0
+        AND deletef = 0
+    </select>
+</mapper>

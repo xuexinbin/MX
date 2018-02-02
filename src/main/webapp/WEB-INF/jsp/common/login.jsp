@@ -185,7 +185,7 @@
 </div>
 <div id="login_mask">
     <div class="loadingmsg">
-        <div id = "login_loginMsg" style="float: left;font-size: 18px;margin-top: 3px;">正在登录，请稍后</div>&nbsp;&nbsp;
+        <div id="login_loginMsg" style="float: left;font-size: 18px;margin-top: 3px;">正在登录，请稍后</div>&nbsp;&nbsp;
         <div class="la-line-scale" style="float: left">
             <div></div>
             <div></div>
@@ -194,7 +194,7 @@
             <div></div>
         </div>
     </div>
-    </div>
+</div>
 </div>
 </body>
 </html>
@@ -227,6 +227,8 @@
                 success: function (result) {
                     if (result.success) {
                         $("#login_loginMsg").html("登录成功，正在跳转");
+                        localStorage.setItem("user", result.data == null ? "" : JSON.stringify(result.data.user));
+                        localStorage.setItem("functions", result.data == null ? "" : JSON.stringify(result.data.functions));
                         window.location.href = "/admin";
                     } else {
                         mask.removeClass("show");

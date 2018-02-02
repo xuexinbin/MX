@@ -14,7 +14,7 @@
     <meta name="Keywords" content="MX"/>
     <meta name="Description" content="专业管理系统"/>
     <!-- 共通变量定义 -->
-    <script src="js/common/common.js"></script>
+    <script src="js/common/constant.js"></script>
     <!-- bootstrap - css -->
     <link href="B-JUI/themes/css/bootstrap.css" rel="stylesheet">
     <!-- core - css -->
@@ -78,6 +78,7 @@
     <link href="B-JUI/plugins/uploadify/css/uploadify.css" rel="stylesheet">
     <script src="B-JUI/plugins/uploadify/scripts/jquery.uploadify.min.js"></script>
     <script src="B-JUI/plugins/download/jquery.fileDownload.js"></script>
+    <script src="js/common/plugins/sockjs.min.js"></script>
 
     <script src='js/common/plugins/echart/echarts.js'></script>
     <!--<script src='js/common/plugins/echart/echarts.min.js'></script>-->
@@ -86,8 +87,10 @@
     <script src="js/common/extend.js"></script>
     <script src="js/common/event.js"></script>
     <link href="css/common.css" rel="stylesheet">
+    <script src="js/common/common.js"></script>
     <!-- init -->
     <script type="text/javascript">
+        //@ sourceURL=mxpage.js
         $(function () {
             BJUI.init({
                 JSPATH: 'B-JUI/',         //[可选]框架路径
@@ -113,7 +116,65 @@
                 theme: 'blue' // 若有Cookie['bjui_theme'],优先选择Cookie['bjui_theme']。皮肤[五种皮肤:default, orange, purple, blue, red, green]
             });
 
+            // 消息点击事件
+            $(".header-message").click(function (e) {
+                var messageElm = $(this);
+                var id = messageElm.attr("data-id");
+                // 打开消息页
+                BJUI.navtab({
+                    id: 'message_' + id,
+                    url: 'system/systemMessage/showMessage',
+                    title: messageElm.attr("data-title"),
+                    icon: 'newspaper-o',
+                    data: {
+                        messageId: id
+                    }
+                });
+                // 已读消息
+                BJUI.ajax('doajax', {
+                    url: 'system/systemMessage/readMessage',
+                    data: {
+                        id: id
+                    },
+                    loadingmask: false,
+                    okCallback: function (res, options) {
+                        // 未读数 -1
+                        var countElm = $("#mx_messageCount");
+                        var newCount = parseInt(countElm.text())-1;
+                        countElm.text(newCount==0? "": newCount);
+                        // 移除该未读消息
+                        messageElm.remove();
+                    }
+                });
 
+            });
+            $("#mx_showMessageTab").click(function (e) {
+                BJUI.navtab({
+                    id:'function_systemMessage',
+                    url:'/system/systemMessage',
+                    title:'系统消息'
+                })
+            });
+            $("#mx_showMessage").click(function (e) {
+                BJUI.ajax('doajax', {
+                    url: 'frame/getUnreadMessage',
+                    loadingmask: false,
+                    okCallback: function (res, options) {
+                        var messageList = res.messageList;
+                        var str = "";
+                        for (var i=0; i< messageList.length; i++) {
+                            str = '<a href="#" class="header-message" data-id="' + messageList[i].id + '" data-title="'+ messageList[i].title +'">';
+                            str += messageList[i].type == 0? '<i class="fa fa-bell-o header-color"></i>&nbsp;' : '<i class="fa fa-envelope header-color"></i>&nbsp;';
+                            str += messageList[i].top == 1? '<span class="tabletag-prefix bgblue">置顶</span>&nbsp;' : '';
+                            str += messageList[i].level == 1? '<span class="tabletag-prefix bgred">紧急</span>&nbsp;' : '';
+                            str += messageList[i].important == 1? '<span class="tabletag-prefix bgred">重要</span>&nbsp;' : '';
+                            str += messageList[i].title;
+                            str += '</a>';
+                        }
+                        $("#mx_messageList").html(str);
+                    }
+                });
+            });
         })
 
         /*window.onbeforeunload = function(){
@@ -160,6 +221,52 @@
             });
         }
 
+        // ---- 全局websocket start -----
+        // 防止建立多个连接
+        var websocket = this.websocket;
+        if (websocket == null) {
+            // 判断是否支持 WebSocket
+            if ('WebSocket' in window) {
+                websocket = new WebSocket("ws://localhost:8080/websocket");
+            } else if ('MozWebSocket' in window) {
+                websocket = new MozWebSocket("ws://localhost:8080/websocket");
+            } else {
+                websocket = new SockJS("http://localhost:8080/sockjs/websocket");
+            }
+        }
+        // 打开时
+        websocket.onopen = function (event) {
+            console.log("  websocket.onopen  ");
+        };
+        // 处理消息时
+        websocket.onmessage = function (event) {
+            if (event.data == null || event.data == "") {
+                return;
+            }
+
+            var countElm = $("#mx_messageCount");
+            var newCount = parseInt(countElm.text() == "" ? "0" : countElm.text()) + 1;
+            countElm.text(newCount);
+
+            var message = JSON.parse(event.data);
+            var str = '<a href="#" class="header-message" data-id="' + message.id + '" data-title="'+ message.title +'">';
+            str += message.type == 0? '<i class="fa fa-bell-o header-color"></i>&nbsp;' : '<i class="fa fa-envelope header-color"></i>&nbsp;';
+            str += message.top == 1? '<span class="tabletag-prefix bgblue">置顶</span>&nbsp;' : '';
+            str += message.level == 1? '<span class="tabletag-prefix bgred">紧急</span>&nbsp;' : '';
+            str += message.important == 1? '<span class="tabletag-prefix bgred">重要</span>&nbsp;' : '';
+            str += message.title;
+            str += '</a>';
+            $("#mx_messageList").prepend(str);
+        };
+
+        websocket.onerror = function (event) {
+            console.log("  websocket.onerror  ");
+        };
+
+        websocket.onclose = function (event) {
+            console.log("  websocket.onclose  ");
+        };
+        // ---- 全局websocket end -----
     </script>
     <!-- highlight && ZeroClipboard -->
     <link href="assets/prettify.css" rel="stylesheet">
@@ -184,18 +291,32 @@
     <div class="container_fluid">
         <div class="navbar-header" style="width: 222px;">
             <a class="navbar-brand" href="/" style="color: white; width: 100%; text-align: center;">
-                <span style="display: block;padding: 3px;"><img src="img/logo.png" height="38"
-                                                                style="margin-top: -8px;">&nbsp;MX管理系统</span>
+                <span style="display: block;padding: 3px;">
+                    <img src="img/logo.png" height="38" style="margin-top: -8px;">
+                    &nbsp;MX管理系统</span>
             </a>
         </div>
         <nav class="collapse navbar-collapse" id="bjui-navbar-collapse" style="overflow: visible;">
             <ul class="nav navbar-nav navbar-right" id="bjui-hnav-navbar">
                 <li class="active">
-                    <a href="json/menu.json" data-toggle="sidenav" data-id-key="targetid"
+                    <a href="frame/getMenu" data-toggle="sidenav" data-id-key="targetid"
                        style="display: none;"></a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li class="header-list">
+                    <a href="#" id="mx_showMessage" class="dropdown-toggle" data-toggle="dropdown" title="查看消息">
+                        <i class="fa fa-bell-o size16"></i>
+                        <span id="mx_messageCount" class="header-badge"><c:if test="${messageCount != 0}">${messageCount}</c:if></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="mx_messageList" class="header-list-a">
+                        </li>
+                        <li class="header-list-bottom">
+                            <a id="mx_showMessageTab" href="#">查看全部消息<i class="fa fa-arrow-circle-right"></i></a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="header-user">
                     <a href="#" style="padding: 5px 10px;" class="dropdown-toggle" data-toggle="dropdown" title="用户信息">
                         <c:if test='${user.avatar == null}'>
@@ -231,7 +352,7 @@
                 </li>
                 <li class="header-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-cogs"></i>
+                        <i class="fa fa-cogs size16"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li id="bjui-themes" style="width: 100%;">

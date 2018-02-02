@@ -6,7 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
-import com.mx.common.util.CommonUtil;
+import com.mx.common.util.ArrayUtil;
+import com.mx.common.util.StringUtil;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -144,7 +145,7 @@ public class MxCommentGenerator implements CommentGenerator {
             return;
         }
         String remarks = introspectedColumn.getRemarks();
-        if (CommonUtil.isEmpty(remarks)) {
+        if (StringUtil.isEmpty(remarks)) {
             return;
         }
 
@@ -188,7 +189,7 @@ public class MxCommentGenerator implements CommentGenerator {
             return;
         }
         String remarks = introspectedColumn.getRemarks();
-        if (CommonUtil.isEmpty(remarks)) {
+        if (StringUtil.isEmpty(remarks)) {
             return;
         }
         method.addJavaDocLine("/**");
@@ -213,7 +214,7 @@ public class MxCommentGenerator implements CommentGenerator {
             return;
         }
         String remarks = introspectedColumn.getRemarks();
-        if (CommonUtil.isEmpty(remarks)) {
+        if (StringUtil.isEmpty(remarks)) {
             return;
         }
 

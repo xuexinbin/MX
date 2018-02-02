@@ -166,6 +166,16 @@
                                             BJUI.alertmsg('ok', '删除成功！', {});
                                             // 刷新角色列表
                                             getRoleListFn();
+                                            $("#roleFunction_treeRoleName").val("");
+                                            $("#roleFunction_roleId").val("");
+                                            // 菜单tree
+                                            var functionTree = $.fn.zTree.getZTreeObj("roleFunction_functionTree");
+                                            // 权限tree
+                                            var authorityTree = $.fn.zTree.getZTreeObj("roleFunction_authorityTree");
+                                            // 全部取消勾选
+                                            functionTree.checkAllNodes(false);
+                                            functionTree.expandAll(true);
+                                            authorityTree.checkAllNodes(false);
                                         }
                                     });
                                 }
@@ -207,7 +217,7 @@
                         for (var i = 0; i < functions.length; i++) {
                             // 菜单节点
                             var node = functionTree.getNodeByParam("id", functions[i], null);
-                            if (node != null) {
+                            if (node != null && !node.isParent) {
                                 functionTree.checkNode(node, true, true);
                                 continue;
                             }

@@ -7,7 +7,8 @@ import java.util.Set;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mx.common.util.CommonUtil;
+import com.mx.common.util.ArrayUtil;
+import com.mx.common.util.StringUtil;
 
 /**
  * 多行更新ben
@@ -44,7 +45,7 @@ public class UpdateDataBean {
 	public UpdateDataBean(String tableId, String conditionCol, String updateData) {
 		this.tableId = tableId;
 		this.conditionCol = conditionCol;
-		if (CommonUtil.isEmpty(updateData)) {
+		if (StringUtil.isEmpty(updateData)) {
 			return;
 		}
 		StringBuffer sb = new StringBuffer();
@@ -77,14 +78,14 @@ public class UpdateDataBean {
 		}
 		
 		// 条件转为DB形式
-		conditionCol = CommonUtil.convertStringToDB(conditionCol);
+		conditionCol = StringUtil.convertStringToDB(conditionCol);
 		
 		Iterator<Entry<String, HashMap<String, String>>> iter = conMap.entrySet().iterator();
 		String setStr = " SET ";
 		while (iter.hasNext()) {
 			Entry<String, HashMap<String, String>> entry = iter.next();
 			// 需要更新的列
-			String tempColumn = CommonUtil.convertStringToDB(String.valueOf(entry.getKey()));
+			String tempColumn = StringUtil.convertStringToDB(String.valueOf(entry.getKey()));
 			sb.append(setStr + tempColumn + " = CASE " + conditionCol);
 			
 			Iterator<Entry<String, String>> caseMap = entry.getValue().entrySet().iterator();

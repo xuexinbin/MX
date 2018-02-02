@@ -9,6 +9,7 @@
  *           【add】刷新方法，重载postData {xx:xx, filterFlag:filterFlag}
  *           【modify】选择字体不修改顶部显示
  *           【modify】主题取消添加active
+ * v20180131 【modify】自定义工具栏 右对齐
  *
  */
 
@@ -10518,8 +10519,10 @@
                 }
                 
                 if (options.toolbarCustom) {
-                    var $custom, $custombox = $('<div style="display:inline-block;"></div>')
-                    
+                    //var $custom, $custombox = $('<div style="display:inline-block;"></div>')
+                    // modify by mx for 自定义工具栏 右对齐 on 20180131
+                    var $custom, $custombox = $('<div></div>')
+
                     if (typeof options.toolbarCustom === 'string') {
                         var custom = $(options.toolbarCustom)
                         

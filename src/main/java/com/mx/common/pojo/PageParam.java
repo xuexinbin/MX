@@ -1,7 +1,8 @@
 package com.mx.common.pojo;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mx.common.util.CommonUtil;
+import com.mx.common.util.ArrayUtil;
+import com.mx.common.util.StringUtil;
 
 /**
  * 分页参数bean
@@ -30,7 +31,7 @@ public class PageParam {
 
 	/**
 	 * bootstrap-table参数构造函数
-	 * @param JSONObject 
+	 * @param obj
 	 * 		limit:每页显示数量
 	 * 		offset:开始行数 第一行:0
 	 * 		search:查找内容
@@ -44,7 +45,7 @@ public class PageParam {
 		this.pageNumber = offset / pageSize + 1;
 		this.search = obj.getString("search");
 		this.sortOrder = obj.getString("sort");
-		this.sortName = CommonUtil.convertStringToDB(obj.getString("order"));
+		this.sortName = StringUtil.convertStringToDB(obj.getString("order"));
 	}
 
 	public int getPageNumber() {
@@ -83,7 +84,7 @@ public class PageParam {
 	}
 
 	public void setSortName(String sortName) {
-		this.sortName = CommonUtil.convertStringToDB(sortName);
+		this.sortName = StringUtil.convertStringToDB(sortName);
 	}
 
 	

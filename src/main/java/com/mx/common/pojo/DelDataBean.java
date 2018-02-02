@@ -1,6 +1,6 @@
 package com.mx.common.pojo;
 
-import com.mx.common.util.CommonUtil;
+import com.mx.common.util.StringUtil;
 
 /**
  * delete 共通方法
@@ -32,7 +32,7 @@ public class DelDataBean {
      * @param delData      字符串 ('1','2','3')
      */
     public DelDataBean(String tableId, String conditionCol, String delData) {
-        conditionCol = CommonUtil.convertStringToDB(conditionCol);
+        conditionCol = StringUtil.convertStringToDB(conditionCol);
         this.sql = "DELETE FROM " + tableId + " WHERE " + conditionCol + " IN" + delData + ";";
     }
 

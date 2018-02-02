@@ -5,8 +5,9 @@ import com.mx.common.dao.ICommonDao;
 import com.mx.common.exception.WebBusinessException;
 import com.mx.common.pojo.*;
 import com.mx.common.service.ICommonService;
-import com.mx.common.util.CommonUtil;
+import com.mx.common.util.ArrayUtil;
 import com.mx.common.util.SessionManager;
+import com.mx.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class CommonServiceImpl implements ICommonService {
 
     @Override
     public int updateRows(String tableId, String conditionCol, String updateData) {
-        if (CommonUtil.isEmpty(tableId) || CommonUtil.isEmpty(updateData) || CommonUtil.isEmpty(updateData)) {
+        if (StringUtil.isEmpty(tableId) || StringUtil.isEmpty(updateData) || StringUtil.isEmpty(updateData)) {
             throw new WebBusinessException(ErrorConstant.ACE0001, null);
         }
         UpdateDataBean updateDataBean = new UpdateDataBean(tableId, conditionCol, updateData);
@@ -33,17 +34,17 @@ public class CommonServiceImpl implements ICommonService {
     @Override
     public void saveTableData(TableParam tableParam) {
         // 更新数据
-        if (CommonUtil.isNotEmpty(tableParam.getUpdateStr())) {
+        if (StringUtil.isNotEmpty(tableParam.getUpdateStr())) {
             UpdateDataBean updateDataBean = new UpdateDataBean(tableParam.getTableName(), tableParam.getUniqueId(), tableParam.getUpdateStr());
             commonDao.operateBySql(updateDataBean.getSql());
         }
         // 插入数据
-        if (CommonUtil.isNotEmpty(tableParam.getInsertStr())) {
+        if (StringUtil.isNotEmpty(tableParam.getInsertStr())) {
             InsertDataBean insertDataBean = new InsertDataBean(tableParam.getTableName(), tableParam.getInsertStr());
             commonDao.operateBySql(insertDataBean.getSql());
         }
         // 删除数据
-        if (CommonUtil.isNotEmpty(tableParam.getDelStr())) {
+        if (StringUtil.isNotEmpty(tableParam.getDelStr())) {
             DelDataBean delDataBean = new DelDataBean(tableParam.getTableName(), tableParam.getUniqueId(), tableParam.getDelStr());
             commonDao.operateBySql(delDataBean.getSql());
         }
@@ -77,6 +78,18 @@ public class CommonServiceImpl implements ICommonService {
         map.put("ids", ids);
         map.put("updateUserId", SessionManager.getLoginUserId());
         return commonDao.updateDeletef(map);
+    }
+
+    @Override
+    public int updateColumn(String tableName, String column, String columnValue, String conditionColumn, String ids) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("tableName", tableName);
+        map.put("column", column);
+        map.put("columnValue", columnValue);
+        map.put("updateUserId", SessionManager.getLoginUserId());
+        map.put("ids", ids);
+        map.put("conditionColumn", conditionColumn);
+        return commonDao.updateColumn(map);
     }
 
     @Override

@@ -33,15 +33,15 @@
             id,
             parent_id,
             name,
-            url,
-            sort,
             type
         FROM
             sys_function
-        <if test="_parameter != null">
-            WHERE
-            type = #{_parameter}
-        </if>
+        <where>
+            <if test="_parameter != null">
+                type = #{_parameter}
+            </if>
+        </where>
+        ORDER BY sort
     </select>
 
     <!-- 获得角色权限 str -->

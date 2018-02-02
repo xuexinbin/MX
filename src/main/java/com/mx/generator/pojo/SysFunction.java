@@ -16,6 +16,11 @@ public class SysFunction extends BaseBean {
     private String name;
 
     /**
+     * 菜单编码
+     */
+    private String code;
+
+    /**
      * 菜单url
      */
     private String url;
@@ -73,6 +78,22 @@ public class SysFunction extends BaseBean {
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    /**
+     * 获得菜单编码
+     * @return code 菜单编码
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * 设置菜单编码
+     * @param code 菜单编码
+     */
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 
     /**

@@ -1,12 +1,17 @@
 package com.mx.common.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.mx.common.constant.CommonConstant;
 import com.mx.common.constant.ErrorCodeEnum;
 import com.mx.common.service.IFrameService;
 import com.mx.common.util.SessionManager;
 import com.mx.common.util.response.ResponseFormat;
 import com.mx.common.util.response.ResponseHandler;
+import com.mx.generator.pojo.SysFunction;
+import com.mx.generator.pojo.SysMessage;
+import com.mx.generator.pojo.SysRole;
 import com.mx.generator.pojo.SysUser;
+import com.mx.system.model.Department;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +19,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 框架 controller
@@ -50,6 +59,8 @@ public class FrameController {
      */
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String adminIndex(ModelMap map) {
+        Integer messageCount = frameService.getUnreadMessageCount();
+        map.addAttribute("messageCount", messageCount);
         map.addAttribute("user", SessionManager.getLoginUser());
         return "common/mx";
     }
@@ -82,7 +93,11 @@ public class FrameController {
         } else {
             SessionManager.getInstance().setValue(CommonConstant.SESSION_USER_ID, sysUserInfo.getId());
             SessionManager.getInstance().setValue(CommonConstant.SESSION_USER, sysUserInfo);
-            rf.setData(sysUserInfo);
+            String functions= frameService.getFunctionList(1);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("user", sysUserInfo);
+            map.put("functions", functions);
+            rf.setData(map);
             logger.info("登录成功：" + userName);
         }
         ResponseHandler.write(response, rf);
@@ -99,6 +114,30 @@ public class FrameController {
         // 注销删除session信息
         SessionManager.getInstance().clearSession();
         return new ModelAndView(new MappingJackson2JsonView(), new HashMap<>());
+    }
+
+    /**
+     * 获得显示菜单
+     *
+     * @return json菜单
+     */
+    @ResponseBody
+    @RequestMapping(value = "frame/getMenu", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+    public String getMenu() {
+        // 获得显示菜单
+        return frameService.getFunctionList(0);
+    }
+
+    /**
+     * 获得未读消息 limit 10
+     * @return
+     */
+    @RequestMapping(value = "frame/getUnreadMessage", method = RequestMethod.POST)
+    public ModelAndView getUnreadMessage() {
+        List<SysMessage>  messageList= frameService.getUnreadMessage();
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("messageList", messageList);
+        return new ModelAndView(new MappingJackson2JsonView(), resultMap);
     }
 
 }

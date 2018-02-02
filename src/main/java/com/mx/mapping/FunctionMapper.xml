@@ -5,6 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR" />
         <result column="url" property="url" jdbcType="VARCHAR"/>
         <result column="icon" property="icon" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="TINYINT"/>
@@ -19,6 +20,7 @@
         id,
         parent_id,
         name,
+        code,
         url,
         icon,
         type,
@@ -39,6 +41,7 @@
           sys_function
         SET
           name = #{name},
+          code = #{code},
           parent_id = #{parentId},
           url = #{url},
           icon = #{icon},
@@ -54,6 +57,7 @@
         INSERT INTO
         sys_function
         (name,
+        code,
         parent_id,
         url,
         icon,
@@ -64,6 +68,7 @@
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             ( #{item.name},
+            #{item.code},
             #{item.parentId},
             #{item.url},
             #{item.icon},

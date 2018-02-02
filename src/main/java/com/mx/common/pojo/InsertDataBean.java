@@ -6,7 +6,8 @@ import java.util.Set;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mx.common.util.CommonUtil;
+import com.mx.common.util.ArrayUtil;
+import com.mx.common.util.StringUtil;
 
 /**
  * 插入sqlbean
@@ -36,7 +37,7 @@ public class InsertDataBean {
 	 */
 	public InsertDataBean(String tableId, String insertData) {
 		this.tableId = tableId;
-		if (CommonUtil.isEmpty(insertData)) {
+		if (StringUtil.isEmpty(insertData)) {
 			return;
 		}
 		
@@ -48,10 +49,10 @@ public class InsertDataBean {
 			JSONObject obj = (JSONObject) it.next();
 			
 			Set<String> keySet = obj.keySet();
-			insertKey = "".equals(insertKey) ? CommonUtil.join(keySet) : insertKey;
-			insertDataArr.add(CommonUtil.insertDataJoin(obj.values().toArray()));
+			insertKey = "".equals(insertKey) ? ArrayUtil.join(keySet) : insertKey;
+			insertDataArr.add(ArrayUtil.insertDataJoin(obj.values().toArray()));
 		}
-		this.sql = "INSERT INTO " + tableId + "(" +  CommonUtil.convertStringToDB(insertKey) + ") VALUES " + CommonUtil.join(insertDataArr) + ";";
+		this.sql = "INSERT INTO " + tableId + "(" +  StringUtil.convertStringToDB(insertKey) + ") VALUES " + ArrayUtil.join(insertDataArr) + ";";
 	}
 
 	public String getTableId() {

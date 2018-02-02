@@ -48,4 +48,13 @@ public interface ICommonDao {
      * @return
      */
     List<SysDictionary> getDictionaryListByType();
+
+    /**
+     * 更新指定列
+     * UPDATE tableName SET column = columnValue, update_user_id = session中用户
+     * WHERE id IN (${ids})
+     * @param map map
+     * @return int
+     */
+    int updateColumn(HashMap<String, Object> map);
 }

@@ -92,7 +92,7 @@ public class SysUser extends BaseBean {
     private Byte enablef;
 
     /**
-     * 是否删除／离职，0正常，1删除离职
+     * 是否删除，0正常，1删除
      */
     private Byte deletef;
 
@@ -377,16 +377,16 @@ public class SysUser extends BaseBean {
     }
 
     /**
-     * 获得是否删除／离职，0正常，1删除离职
-     * @return deletef 是否删除／离职，0正常，1删除离职
+     * 获得是否删除，0正常，1删除
+     * @return deletef 是否删除，0正常，1删除
      */
     public Byte getDeletef() {
         return deletef;
     }
 
     /**
-     * 设置是否删除／离职，0正常，1删除离职
-     * @param deletef 是否删除／离职，0正常，1删除离职
+     * 设置是否删除，0正常，1删除
+     * @param deletef 是否删除，0正常，1删除
      */
     public void setDeletef(Byte deletef) {
         this.deletef = deletef;

@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mx.common.dao.IFrameDao" >
-    <resultMap id="BaseResultMap" type="com.mx.generator.pojo.SysUser" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="true_name" property="trueName" jdbcType="VARCHAR" />
-        <result column="department_id" property="departmentId" jdbcType="INTEGER" />
-        <result column="role_ids" property="roleIds" jdbcType="VARCHAR" />
-        <result column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="avatar" property="avatar" jdbcType="VARCHAR" />
-        <result column="memo" property="memo" jdbcType="VARCHAR" />
-        <result column="enablef" property="enablef" jdbcType="TINYINT" />
+<mapper namespace="com.mx.common.dao.IFrameDao">
+    <resultMap id="UserResultMap" type="com.mx.generator.pojo.SysUser">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="true_name" property="trueName" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
+        <result column="role_ids" property="roleIds" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="enablef" property="enablef" jdbcType="TINYINT"/>
     </resultMap>
-  <select id="logining" resultMap="BaseResultMap" parameterType="map" >
+    <resultMap id="FunctionResultMap" type="com.mx.common.pojo.MenuBean">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="MessageResultMap" type="com.mx.generator.pojo.SysMessage" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="TINYINT" />
+        <result column="top" property="top" jdbcType="TINYINT" />
+        <result column="important" property="important" jdbcType="TINYINT" />
+        <result column="level" property="level" jdbcType="TINYINT" />
+    </resultMap>
+
+    <select id="logining" resultMap="UserResultMap" parameterType="map">
     SELECT
         id,
         true_name,
@@ -27,5 +43,60 @@
         AND deletef = 0
         AND enablef = 0
   </select>
-  
+
+    <!-- 获得显示菜单 -->
+    <select id="getFunctionList" resultMap="FunctionResultMap" parameterType="map">
+        SELECT
+            DISTINCT
+            CONCAT('function_', sf.code) id,
+            CONCAT('function_', sfp.code) parent_id,
+            sf.name,
+            sf.url,
+            sf.icon
+        FROM
+          sys_role sr
+          INNER JOIN sys_role_function srf ON sr.id = srf.role_id
+          INNER JOIN sys_function sf ON srf.function_id = sf.id
+          LEFT  JOIN sys_function sfp ON sf.parent_id = sfp.id
+        WHERE
+            sr.id IN (${roleIds})
+            <if test="type != null">
+                AND sf.type = #{type}
+            </if>
+        ORDER BY sf.sort
+    </select>
+
+    <!-- 获得未读消息数量 -->
+    <select id="getUnreadMessageCount" resultType="integer" parameterType="integer">
+        SELECT
+        COUNT(m.id)
+        FROM
+        sys_message m
+        INNER JOIN sys_user_message um ON m.id = um.message_id
+        WHERE
+        um.user_id = #{loginUserId}
+        AND um.deletef = 0
+        AND  um.read = 0
+    </select>
+    <!-- 获得未读消息 -->
+    <select id="getUnreadMessage" resultMap="MessageResultMap" parameterType="integer">
+      SELECT
+        m.id,
+        m.title,
+        m.type,
+        m.top,
+        m.important,
+        m.level
+      FROM
+        sys_message m
+        INNER JOIN sys_user_message um ON m.id = um.message_id
+      WHERE
+        um.user_id = #{loginUserId}
+        AND um.deletef = 0
+        AND  um.read = 0
+      ORDER BY m.top DESC, m.add_time DESC
+      LIMIT 10
+    </select>
+
+
 </mapper>
