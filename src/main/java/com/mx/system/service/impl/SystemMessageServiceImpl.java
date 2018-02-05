@@ -119,12 +119,12 @@ public class SystemMessageServiceImpl implements ISystemMessageService {
 
         // 推送消息给在线用户
         PushMessageBean pushMessage = new PushMessageBean();
-        pushMessage.setId(message.getId());
-        pushMessage.setType(message.getType());
-        pushMessage.setImportant(message.getImportant());
-        pushMessage.setLevel(message.getLevel());
-        pushMessage.setTop(message.getTop());
-        pushMessage.setTitle(message.getTitle());
+//        pushMessage.setId(message.getId());
+//        pushMessage.setType(message.getType());
+//        pushMessage.setImportant(message.getImportant());
+//        pushMessage.setLevel(message.getLevel());
+//        pushMessage.setTop(message.getTop());
+//        pushMessage.setTitle(message.getTitle());
         TextMessage textMessage = new TextMessage(JSON.toJSONString(pushMessage), true);
         MxWebSocketHandler.pushMessage(message.getUserIds(), textMessage);
     }

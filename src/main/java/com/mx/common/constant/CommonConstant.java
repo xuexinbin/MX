@@ -33,4 +33,5 @@ public class CommonConstant {
 	public final static String SESSION_USER_ID = "USER_ID";
 	/** session_user */
 	public final static String SESSION_USER = "USER";
+	public final static String SESSION_FUNCTION= "FUNCTION";
 }

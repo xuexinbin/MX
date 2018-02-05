@@ -12,7 +12,8 @@ jQuery.fn.extend({
     initSelect: initSelect,
     // 初始化图片上传控件
     initUpload: initUpload,
-
+    // 插入loading动画
+    insertLoading: insertLoading,
     // ----- 表单相关 end -----
 
 });
@@ -94,7 +95,7 @@ function initSelect(list) {
  */
 function initUpload(option) {
     var defaultOptions = {
-        server : null, // 上传地址
+        server: null, // 上传地址
         pick: this.selector, // 选择图片id
         maxSize: 1024 * 1024, // 默认最大1M
         loadingmask: true, // 加载遮罩
@@ -125,7 +126,7 @@ function initUpload(option) {
     // 当有文件添加进来的时候
     uploader.on('fileQueued', function (file) {
         if (file.size > options.maxSize) {
-            BJUI.alertmsg('error', '图片不能超过'+ WebUploader.formatSize(options.maxSize)+'，请重新选择！')
+            BJUI.alertmsg('error', '图片不能超过' + WebUploader.formatSize(options.maxSize) + '，请重新选择！')
             return;
         }
         // 判断文件格式：使用accept影响打开选中框的速度
@@ -182,6 +183,30 @@ function initUpload(option) {
         }
     });
     return uploader;
+}
+
+/**
+ * 插入loading动画
+ * @param type 类别
+ */
+function insertLoading(type) {
+    var id = this.selector;
+    var str = ""
+    switch (type) {
+        case "ball-grid-beat":
+            str += '<div class="div-mask">'
+                + '<div class="la-ball-grid-beat la-2x div-center">'
+                + '<div></div> <div></div> <div></div> <div></div> <div></div> <div></div> <div></div> <div></div> <div></div>'
+                + '</div></div>';
+            break;
+        case "ball-square-clockwise-spin":
+            str += '<div class="div-mask">'
+                + '<div class="la-ball-square-clockwise-spin la-2x div-center">'
+                + '<div></div> <div></div> <div></div> <div></div> <div></div> <div></div> <div></div> <div></div>'
+                + '</div></div>';
+            break;
+    }
+    $(id).html(str);
 }
 
 

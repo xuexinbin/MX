@@ -89,6 +89,14 @@
                     align: 'center',
                     rule: 'required;length(1~10)'
                 }, {
+                    name: 'parentId',
+                    label: '所属菜单',
+                    width: 150,
+                    align: 'center',
+                    type: 'select',
+                    items: [],
+                    itemsMapper: "parentList"
+                }, {
                     name: 'code',
                     label: '编码',
                     width: 120,
@@ -115,16 +123,20 @@
             var reloadGrid = function (type) {
                 var columns = [];
                 var title = "";
+                var isTree ='';
                 if (type == 0) {
                     columns = menuColumns;
                     title = "菜单列表";
+                    isTree ='name';
                 } else {
                     columns = functionColumns;
                     title = "功能列表";
+                    isTree= false;
                 }
                 $(gridId).datagrid('reload', {
                     columns: columns,
                     gridTitle: title,
+                    isTree: isTree,
                     postData: {
                         type: type
                     }

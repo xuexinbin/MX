@@ -41,6 +41,10 @@ public class FunctionServiceImpl implements IFunctionService {
     @Override
     public List<SysFunction> getFunctionGridData(Map<String, String> map) {
         List<SysFunction> list = functionMapper.getFunctionGridData(map);
+        // 功能权限grid不判断parentId
+        if ("1".equals(map.get("type"))) {
+            return list;
+        }
         // findGrid:不存在父节点，parentId设为0
         ArrayList<Object> idList = new ArrayList<>();
         for (SysFunction item : list) {

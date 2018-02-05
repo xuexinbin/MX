@@ -37,8 +37,15 @@
         FROM
             sys_function
         <where>
-            <if test="_parameter != null">
+            <if test="_parameter ==0 or _parameter ==1">
                 type = #{_parameter}
+            </if>
+            <if test="_parameter ==3">
+                type = 0
+                OR (type=1 AND parent_id != 0)
+            </if>
+            <if test="_parameter ==4">
+                type=1 AND parent_id = 0
             </if>
         </where>
         ORDER BY sort

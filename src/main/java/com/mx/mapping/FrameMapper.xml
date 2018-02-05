@@ -18,13 +18,14 @@
         <result column="url" property="url" jdbcType="VARCHAR"/>
         <result column="icon" property="icon" jdbcType="VARCHAR"/>
     </resultMap>
-    <resultMap id="MessageResultMap" type="com.mx.generator.pojo.SysMessage" >
+    <resultMap id="SystemMessageResultMap" type="com.mx.system.model.SystemMessage" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="title" property="title" jdbcType="VARCHAR" />
         <result column="type" property="type" jdbcType="TINYINT" />
         <result column="top" property="top" jdbcType="TINYINT" />
         <result column="important" property="important" jdbcType="TINYINT" />
         <result column="level" property="level" jdbcType="TINYINT" />
+        <result column="userMessageId" property="userMessageId" jdbcType="INTEGER" />
     </resultMap>
 
     <select id="logining" resultMap="UserResultMap" parameterType="map">
@@ -43,6 +44,18 @@
         AND deletef = 0
         AND enablef = 0
   </select>
+
+    <!-- 获得角色权限 str -->
+    <select id="getFunctions" resultType="string" parameterType="string">
+        SELECT
+        DISTINCT
+        sf.code
+        FROM
+        sys_role_function srf
+        INNER JOIN sys_function sf ON srf.function_id = sf.id
+        WHERE
+        role_id IN (${_parameter})
+    </select>
 
     <!-- 获得显示菜单 -->
     <select id="getFunctionList" resultMap="FunctionResultMap" parameterType="map">
@@ -79,14 +92,15 @@
         AND  um.read = 0
     </select>
     <!-- 获得未读消息 -->
-    <select id="getUnreadMessage" resultMap="MessageResultMap" parameterType="integer">
+    <select id="getUnreadMessage" resultMap="SystemMessageResultMap" parameterType="integer">
       SELECT
         m.id,
         m.title,
         m.type,
         m.top,
         m.important,
-        m.level
+        m.level,
+        um.id userMessageId
       FROM
         sys_message m
         INNER JOIN sys_user_message um ON m.id = um.message_id

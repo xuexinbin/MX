@@ -88,6 +88,8 @@
     <script src="js/common/event.js"></script>
     <link href="css/common.css" rel="stylesheet">
     <script src="js/common/common.js"></script>
+
+    <link href="css/plugins/loading/ball-grid-beat.css" rel="stylesheet">
     <!-- init -->
     <script type="text/javascript">
         //@ sourceURL=mxpage.js
@@ -116,38 +118,6 @@
                 theme: 'blue' // 若有Cookie['bjui_theme'],优先选择Cookie['bjui_theme']。皮肤[五种皮肤:default, orange, purple, blue, red, green]
             });
 
-            // 消息点击事件
-            $(".header-message").click(function (e) {
-                var messageElm = $(this);
-                var id = messageElm.attr("data-id");
-                // 打开消息页
-                BJUI.navtab({
-                    id: 'message_' + id,
-                    url: 'system/systemMessage/showMessage',
-                    title: messageElm.attr("data-title"),
-                    icon: 'newspaper-o',
-                    data: {
-                        messageId: id
-                    }
-                });
-                // 已读消息
-                BJUI.ajax('doajax', {
-                    url: 'system/systemMessage/readMessage',
-                    data: {
-                        id: id
-                    },
-                    loadingmask: false,
-                    okCallback: function (res, options) {
-                        // 未读数 -1
-                        var countElm = $("#mx_messageCount");
-                        var newCount = parseInt(countElm.text())-1;
-                        countElm.text(newCount==0? "": newCount);
-                        // 移除该未读消息
-                        messageElm.remove();
-                    }
-                });
-
-            });
             $("#mx_showMessageTab").click(function (e) {
                 BJUI.navtab({
                     id:'function_systemMessage',
@@ -156,6 +126,7 @@
                 })
             });
             $("#mx_showMessage").click(function (e) {
+                $("#mx_messageList").insertLoading("ball-grid-beat");
                 BJUI.ajax('doajax', {
                     url: 'frame/getUnreadMessage',
                     loadingmask: false,
@@ -163,8 +134,8 @@
                         var messageList = res.messageList;
                         var str = "";
                         for (var i=0; i< messageList.length; i++) {
-                            str = '<a href="#" class="header-message" data-id="' + messageList[i].id + '" data-title="'+ messageList[i].title +'">';
-                            str += messageList[i].type == 0? '<i class="fa fa-bell-o header-color"></i>&nbsp;' : '<i class="fa fa-envelope header-color"></i>&nbsp;';
+                            str += '<a href="#" class="header-message" data-id="' + messageList[i].id + '"  data-userMessageId="' + messageList[i].userMessageId + '" data-title="'+ messageList[i].title +'">';
+                            str += messageList[i].type == 0? '<i class="fa fa-bell-o color-blue"></i>&nbsp;' : '<i class="fa fa-envelope color-darkgreen"></i>&nbsp;';
                             str += messageList[i].top == 1? '<span class="tabletag-prefix bgblue">置顶</span>&nbsp;' : '';
                             str += messageList[i].level == 1? '<span class="tabletag-prefix bgred">紧急</span>&nbsp;' : '';
                             str += messageList[i].important == 1? '<span class="tabletag-prefix bgred">重要</span>&nbsp;' : '';
@@ -172,6 +143,38 @@
                             str += '</a>';
                         }
                         $("#mx_messageList").html(str);
+
+                        // 消息点击事件
+                        $(".header-message").click(function (e) {
+                            var messageElm = $(this);
+                            var id = messageElm.attr("data-id");
+                            var userMessageId = messageElm.attr("data-userMessageId");
+                            // 打开消息页
+                            BJUI.navtab({
+                                id: 'message_' + id,
+                                url: 'system/systemMessage/showMessage',
+                                title: messageElm.attr("data-title"),
+                                icon: 'newspaper-o',
+                                data: {
+                                    messageId: id
+                                }
+                            });
+                            // 已读消息
+                            BJUI.ajax('doajax', {
+                                url: 'system/systemMessage/readMessage',
+                                data: {
+                                    id: userMessageId
+                                },
+                                loadingmask: false,
+                                okCallback: function (res, options) {
+                                    // 未读数 -1
+                                    var countElm = $("#mx_messageCount");
+                                    var newCount = parseInt(countElm.text())-1;
+                                    countElm.text(newCount==0? "": newCount);
+                                }
+                            });
+
+                        });
                     }
                 });
             });
@@ -243,20 +246,10 @@
             if (event.data == null || event.data == "") {
                 return;
             }
-
+            // 未读消息+1
             var countElm = $("#mx_messageCount");
             var newCount = parseInt(countElm.text() == "" ? "0" : countElm.text()) + 1;
             countElm.text(newCount);
-
-            var message = JSON.parse(event.data);
-            var str = '<a href="#" class="header-message" data-id="' + message.id + '" data-title="'+ message.title +'">';
-            str += message.type == 0? '<i class="fa fa-bell-o header-color"></i>&nbsp;' : '<i class="fa fa-envelope header-color"></i>&nbsp;';
-            str += message.top == 1? '<span class="tabletag-prefix bgblue">置顶</span>&nbsp;' : '';
-            str += message.level == 1? '<span class="tabletag-prefix bgred">紧急</span>&nbsp;' : '';
-            str += message.important == 1? '<span class="tabletag-prefix bgred">重要</span>&nbsp;' : '';
-            str += message.title;
-            str += '</a>';
-            $("#mx_messageList").prepend(str);
         };
 
         websocket.onerror = function (event) {
@@ -296,13 +289,27 @@
                     &nbsp;MX管理系统</span>
             </a>
         </div>
-        <nav class="collapse navbar-collapse" id="bjui-navbar-collapse" style="overflow: visible;">
+        <nav class="collapse navbar-collapse" id="bjui-navbar-collapse">
+            <ul class="nav navbar-nav navbar-left" style="margin-left: -20px;">
+                <li class="header-icon">
+                    <a id="bjui-sidenav-arrow" data-placement="left" title="隐藏左侧菜单">
+                        <i class="fa fa-chevron-circle-left size16"></i>
+                    </a>
+                </li>
+                <li>
+                    <a id="bjui-sidenav-btn" data-placement="right" title="显示左侧菜单">
+                        <i class="fa fa-bars size16"></i>
+                    </a>
+                </li>
+
+            </ul>
             <ul class="nav navbar-nav navbar-right" id="bjui-hnav-navbar">
                 <li class="active">
                     <a href="frame/getMenu" data-toggle="sidenav" data-id-key="targetid"
                        style="display: none;"></a>
                 </li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
                 <li class="header-list">
                     <a href="#" id="mx_showMessage" class="dropdown-toggle" data-toggle="dropdown" title="查看消息">
@@ -311,6 +318,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li id="mx_messageList" class="header-list-a">
+
                         </li>
                         <li class="header-list-bottom">
                             <a id="mx_showMessageTab" href="#">查看全部消息<i class="fa fa-arrow-circle-right"></i></a>
@@ -393,18 +401,18 @@
     <div class="container_fluid" id="bjui-body">
         <div id="bjui-sidenav-col">
             <div id="bjui-sidenav">
-                <div id="bjui-sidenav-arrow" data-toggle="tooltip" data-placement="left" data-title="隐藏左侧菜单">
-                    <i class="fa fa-long-arrow-left"></i>
-                </div>
+                <%--<div id="bjui-sidenav-arrow" data-toggle="tooltip" data-placement="left" data-title="隐藏左侧菜单">--%>
+                    <%--<i class="fa fa-long-arrow-left"></i>--%>
+                <%--</div>--%>
                 <div id="bjui-sidenav-box">
 
                 </div>
             </div>
         </div>
         <div id="bjui-navtab" class="tabsPage">
-            <div id="bjui-sidenav-btn" data-toggle="tooltip" data-title="显示左侧菜单" data-placement="right">
-                <i class="fa fa-bars"></i>
-            </div>
+            <%--<div id="bjui-sidenav-btn" data-toggle="tooltip" data-title="显示左侧菜单" data-placement="right">--%>
+                <%--<i class="fa fa-bars"></i>--%>
+            <%--</div>--%>
             <div class="tabsPageHeader">
                 <div class="tabsPageHeaderContent">
                     <ul class="navtab-tab nav nav-tabs">

@@ -24,7 +24,8 @@ public interface IRoleFunctionService {
     /**
      * 获得菜单列表
      *
-     * @param type 0菜单 1权限 null全部
+     * @param type 0菜单 1功能权限
+     *             3菜单和菜单下功能权限 4不属于菜单的功能权限
      * @return list
      */
     List<SysFunction> getFunctionList(Integer type);

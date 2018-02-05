@@ -174,8 +174,10 @@ fieldset .bjui-row{padding:0;}
 #bjui-sidenav-box .nav > li > a.right-arrow:hover > b > i,
 #bjui-sidenav-box .nav > li.open > a.right-arrow > b > i{-webkit-transform:rotate(90deg); -ms-transform:rotate(90deg); transform:rotate(90deg);}
 #bjui-sidenav-box .nav > li.open > a.right-arrow:hover > b > i{-webkit-transform:rotate(-90deg); -ms-transform:rotate(-90deg); transform:rotate(-90deg);}
-#bjui-sidenav-arrow{position:absolute; top:40%; right:1px; z-index:10; width:40px; height:40px; text-align:center; font-size:20px; line-height:40px; color:#fff; background-color:#999; background-color:rgba(0,0,0, .5); border-radius:20px; cursor:pointer;}
-#bjui-sidenav-btn{position:absolute; top:40%; left:1px; z-index:1; display:none; width:40px; height:40px; text-align:center; font-size:20px; line-height:40px; color:#fff; background-color:#999; background-color:rgba(0,0,0,.5); border-radius:20px; cursor:pointer;}
+/*#bjui-sidenav-arrow{position:absolute; top:40%; right:1px; z-index:10; width:40px; height:40px; text-align:center; font-size:20px; line-height:40px; color:#fff; background-color:#999; background-color:rgba(0,0,0, .5); border-radius:20px; cursor:pointer;}*/
+#bjui-sidenav-arrow{cursor:pointer;}
+/*#bjui-sidenav-btn{position:absolute; top:40%; left:1px; z-index:1; display:none; width:40px; height:40px; text-align:center; font-size:20px; line-height:40px; color:#fff; background-color:#999; background-color:rgba(0,0,0,.5); border-radius:20px; cursor:pointer;}*/
+#bjui-sidenav-btn{cursor:pointer;}
 #bjui-sidenav-btn:hover,
 #bjui-sidenav-arrow:hover{background-color:rgba(0,0,0, .7);}
 #bjui-sidenav-btn > i,

@@ -7,11 +7,8 @@ import com.mx.common.service.IFrameService;
 import com.mx.common.util.SessionManager;
 import com.mx.common.util.response.ResponseFormat;
 import com.mx.common.util.response.ResponseHandler;
-import com.mx.generator.pojo.SysFunction;
 import com.mx.generator.pojo.SysMessage;
-import com.mx.generator.pojo.SysRole;
 import com.mx.generator.pojo.SysUser;
-import com.mx.system.model.Department;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,10 +89,11 @@ public class FrameController {
         } else {
             SessionManager.getInstance().setValue(CommonConstant.SESSION_USER_ID, sysUserInfo.getId());
             SessionManager.getInstance().setValue(CommonConstant.SESSION_USER, sysUserInfo);
-            String functions= frameService.getFunctionList(1);
+            List<String> functions = frameService.getFunctions(sysUserInfo.getRoleIds());
+            SessionManager.getInstance().setValue(CommonConstant.SESSION_FUNCTION, functions);
             HashMap<String, Object> map = new HashMap<>();
-            map.put("user", sysUserInfo);
-            map.put("functions", functions);
+            map.put("user", JSON.toJSONString(sysUserInfo));
+            map.put("functions", JSON.toJSONString(functions));
             rf.setData(map);
             logger.info("登录成功：" + userName);
         }
@@ -125,16 +122,17 @@ public class FrameController {
     @RequestMapping(value = "frame/getMenu", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
     public String getMenu() {
         // 获得显示菜单
-        return frameService.getFunctionList(0);
+        return frameService.getMenu(0);
     }
 
     /**
      * 获得未读消息 limit 10
-     * @return
+     *
+     * @return mode
      */
     @RequestMapping(value = "frame/getUnreadMessage", method = RequestMethod.POST)
     public ModelAndView getUnreadMessage() {
-        List<SysMessage>  messageList= frameService.getUnreadMessage();
+        List<SysMessage> messageList = frameService.getUnreadMessage();
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("messageList", messageList);
         return new ModelAndView(new MappingJackson2JsonView(), resultMap);

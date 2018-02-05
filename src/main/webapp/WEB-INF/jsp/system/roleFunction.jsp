@@ -217,7 +217,7 @@
                         for (var i = 0; i < functions.length; i++) {
                             // 菜单节点
                             var node = functionTree.getNodeByParam("id", functions[i], null);
-                            if (node != null && !node.isParent) {
+                            if (node != null) {
                                 functionTree.checkNode(node, true, true);
                                 continue;
                             }
@@ -235,7 +235,8 @@
             // ----- 角色权限页面 start ------
             var functionSetting = {
                 check: {
-                    enable: true
+                    enable: true,
+                    chkboxType: { "Y": "p", "N": "s" }
                 },
                 data: {
                     simpleData: {
@@ -251,7 +252,7 @@
                 },
                 async: {
                     enable: true, // async配置生效
-                    otherParam: ["type", "0",],
+                    otherParam: ["type", "3",],
                     url: "system/roleFunction/getFunctionList"
                 }
             };
@@ -273,7 +274,7 @@
                 },
                 async: {
                     enable: true, // async配置生效
-                    otherParam: ["type", "1",],
+                    otherParam: ["type", "4",],
                     url: "system/roleFunction/getFunctionList"
                 }
             };

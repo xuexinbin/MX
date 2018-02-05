@@ -13,18 +13,24 @@ public interface IFrameService {
     /**
      * 登录认证
      *
-     * @param userName
-     * @param password
-     * @return
+     * @param userName 用户名
+     * @param password 密码
+     * @return user
      */
     SysUser logining(String userName, String password);
 
     /**
      * 获得显示菜单
-     * @param type type:0菜单 1功能 null全部;roleIds
+     * @param type type:0菜单 1功能 null全部
      * @return json json
      */
-    String getFunctionList(Integer type);
+    String getMenu(Integer type);
+    /**
+     * 获得权限
+     * @param roleIds 角色ids
+     * @return list
+     */
+    List<String> getFunctions(String roleIds);
 
     /**
      * 获得未读消息最多5个

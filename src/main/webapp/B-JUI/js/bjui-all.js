@@ -10,6 +10,7 @@
  *           【modify】选择字体不修改顶部显示
  *           【modify】主题取消添加active
  * v20180131 【modify】自定义工具栏 右对齐
+ * v20180205 【add】自定义展开按钮
  *
  */
 
@@ -165,7 +166,7 @@
                 th = $top.height(), nh = parseInt($navbar.css('min-height'), 10),
                 eventName = 'click.bjui.sidenav.hide', opts = {},
                 $navtab  = $('#bjui-navtab'), $sidenav = $('#bjui-sidenav'), $sidenavcol = $('#bjui-sidenav-col'),
-                $sidenavarrow = $('#bjui-sidenav-arrow'), $sidenavbtn = $('#bjui-sidenav-btn'), $sidenavbox = $('#bjui-sidenav-box'),
+                $sidenavarrow = $('#bjui-sidenav-arrow'), $sidenavbtn = $('#bjui-sidenav-btn'),$sidenavarrow = $('#bjui-sidenav-arrow'), $sidenavbox = $('#bjui-sidenav-box'),
                 tnh = $sidenavbtn.outerHeight() - 2
             
             $('#bjui-navtab .tabsPageContent').height(hh - th - nh - tnh)
@@ -193,11 +194,15 @@
             if (ww < BJUI.ui.showSideWidth) {
                 $sidenavcol.css('left', -(BJUI.ui.sidenavWidth + BJUI.ui.offsetWidth)).addClass('autohide')
                 $navtab.css('margin-left', 0)
+                // add by mx for 自定义展开按钮on 2018/02/05
+                $sidenavarrow.hide()
                 $sidenavbtn.show()
             } else {
                 $sidenavcol.css('left', 0).removeClass('autohide')
                 $navtab.css('margin-left', (BJUI.ui.sidenavWidth + BJUI.ui.offsetWidth))
                 $sidenavbtn.hide()
+                // add by mx for 自定义展开按钮on 2018/02/05
+                $sidenavarrow.show()
             }
             
             $sidenavarrow.off(eventName).on(eventName, function() {
@@ -206,6 +211,8 @@
                     .animate({
                         left: -(BJUI.ui.sidenavWidth + BJUI.ui.offsetWidth)
                     }, 'fast', function() {
+                        // add by mx for 自定义展开按钮on 2018/02/05
+                        $sidenavarrow.hide()
                         $sidenavbtn.show()
                         
                         $(window).trigger(BJUI.eventType.resizeGrid)
@@ -220,6 +227,8 @@
             
             $sidenavbtn.off(eventName).on(eventName, function() {
                 $sidenavbtn.hide()
+                // add by mx for 自定义展开按钮on 2018/02/05
+                $sidenavarrow.show()
                 
                 $sidenavcol
                     .stop()

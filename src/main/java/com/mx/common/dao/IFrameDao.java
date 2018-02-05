@@ -40,4 +40,11 @@ public interface IFrameDao {
      * @return count
      */
     Integer getUnreadMessageCount(Integer loginUserId);
+
+    /**
+     * 获得权限
+     * @return list
+     * @param roleIds
+     */
+    List<String> getFunctions(String roleIds);
 }

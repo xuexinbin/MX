@@ -3,7 +3,6 @@ package com.mx.common.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.mx.common.pojo.MenuBean;
 import com.mx.common.util.SessionManager;
-import com.mx.generator.pojo.SysFunction;
 import com.mx.generator.pojo.SysMessage;
 import com.mx.generator.pojo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,8 @@ public class FrameServiceImpl implements IFrameService {
         return frameDao.logining(map);
     }
 
-
     @Override
-    public String getFunctionList(Integer type) {
+    public String getMenu(Integer type) {
         String roleIds = SessionManager.getLoginUser().getRoleIds();
         HashMap<String, Object> map = new HashMap<>();
         map.put("type", type);
@@ -67,6 +65,11 @@ public class FrameServiceImpl implements IFrameService {
         }
 
         return JSON.toJSONString(newList);
+    }
+
+    @Override
+    public List<String> getFunctions(String roleIds) {
+        return frameDao.getFunctions(roleIds);
     }
 
     @Override
