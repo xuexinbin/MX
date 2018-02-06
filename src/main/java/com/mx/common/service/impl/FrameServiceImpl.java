@@ -81,4 +81,9 @@ public class FrameServiceImpl implements IFrameService {
     public Integer getUnreadMessageCount() {
         return frameDao.getUnreadMessageCount(SessionManager.getLoginUserId());
     }
+
+    @Override
+    public String getRoleName() {
+        return frameDao.getRoleName(SessionManager.getLoginUser().getRoleIds());
+    }
 }

@@ -37,8 +37,7 @@
                 {
                     name: 'parentId',
                     label: '父菜单',
-                    width: 150,
-                    align: 'center',
+                    width: 120,
                     type: 'select',
                     items: [],
                     itemsMapper: "parentList"
@@ -46,12 +45,11 @@
                     name: 'code',
                     label: '编码',
                     width: 120,
-                    align: 'center',
                     rule: 'required;length(~15)'
                 }, {
                     name: 'sort',
                     label: '排序',
-                    width: 100,
+                    width: 60,
                     align: 'center',
                     rule: 'length(~2)'
                 }, {
@@ -72,7 +70,7 @@
                 {
                     label: '操作',
                     align: 'center',
-                    width: 180,
+                    width: 120,
                     render: function (value, data) {
                         var html = '<button type="button" class="btn-green" data-toggle="edit.datagrid.tr">编辑</button>&nbsp;&nbsp;'
                             + '<button type="button" class="btn-red" data-toggle="del.datagrid.tr">删除</button>'
@@ -85,14 +83,12 @@
                 {
                     name: 'name',
                     label: '功能名称',
-                    width: 150,
-                    align: 'center',
+                    width: 180,
                     rule: 'required;length(1~10)'
                 }, {
                     name: 'parentId',
                     label: '所属菜单',
-                    width: 150,
-                    align: 'center',
+                    width: 120,
                     type: 'select',
                     items: [],
                     itemsMapper: "parentList"
@@ -100,19 +96,18 @@
                     name: 'code',
                     label: '编码',
                     width: 120,
-                    align: 'center',
                     rule: 'required;length(~15)'
                 }, {
                     name: 'sort',
                     label: '排序',
-                    width: 150,
+                    width: 80,
                     align: 'center',
                     rule: 'length(~2)'
                 },
                 {
                     label: '操作',
                     align: 'center',
-                    width: 180,
+                    width: 120,
                     render: function (value, data) {
                         var html = '<button type="button" class="btn-green" data-toggle="edit.datagrid.tr">编辑</button>&nbsp;&nbsp;'
                             + '<button type="button" class="btn-red" data-toggle="del.datagrid.tr">删除</button>'

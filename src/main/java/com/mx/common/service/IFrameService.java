@@ -43,4 +43,10 @@ public interface IFrameService {
      * @return count
      */
     Integer getUnreadMessageCount();
+
+    /**
+     * 获得角色名称
+     * @return names
+     */
+    String getRoleName();
 }

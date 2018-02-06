@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
-	<properties>
-	    <!-- 日志文件保存路径 -->
-		<property name="LOG_HOME">C:/log</property>
-		<property name="FILE_NAME">logs</property>
-	</properties>
-	<Appenders>
-		<!-- 控制台打印 -->  
-		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
-		</Console>
-		<!-- 日志文件 -->
-		<RollingRandomAccessFile name="RUNNING_LOG"
-			fileName="${LOG_HOME}/${FILE_NAME}.log"
-			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.zip">
-			<PatternLayout
-				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
-			<Policies>
-				<TimeBasedTriggeringPolicy />
-				<SizeBasedTriggeringPolicy size="10MB" />
-			</Policies>
-			<DefaultRolloverStrategy max="20" />
-		</RollingRandomAccessFile>
-	</Appenders>
-	<Loggers>
-		<!-- SQL -->
-		<Logger name="java.sql.Connection" level="debug" additivity="true">
-		</Logger>
-		<Logger name="java.sql.Statement" level="debug" additivity="true">
-		</Logger>
-		<Logger name="java.sql.PreparedStatement" level="debug" additivity="true">
-		</Logger>
-		<Logger name="java.sql.ResultSet" level="debug" additivity="true">
-		</Logger>
-		<Root level="debug">
-			<appender-ref ref="RUNNING_LOG" />
-			<!-- 控制台打印，发布时可删 -->
-			<appender-ref ref="Console" />
-		</Root>
-	</Loggers>
+    <properties>
+        <!-- 日志文件保存路径 -->
+        <property name="LOG_HOME">C:/log</property>
+        <property name="FILE_NAME">logs</property>
+        <property name="ERROR_FILE_NAME">error</property>
+    </properties>
+    <Appenders>
+        <!-- 控制台打印 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <!-- 日志文件 -->
+        <RollingRandomAccessFile name="RUNNING_LOG"
+                                 fileName="${LOG_HOME}/${FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.zip">
+            <PatternLayout
+                    pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+
+    </Appenders>
+    <Loggers>
+        <!-- SQL -->
+        <Logger name="java.sql.Connection" level="debug" additivity="true">
+        </Logger>
+        <Logger name="java.sql.Statement" level="debug" additivity="true">
+        </Logger>
+        <Logger name="java.sql.PreparedStatement" level="debug" additivity="true">
+        </Logger>
+        <Logger name="java.sql.ResultSet" level="debug" additivity="true">
+        </Logger>
+        <Root level="debug">
+            <appender-ref ref="RUNNING_LOG"/>
+            <!-- 控制台打印，发布时可删 -->
+            <appender-ref ref="Console"/>
+        </Root>
+    </Loggers>
 </Configuration>

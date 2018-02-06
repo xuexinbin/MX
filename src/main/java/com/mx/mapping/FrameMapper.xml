@@ -57,6 +57,16 @@
         role_id IN (${_parameter})
     </select>
 
+    <!-- 获得角色名称 -->
+    <select id="getRoleName" resultType="string" parameterType="string">
+        SELECT
+            GROUP_CONCAT( DISTINCT  name)
+        FROM
+          sys_role
+        WHERE
+          id IN (${_parameter})
+    </select>
+
     <!-- 获得显示菜单 -->
     <select id="getFunctionList" resultMap="FunctionResultMap" parameterType="map">
         SELECT

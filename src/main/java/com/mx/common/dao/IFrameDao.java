@@ -47,4 +47,11 @@ public interface IFrameDao {
      * @param roleIds
      */
     List<String> getFunctions(String roleIds);
+
+    /**
+     * 获得角色名称
+     * @param roleIds 角色ids
+     * @return names
+     */
+    String getRoleName(String roleIds);
 }

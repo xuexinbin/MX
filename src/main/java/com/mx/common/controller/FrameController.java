@@ -3,6 +3,7 @@ package com.mx.common.controller;
 import com.alibaba.fastjson.JSON;
 import com.mx.common.constant.CommonConstant;
 import com.mx.common.constant.ErrorCodeEnum;
+import com.mx.common.service.ICommonService;
 import com.mx.common.service.IFrameService;
 import com.mx.common.util.SessionManager;
 import com.mx.common.util.response.ResponseFormat;
@@ -56,8 +57,10 @@ public class FrameController {
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String adminIndex(ModelMap map) {
         Integer messageCount = frameService.getUnreadMessageCount();
+        String roleName = frameService.getRoleName();
         map.addAttribute("messageCount", messageCount);
         map.addAttribute("user", SessionManager.getLoginUser());
+        map.addAttribute("roleName", roleName);
         return "common/mx";
     }
 

@@ -120,7 +120,7 @@
 
             $("#mx_showMessageTab").click(function (e) {
                 BJUI.navtab({
-                    id:'function_systemMessage',
+                    id:'function_sys-message',
                     url:'/system/systemMessage',
                     title:'系统消息'
                 })
@@ -326,7 +326,7 @@
                     </ul>
                 </li>
                 <li class="header-user">
-                    <a href="#" style="padding: 5px 10px;" class="dropdown-toggle" data-toggle="dropdown" title="用户信息">
+                    <a href="#" style="height: 40px;padding: 5px 10px;" class="dropdown-toggle" data-toggle="dropdown" title="用户信息">
                         <c:if test='${user.avatar == null}'>
                             <i class="fa fa-user-circle"></i>&nbsp;&nbsp;${user.userName}&nbsp;
                         </c:if>
@@ -345,7 +345,7 @@
                                      style="border: 3px solid rgba(255,255,255,0.2);border-radius: 30px;"
                                      src="${user.avatar}">
                                 <br>
-                                <span> ${user.userName} - ${user.roleIds}</span>
+                                <span> ${user.userName} - ${roleName}</span>
                             </c:if>
                         </li>
                         <li style="padding: 10px;">

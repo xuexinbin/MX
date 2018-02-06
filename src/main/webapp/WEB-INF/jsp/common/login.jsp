@@ -58,10 +58,13 @@
         }
 
         .content-panel {
-            margin-top: 100px;
+            height: 300px;
             width: 300px;
-            float: right;
-            margin-right: 10%;
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 150px;
+            bottom: 0;
         }
 
         .content-panel-h {
