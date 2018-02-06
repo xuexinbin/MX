@@ -125,8 +125,8 @@
                     align: 'center',
                     width: 180,
                     render: function (value, data) {
-                        var html = '<button type="button" class="user-editUserDialog btn-green"  val="' + data.id + '">编辑</button>&nbsp;&nbsp;'
-                            + '<button type="button" class="btn-red" data-toggle="del.datagrid.tr">删除</button>'
+                        var html = '<i class="fa fa-edit grid-icon grid-edit user-editUserDialog" val="' + data.id + '" title="编辑"></i>&nbsp;&nbsp;&nbsp;'
+                            + '<i class="fa fa-times grid-icon grid-del" data-toggle="del.datagrid.tr" title="删除"></i>';
                         return html;
                     }
                 },

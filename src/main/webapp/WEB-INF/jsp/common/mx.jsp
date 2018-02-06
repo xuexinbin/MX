@@ -120,9 +120,9 @@
 
             $("#mx_showMessageTab").click(function (e) {
                 BJUI.navtab({
-                    id:'function_sys-message',
-                    url:'/system/systemMessage',
-                    title:'系统消息'
+                    id: 'function_sys-message',
+                    url: '/system/systemMessage',
+                    title: '系统消息'
                 })
             });
             $("#mx_showMessage").click(function (e) {
@@ -133,12 +133,12 @@
                     okCallback: function (res, options) {
                         var messageList = res.messageList;
                         var str = "";
-                        for (var i=0; i< messageList.length; i++) {
-                            str += '<a href="#" class="header-message" data-id="' + messageList[i].id + '"  data-userMessageId="' + messageList[i].userMessageId + '" data-title="'+ messageList[i].title +'">';
-                            str += messageList[i].type == 0? '<i class="fa fa-bell-o color-blue"></i>&nbsp;' : '<i class="fa fa-envelope color-darkgreen"></i>&nbsp;';
-                            str += messageList[i].top == 1? '<span class="tabletag-prefix bgblue">置顶</span>&nbsp;' : '';
-                            str += messageList[i].level == 1? '<span class="tabletag-prefix bgred">紧急</span>&nbsp;' : '';
-                            str += messageList[i].important == 1? '<span class="tabletag-prefix bgred">重要</span>&nbsp;' : '';
+                        for (var i = 0; i < messageList.length; i++) {
+                            str += '<a href="#" class="header-message" data-id="' + messageList[i].id + '"  data-userMessageId="' + messageList[i].userMessageId + '" data-title="' + messageList[i].title + '">';
+                            str += messageList[i].type == 0 ? '<i class="fa fa-bell-o color-blue"></i>&nbsp;' : '<i class="fa fa-envelope color-darkgreen"></i>&nbsp;';
+                            str += messageList[i].top == 1 ? '<span class="tabletag-prefix bgblue">置顶</span>&nbsp;' : '';
+                            str += messageList[i].level == 1 ? '<span class="tabletag-prefix bgred">紧急</span>&nbsp;' : '';
+                            str += messageList[i].important == 1 ? '<span class="tabletag-prefix bgred">重要</span>&nbsp;' : '';
                             str += messageList[i].title;
                             str += '</a>';
                         }
@@ -169,8 +169,8 @@
                                 okCallback: function (res, options) {
                                     // 未读数 -1
                                     var countElm = $("#mx_messageCount");
-                                    var newCount = parseInt(countElm.text())-1;
-                                    countElm.text(newCount==0? "": newCount);
+                                    var newCount = parseInt(countElm.text()) - 1;
+                                    countElm.text(newCount == 0 ? "" : newCount);
                                 }
                             });
 
@@ -314,7 +314,8 @@
                 <li class="header-list">
                     <a href="#" id="mx_showMessage" class="dropdown-toggle" data-toggle="dropdown" title="查看消息">
                         <i class="fa fa-bell-o size16"></i>
-                        <span id="mx_messageCount" class="header-badge"><c:if test="${messageCount != 0}">${messageCount}</c:if></span>
+                        <span id="mx_messageCount" class="header-badge"><c:if
+                                test="${messageCount != 0}">${messageCount}</c:if></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li id="mx_messageList" class="header-list-a">
@@ -326,7 +327,8 @@
                     </ul>
                 </li>
                 <li class="header-user">
-                    <a href="#" style="height: 40px;padding: 5px 10px;" class="dropdown-toggle" data-toggle="dropdown" title="用户信息">
+                    <a href="#" style="height: 40px;padding: 5px 10px;" class="dropdown-toggle" data-toggle="dropdown"
+                       title="用户信息">
                         <c:if test='${user.avatar == null}'>
                             <i class="fa fa-user-circle"></i>&nbsp;&nbsp;${user.userName}&nbsp;
                         </c:if>
@@ -402,7 +404,7 @@
         <div id="bjui-sidenav-col">
             <div id="bjui-sidenav">
                 <%--<div id="bjui-sidenav-arrow" data-toggle="tooltip" data-placement="left" data-title="隐藏左侧菜单">--%>
-                    <%--<i class="fa fa-long-arrow-left"></i>--%>
+                <%--<i class="fa fa-long-arrow-left"></i>--%>
                 <%--</div>--%>
                 <div id="bjui-sidenav-box">
 
@@ -411,7 +413,7 @@
         </div>
         <div id="bjui-navtab" class="tabsPage">
             <%--<div id="bjui-sidenav-btn" data-toggle="tooltip" data-title="显示左侧菜单" data-placement="right">--%>
-                <%--<i class="fa fa-bars"></i>--%>
+            <%--<i class="fa fa-bars"></i>--%>
             <%--</div>--%>
             <div class="tabsPageHeader">
                 <div class="tabsPageHeaderContent">
@@ -428,22 +430,83 @@
             </ul>
             <div class="navtab-panel tabsPageContent">
                 <div class="navtabPage unitBox">
-                    <div class="bjui-pageContent">
-                        <div class="highlight">
-                                <pre class="prettyprint">
-------------------------
-BJUI 更新至 V1.31
-------------------------
-[修复] datagrid参数templateWidth、dialogFilterW为0时默认为启用；修复排序bug；新增字段参数itemattr，为items参数指定key/value；新增方法filter，用于数据筛选。
-[修复] 分页组件。
-[更新] ajaxform、ajaxsearch新增参数validate，是否验证标记。
-[更新] 验证插件nice validate更新至1.0.7。
-[更新] 图标字体Font Awesome更新至4.7.0。
-[调整] CSS细微调整。
-------------------------
+                    <div class="bjui-pageContent" style="padding: 10px;">
+                        <div style="width:22%;float:left;">
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>150</h3>
 
-　　　　　　2016-11-01 by.萧克南
-                                </pre>
+                                    <p>新增用户</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-user-plus"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看全部 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div style="width:22%;float:left;margin-left: 3%;">
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>50%</h3>
+
+                                    <p>比率</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-line-chart"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看全部 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div style="width:22%;float:left;margin-left: 3%;">
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>50%</h3>
+                                    <p>比率</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-pie-chart"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看全部 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div style="width:22%;float:left;margin-left: 3%;">
+                            <div class="small-box bg-red">
+                                <div class="inner">
+                                    <h3>30</h3>
+                                    <p>新增订单</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-cart-plus"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看全部 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="box">
+                            <div class="box-header">
+                                <i class="fa fa-clipboard"></i>&nbsp;To Do List
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Design a nice theme</li>
+                                    <li>Make the theme responsive</li>
+                                    <li>Let theme shine like a star</li>
+                                    <li>Let theme shine like a star</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="box" style="margin-left: 5%">
+                            <div class="box-header">
+                                <i class="fa fa-clipboard"></i>&nbsp;To Do List
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Design a nice theme</li>
+                                    <li>Make the theme responsive</li>
+                                    <li>Let theme shine like a star</li>
+                                    <li>Let theme shine like a star</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -70,10 +70,10 @@
                 {
                     label: '操作',
                     align: 'center',
-                    width: 120,
+                    width: 100,
                     render: function (value, data) {
-                        var html = '<button type="button" class="btn-green" data-toggle="edit.datagrid.tr">编辑</button>&nbsp;&nbsp;'
-                            + '<button type="button" class="btn-red" data-toggle="del.datagrid.tr">删除</button>'
+                        var html = '<i class="fa fa-edit grid-icon grid-edit" data-toggle="edit.datagrid.tr" title="编辑"></i>&nbsp;&nbsp;&nbsp;'
+                            + '<i class="fa fa-times grid-icon grid-del" data-toggle="del.datagrid.tr" title="删除"></i>';
                         return html;
                     }
                 },
@@ -107,10 +107,10 @@
                 {
                     label: '操作',
                     align: 'center',
-                    width: 120,
+                    width: 100,
                     render: function (value, data) {
-                        var html = '<button type="button" class="btn-green" data-toggle="edit.datagrid.tr">编辑</button>&nbsp;&nbsp;'
-                            + '<button type="button" class="btn-red" data-toggle="del.datagrid.tr">删除</button>'
+                        var html = '<i class="fa fa-edit grid-icon grid-edit" data-toggle="edit.datagrid.tr" title="编辑"></i>&nbsp;&nbsp;&nbsp;'
+                            + '<i class="fa fa-times grid-icon grid-del" data-toggle="del.datagrid.tr" title="删除"></i>';
                         return html;
                     }
                 },

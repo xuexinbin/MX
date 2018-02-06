@@ -52,10 +52,10 @@ $(function () {
             }, {
                 label: '操作',
                 align: 'center',
-                width: 120,
+                width: 100,
                 render: function (value, data) {
-                    var html = '<button type="button" class="btn-blue systemMessage-showMessage" data-id="' + data.id + '" data-userMessageId="' +data.userMessageId+ '" data-title="' + data.title + '">查看</button>&nbsp;&nbsp;'
-                        + '<button type="button" class="btn-red" data-toggle="del.datagrid.tr">删除</button>'
+                    var html = '<i class="fa fa-newspaper-o grid-icon grid-blue systemMessage-showMessage" data-id="' + data.id + '" data-userMessageId="' +data.userMessageId+ '" data-title="' + data.title + '" title="查看消息"></i>&nbsp;&nbsp;&nbsp;'
+                        + '<i class="fa fa-times grid-icon grid-del" data-toggle="del.datagrid.tr" title="删除"></i>';
                     return html;
                 }
             },
