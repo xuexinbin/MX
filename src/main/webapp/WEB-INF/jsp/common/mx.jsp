@@ -180,6 +180,10 @@
             });
         })
 
+        var homeRefreshFN = function () {
+            console.log("首页刷新");
+        }
+
         /*window.onbeforeunload = function(){
             return "确定要关闭本系统 ?";
         }*/
@@ -423,6 +427,11 @@
                 </div>
                 <div class="tabsLeft"><i class="fa fa-angle-double-left"></i></div>
                 <div class="tabsRight"><i class="fa fa-angle-double-right"></i></div>
+                <div class="tabsBar" style="width:80px;">
+                    <i class="fa fa-home"></i>&nbsp;
+                    <i class="fa fa-refresh"></i>&nbsp;
+                    <i class="fa fa-times"></i>&nbsp;
+                </div>
                 <div class="tabsMore"><i class="fa fa-angle-double-down"></i></div>
             </div>
             <ul class="tabsMoreList">

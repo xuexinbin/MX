@@ -11,6 +11,7 @@
  *           【modify】主题取消添加active
  * v20180131 【modify】自定义工具栏 右对齐
  * v20180205 【add】自定义展开按钮
+ *           【add】添加顶部首页、刷新、关闭工具栏
  *
  */
 
@@ -2412,7 +2413,7 @@
     // NAVTAB GLOBAL ELEMENTS
     // ======================
     
-    var currentIndex, $currentTab, $currentPanel, $box, $tabs, $panels, $prevBtn, $nextBtn, $moreBtn, $moreBox, $main, $mainLi,
+    var currentIndex, $currentTab, $currentPanel, $box, $tabs, $panels, $prevBtn, $nextBtn, $moreBtn,$homeBtn,$refreshBtn,$closeBtn, $moreBox, $main, $mainLi,
         autorefreshTimer
     
     $(function() {
@@ -2424,6 +2425,10 @@
             $prevBtn     = $box.find('> .tabsPageHeader > .tabsLeft')
             $nextBtn     = $box.find('> .tabsPageHeader > .tabsRight')
             $moreBtn     = $box.find('> .tabsPageHeader > .tabsMore')
+            // add by mx for 添加顶部首页、刷新、关闭工具栏 on 20180207
+            $homeBtn     = $box.find('> .tabsPageHeader > .tabsBar > .fa-home')
+            $refreshBtn  = $box.find('> .tabsPageHeader > .tabsBar > .fa-refresh')
+            $closeBtn    = $box.find('> .tabsPageHeader > .tabsBar > .fa-times')
             $moreBox     = $box.find('> .tabsMoreList')
             $main        = $tabs.find('li:first')
             $mainLi      = $moreBox.find('li:first')
@@ -2440,7 +2445,20 @@
                 else
                     $moreBox.height('')
             })
-            
+            // add by mx for 添加顶部首页、刷新、关闭工具栏 on 20180207
+            $homeBtn.click(function() {
+                BJUI.navtab('switchTab','main');
+            })
+            $refreshBtn.click(function() {
+                if ($('body').data('bjui.navtab').current == "main") {
+                    homeRefreshFN();
+                    return;
+                }
+                BJUI.navtab('refresh');
+            })
+            $closeBtn.click(function() {
+                BJUI.navtab('closeCurrentTab');
+            })
             $(document).on('click.bjui.navtab.switchtab', function(e) {
                 var $target = e.target.tagName == 'I' ? $(e.target).parent() : $(e.target)
                 

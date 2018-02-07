@@ -69,6 +69,7 @@ fieldset{border-color:#b5d2b5;}
 /* Navtab */
 #bjui-navtab > .tabsPageHeader > .tabsLeft,
 #bjui-navtab > .tabsPageHeader > .tabsRight,
+#bjui-navtab > .tabsPageHeader > .tabsBar,
 #bjui-navtab > .tabsPageHeader > .tabsMore{background-color:#f5fdf5; border:1px #b5d2b5 solid;}
 #bjui-navtab > .tabsPageHeader > .tabsLeft:hover,
 #bjui-navtab > .tabsPageHeader > .tabsRight:hover,

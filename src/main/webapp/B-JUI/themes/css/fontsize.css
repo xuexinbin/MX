@@ -12,7 +12,10 @@ html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul{he
 html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li > a{padding:0px 24px 0px 16px;}
 html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li > a > span{font-size:22px;}
 html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li span.close{font-size:22px;}
-html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsLeft, html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsRight, html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsMore{height:32px; line-height:1.78;}
+html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsLeft,
+html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsRight,
+html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsBar,
+html.bjui-font-a #bjui-navtab > .tabsPageHeader > .tabsMore{height:32px; line-height:1.78;}
 html.bjui-font-a #bjui-navtab > .tabsMoreList{top:31px;}
 html.bjui-font-a #bjui-navtab > .tabsMoreList > li a{height:34px; line-height:34px;}
 html.bjui-font-a #bjui-contextmenu li{height:32px; line-height:32px;}
@@ -90,7 +93,10 @@ html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul{he
 html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li > a{padding:0px 24px 2px 16px;}
 html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li > a > span{font-size:20px;}
 html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li span.close{font-size:20px;}
-html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsLeft, html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsRight, html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsMore{height:32px; line-height:1.78;}
+html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsLeft,
+html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsRight,
+html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsBar,
+html.bjui-font-b #bjui-navtab > .tabsPageHeader > .tabsMore{height:32px; line-height:1.78;}
 html.bjui-font-b #bjui-navtab > .tabsMoreList{top:31px;}
 html.bjui-font-b #bjui-navtab > .tabsMoreList > li a{height:30px; line-height:30px;}
 html.bjui-font-b #bjui-contextmenu li{height:28px; line-height:28px;}
@@ -167,7 +173,10 @@ html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul{he
 html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li > a{padding:4px 24px 4px 16px;}
 html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li > a > span{font-size:16px;}
 html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsPageHeaderContent > ul > li span.close{font-size:16px;}
-html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsLeft, html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsRight, html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsMore{height:32px; line-height:1.78;}
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsLeft,
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsRight,
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsBar,
+html.bjui-font-c #bjui-navtab > .tabsPageHeader > .tabsMore{height:32px; line-height:1.78;}
 html.bjui-font-c #bjui-navtab > .tabsMoreList{top:31px;}
 html.bjui-font-c #bjui-navtab > .tabsMoreList > li a{height:30px; line-height:30px;}
 html.bjui-font-c #bjui-contextmenu li{height:26px; line-height:26px;}
