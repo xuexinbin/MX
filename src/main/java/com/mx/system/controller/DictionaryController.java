@@ -1,6 +1,7 @@
 package com.mx.system.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.mx.common.controller.BaseWebController;
 import com.mx.common.service.ICommonService;
 import com.mx.generator.pojo.SysDictionary;
 import com.mx.system.service.IDictionaryService;
@@ -24,7 +25,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/system/dictionary")
-public class DictionaryController {
+public class DictionaryController  extends BaseWebController {
 
     @Autowired
     IDictionaryService dictionaryService;

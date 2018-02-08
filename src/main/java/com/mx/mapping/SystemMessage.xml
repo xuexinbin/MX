@@ -29,8 +29,8 @@
             </if>
             <if test="addUserId==null || addUserId == ''">
               um.id userMessageId,
+              um.read,
             </if>
-            um.read,
             m.id,
             m.title,
             m.important,

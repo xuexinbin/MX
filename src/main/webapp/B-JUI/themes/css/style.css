@@ -134,6 +134,7 @@ fieldset .bjui-row{padding:0;}
 .bjui-header .navbar-header button{padding:4px 10px; height:auto;}
 .bjui-header .navbar-nav > li > a{padding:10px 10px;}
 .bjui-header .navbar-collapse.navbar-show{overflow:visible !important; border-radius:0 0 3px 3px;}
+#bjui-navbar .navbar-header a {color: white;}
 /*#bjui-top .navbar-collapse{overflow:visible !important; z-index:2;}*/
 #bjui-top .navbar-collapse{z-index:4;}
 #bjui-top .navbar-collapse.navbar-show{height:auto !important; background-color:#555 !important;}

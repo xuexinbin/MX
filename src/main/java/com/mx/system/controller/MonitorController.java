@@ -1,5 +1,6 @@
 package com.mx.system.controller;
 
+import com.mx.common.controller.BaseWebController;
 import com.mx.common.service.ICommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ import java.util.zip.ZipInputStream;
  */
 @Controller
 @RequestMapping("system/monitor")
-public class MonitorController {
+public class MonitorController extends BaseWebController {
 
     @Autowired
     ICommonService commonService;

@@ -103,9 +103,9 @@ $(function () {
             }, {
                 label: '操作',
                 align: 'center',
-                width: 90,
+                width: 50,
                 render: function (value, data) {
-                    var html = '<button type="button" class="btn-blue systemMessage-showMessage" data-id="' + data.id + '" data-title="' + data.title + '">查看</button>'
+                    var html = '<i class="fa fa-newspaper-o grid-icon grid-blue systemMessage-showMessage" data-id="' + data.id + '" data-title="' + data.title + '" title="查看消息"></i>';
                     return html;
                 }
             },

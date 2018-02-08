@@ -1,6 +1,7 @@
 package com.mx.system.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.mx.common.controller.BaseWebController;
 import com.mx.common.pojo.SelectBean;
 import com.mx.common.service.ICommonService;
 import com.mx.generator.pojo.SysFunction;
@@ -26,7 +27,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/system/function")
-public class FunctionController {
+public class FunctionController extends BaseWebController {
 
     @Autowired
     IFunctionService functionService;

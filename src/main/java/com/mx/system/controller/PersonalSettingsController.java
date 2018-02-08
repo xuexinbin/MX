@@ -1,5 +1,6 @@
 package com.mx.system.controller;
 
+import com.mx.common.controller.BaseWebController;
 import com.mx.common.util.response.ResponseFormat;
 import com.mx.common.util.response.ResponseHandler;
 import com.mx.generator.pojo.SysUser;
@@ -26,7 +27,7 @@ import java.util.HashMap;
  */
 @Controller
 @RequestMapping("/system/personalSettings")
-public class PersonalSettingsController {
+public class PersonalSettingsController extends BaseWebController {
 
     @Autowired
     IPersonalSettingsService personalSettingsService;

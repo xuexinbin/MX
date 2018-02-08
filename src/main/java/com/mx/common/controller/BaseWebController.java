@@ -25,8 +25,8 @@ public class BaseWebController {
      * 异常处理
      *
      * @param exception 异常
-     * @param request
-     * @param response
+     * @param request   req
+     * @param response  res
      * @return 异常返回值
      */
     @ExceptionHandler(Exception.class)
@@ -40,8 +40,14 @@ public class BaseWebController {
         } else {
             logger.error("UNCATCH Exception", exception);
         }
-        Map<String, String> resultMap = new HashMap<String, String>();
-        resultMap.put("error", "unknownError");
+        String message = "系统出现未知错误！";
+        if (exception.getCause() != null) {
+            message = exception.getCause().getMessage();
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        // BJUI错误代码 statusCode: {ok:200, error:300, timeout:301},
+        resultMap.put("statusCode", 300);
+        resultMap.put("message", message);
         return new ModelAndView(new MappingJackson2JsonView(), resultMap);
     }
 }

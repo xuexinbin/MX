@@ -1,6 +1,7 @@
 package com.mx.system.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.mx.common.controller.BaseWebController;
 import com.mx.common.pojo.SelectBean;
 import com.mx.common.service.ICommonService;
 import com.mx.system.model.Department;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/system/department")
-public class DepartmentController {
+public class DepartmentController extends BaseWebController {
 
     @Autowired
     IDepartmentService departmentService;

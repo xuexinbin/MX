@@ -6,6 +6,12 @@
 %>
 <!DOCTYPE html>
 <html lang="zh">
+<link href="css/plugins/loading/timer.css" rel="stylesheet">
+<div id="mx_loadMask" class="loadingmsg" style="z-index:999;height:200px;width: 180px; position: absolute;margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
+    <div class="la-timer la-2x" style="color:#f1f1f1;">
+        <div></div>
+    </div>
+</div>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,8 +35,8 @@
     <link href="B-JUI/plugins/webuploader/webuploader.css" rel="stylesheet">
     <link href="B-JUI/themes/css/FA/css/font-awesome.min.css" rel="stylesheet">
     <!-- Favicons -->
-    <link rel="apple-touch-icon-precomposed" href="img/logo.png">
-    <link rel="shortcut icon" href="img/logo.png">
+    <link rel="apple-touch-icon-precomposed" href="img/logo.ico">
+    <link rel="shortcut icon" href="img/logo.ico">
     <!--[if lte IE 7]>
     <link href="B-JUI/themes/css/ie7.css" rel="stylesheet">
     <![endif]-->
@@ -68,11 +74,6 @@
     <script src="B-JUI/plugins/bootstrapSelect/defaults-zh_CN.min.js"></script>
     <!-- icheck -->
     <script src="B-JUI/plugins/icheck/icheck.min.js"></script>
-    <!-- HighCharts
-    <script src="B-JUI/plugins/highcharts/highcharts.js"></script>
-    <script src="B-JUI/plugins/highcharts/highcharts-3d.js"></script>
-    <script src="B-JUI/plugins/highcharts/themes/gray.js"></script>
-    -->
     <!-- other plugins -->
     <script src="B-JUI/plugins/other/jquery.autosize.js"></script>
     <link href="B-JUI/plugins/uploadify/css/uploadify.css" rel="stylesheet">
@@ -90,191 +91,14 @@
     <script src="js/common/common.js"></script>
 
     <link href="css/plugins/loading/ball-grid-beat.css" rel="stylesheet">
-    <!-- init -->
-    <script type="text/javascript">
-        //@ sourceURL=mxpage.js
-        $(function () {
-            BJUI.init({
-                JSPATH: 'B-JUI/',         //[可选]框架路径
-                PLUGINPATH: 'B-JUI/plugins/', //[可选]插件路径
-                loginInfo: {url: 'login_timeout.html', title: '登录', width: 440, height: 240}, // 会话超时后弹出登录对话框
-                statusCode: {ok: 200, error: 300, timeout: 301}, //[可选]
-                ajaxTimeout: 300000, //[可选]全局Ajax请求超时时间(毫秒)
-                alertTimeout: 3000,  //[可选]信息提示[info/correct]自动关闭延时(毫秒)
-                pageInfo: {
-                    total: 'totalRow',
-                    pageCurrent: 'pageCurrent',
-                    pageSize: 'pageSize',
-                    orderField: 'orderField',
-                    orderDirection: 'orderDirection'
-                }, //[可选]分页参数
-                keys: {statusCode: 'statusCode', message: 'message'}, //[可选]
-                ui: {
-                    sidenavWidth: 220,
-                    showSlidebar: true, //[可选]左侧导航栏锁定/隐藏
-                    overwriteHomeTab: false //[可选]当打开一个未定义id的navtab时，是否可以覆盖主navtab(我的主页)
-                },
-                debug: true,    // [可选]调试模式 [true|false，默认false]
-                theme: 'blue' // 若有Cookie['bjui_theme'],优先选择Cookie['bjui_theme']。皮肤[五种皮肤:default, orange, purple, blue, red, green]
-            });
 
-            $("#mx_showMessageTab").click(function (e) {
-                BJUI.navtab({
-                    id: 'function_sys-message',
-                    url: '/system/systemMessage',
-                    title: '系统消息'
-                })
-            });
-            $("#mx_showMessage").click(function (e) {
-                $("#mx_messageList").insertLoading("ball-grid-beat");
-                BJUI.ajax('doajax', {
-                    url: 'frame/getUnreadMessage',
-                    loadingmask: false,
-                    okCallback: function (res, options) {
-                        var messageList = res.messageList;
-                        var str = "";
-                        for (var i = 0; i < messageList.length; i++) {
-                            str += '<a href="#" class="header-message" data-id="' + messageList[i].id + '"  data-userMessageId="' + messageList[i].userMessageId + '" data-title="' + messageList[i].title + '">';
-                            str += messageList[i].type == 0 ? '<i class="fa fa-bell-o color-blue"></i>&nbsp;' : '<i class="fa fa-envelope color-darkgreen"></i>&nbsp;';
-                            str += messageList[i].top == 1 ? '<span class="tabletag-prefix bgblue">置顶</span>&nbsp;' : '';
-                            str += messageList[i].level == 1 ? '<span class="tabletag-prefix bgred">紧急</span>&nbsp;' : '';
-                            str += messageList[i].important == 1 ? '<span class="tabletag-prefix bgred">重要</span>&nbsp;' : '';
-                            str += messageList[i].title;
-                            str += '</a>';
-                        }
-                        $("#mx_messageList").html(str);
-
-                        // 消息点击事件
-                        $(".header-message").click(function (e) {
-                            var messageElm = $(this);
-                            var id = messageElm.attr("data-id");
-                            var userMessageId = messageElm.attr("data-userMessageId");
-                            // 打开消息页
-                            BJUI.navtab({
-                                id: 'message_' + id,
-                                url: 'system/systemMessage/showMessage',
-                                title: messageElm.attr("data-title"),
-                                icon: 'newspaper-o',
-                                data: {
-                                    messageId: id
-                                }
-                            });
-                            // 已读消息
-                            BJUI.ajax('doajax', {
-                                url: 'system/systemMessage/readMessage',
-                                data: {
-                                    id: userMessageId
-                                },
-                                loadingmask: false,
-                                okCallback: function (res, options) {
-                                    // 未读数 -1
-                                    var countElm = $("#mx_messageCount");
-                                    var newCount = parseInt(countElm.text()) - 1;
-                                    countElm.text(newCount == 0 ? "" : newCount);
-                                }
-                            });
-
-                        });
-                    }
-                });
-            });
-        })
-
-        var homeRefreshFN = function () {
-            console.log("首页刷新");
-        }
-
-        /*window.onbeforeunload = function(){
-            return "确定要关闭本系统 ?";
-        }*/
-
-        //菜单-事件-zTree
-        function MainMenuClick(event, treeId, treeNode) {
-            if (treeNode.target && treeNode.target == 'dialog' || treeNode.target == 'navtab')
-                event.preventDefault()
-            if (treeNode.isParent) {
-                var zTree = $.fn.zTree.getZTreeObj(treeId)
-                zTree.expandNode(treeNode)
-                return
-            }
-
-            if (treeNode.target && treeNode.target == 'dialog')
-                $(event.target).dialog({id: treeNode.targetid, url: treeNode.url, title: treeNode.name})
-            else if (treeNode.target && treeNode.target == 'navtab')
-                $(event.target).navtab({
-                    id: treeNode.targetid,
-                    url: treeNode.url,
-                    title: treeNode.name,
-                    fresh: treeNode.fresh,
-                    external: treeNode.external
-                })
-        }
-
-        // 满屏开关
-        function bjui_index_exchange(bjui_index_container) {
-            $('#bjui-top').find('> div').attr('class', bjui_index_container)
-            $('#bjui-navbar').find('> div').attr('class', bjui_index_container)
-            $('#bjui-body-box').find('> div').attr('class', bjui_index_container)
-        }
-
-        // 注销登录
-        function mx_loginOut() {
-            window.location.href = "/login";
-            BJUI.ajax('doajax', {
-                url: 'frame/loginOut',
-                loadingmask: false,
-                okCallback: function (res, options) {
-                }
-            });
-        }
-
-        // ---- 全局websocket start -----
-        // 防止建立多个连接
-        var websocket = this.websocket;
-        if (websocket == null) {
-            // 判断是否支持 WebSocket
-            if ('WebSocket' in window) {
-                websocket = new WebSocket("ws://localhost:8080/websocket");
-            } else if ('MozWebSocket' in window) {
-                websocket = new MozWebSocket("ws://localhost:8080/websocket");
-            } else {
-                websocket = new SockJS("http://localhost:8080/sockjs/websocket");
-            }
-        }
-        // 打开时
-        websocket.onopen = function (event) {
-            console.log("  websocket.onopen  ");
-        };
-        // 处理消息时
-        websocket.onmessage = function (event) {
-            if (event.data == null || event.data == "") {
-                return;
-            }
-            // 未读消息+1
-            var countElm = $("#mx_messageCount");
-            var newCount = parseInt(countElm.text() == "" ? "0" : countElm.text()) + 1;
-            countElm.text(newCount);
-        };
-
-        websocket.onerror = function (event) {
-            console.log("  websocket.onerror  ");
-        };
-
-        websocket.onclose = function (event) {
-            console.log("  websocket.onclose  ");
-        };
-        // ---- 全局websocket end -----
-    </script>
     <!-- highlight && ZeroClipboard -->
     <link href="assets/prettify.css" rel="stylesheet">
     <script src="assets/prettify.js"></script>
     <link href="assets/ZeroClipboard.css" rel="stylesheet">
     <script src="assets/ZeroClipboard.js"></script>
-    <style>
-        #bjui-navbar .navbar-header a {
-            color: white;
-        }
-    </style>
+    <!-- init -->
+    <script src="js/mx.js"></script>
 </head>
 <body>
 <!--[if lte IE 7]>
@@ -284,6 +108,7 @@
             href="http://down.tech.sina.com.cn/content/40975.html" target="_blank">谷歌 Chrome</a></div>
 </div>
 <![endif]-->
+
 <header class="navbar bjui-header" id="bjui-navbar">
     <div class="container_fluid">
         <div class="navbar-header" style="width: 222px;">
@@ -356,7 +181,7 @@
                         </li>
                         <li style="padding: 10px;">
                             <button type="button" class="btn-default" data-icon="cog" data-toggle="navtab"
-                                    data-options="{id:'system-5',url:'system/personalSettings'}">设置
+                                    data-options="{id:'function_sys-userSeting',url:'system/personalSettings',title:'个人设置'}">设置
                             </button>
                             <button type="button" onclick="mx_loginOut()" class="btn-default" data-icon="sign-out"
                                     style="float: right;">注销
@@ -523,6 +348,7 @@
         </div>
     </div>
 </div>
+
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="B-JUI/other/ie10-viewport-bug-workaround.js"></script>
 </body>

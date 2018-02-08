@@ -3,6 +3,7 @@ package com.mx.system.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mx.common.constant.CommonConstant;
+import com.mx.common.controller.BaseWebController;
 import com.mx.common.pojo.PushMessageBean;
 import com.mx.common.service.ICommonService;
 import com.mx.common.util.DictionaryUtil;
@@ -41,7 +42,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("system/systemMessage")
-public class SystemMessageController {
+public class SystemMessageController extends BaseWebController {
 
     @Autowired
     ISystemMessageService systemMessageService;
