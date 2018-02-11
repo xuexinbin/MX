@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.cash.vip.dao.VipMapper">
+    <resultMap id="VipResultMap" type="com.mx.cash.vip.model.Vip">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="number" jdbcType="VARCHAR" property="number"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="remain" jdbcType="INTEGER" property="remain"/>
+        <result column="point" jdbcType="INTEGER" property="point"/>
+        <result column="open_time" jdbcType="TIMESTAMP" property="openTime"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="mail" jdbcType="VARCHAR" property="mail"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="weixin" jdbcType="VARCHAR" property="weixin"/>
+        <result column="qq" jdbcType="VARCHAR" property="qq"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
+        <result column="enablef" jdbcType="TINYINT" property="enablef"/>
+        <result column="deletef" jdbcType="TINYINT" property="deletef"/>
+        <result column="update_user_id" jdbcType="INTEGER" property="updateUserId"/>
+        <result column="add_user_id" jdbcType="INTEGER" property="addUserId"/>
+    </resultMap>
+
+    <resultMap id="VipRechargeResultMap" type="com.mx.cash.vip.model.VipRecharge" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="vip_id" property="vipId" jdbcType="INTEGER" />
+        <result column="recharge_type" property="rechargeType" jdbcType="TINYINT" />
+        <result column="money" property="money" jdbcType="DECIMAL" />
+        <result column="give_money" property="giveMoney" jdbcType="DECIMAL" />
+        <result column="give_point" property="givePoint" jdbcType="DECIMAL" />
+        <result column="type" property="type" jdbcType="TINYINT" />
+        <result column="recharge_time" property="rechargeTime" jdbcType="TIMESTAMP" />
+        <result column="operator" property="operator" jdbcType="VARCHAR" />
+        <result column="memo" property="memo" jdbcType="VARCHAR" />
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER" />
+        <result column="vipName" property="vipName" jdbcType="VARCHAR" />
+        <result column="vipNumber" property="vipNumber" jdbcType="VARCHAR" />
+        <result column="vipPhone" property="vipPhone" jdbcType="VARCHAR" />
+        <result column="vipRemain" property="vipRemain" jdbcType="INTEGER" />
+    </resultMap>
+    <!-- 获得会员管理grid数据 -->
+    <select id="getVipInfoGridData" resultMap="VipResultMap" parameterType="map">
+        SELECT
+        id,
+        name,
+        number,
+        type,
+        remain,
+        point,
+        open_time,
+        sex,
+        mail,
+        phone,
+        weixin,
+        qq,
+        birthday,
+        memo,
+        enablef
+        FROM
+        cash_vip
+        WHERE
+        deletef = 0
+        <if test="likeStr != null and likeStr != '' ">
+            AND (name like CONCAT('%',#{likeStr},'%')
+            OR number like CONCAT('%',#{likeStr},'%')
+            OR phone like CONCAT('%',#{likeStr},'%'))
+        </if>
+        <if test="type != null and type != ''">
+            AND type = #{type}
+        </if>
+        <if test="enablef != null and enablef != ''">
+            AND enablef = #{enablef}
+        </if>
+    </select>
+
+    <!-- 添加会员 -->
+    <insert id="addVip" parameterType="com.mx.cash.vip.model.Vip">
+        INSERT INTO cash_vip (
+            name,
+            number,
+            type,
+            remain,
+            point,
+            open_time,
+            sex,
+            mail,
+            phone,
+            weixin,
+            qq,
+            birthday,
+            memo,
+            enablef,
+            update_user_id,
+            add_user_id)
+        VALUES (
+          #{name},
+          #{number},
+          #{type},
+          #{remain},
+          #{point},
+          #{openTime},
+          #{sex},
+          #{mail},
+          #{phone},
+          #{weixin},
+          #{qq},
+          #{birthday},
+          #{memo},
+          #{enablef},
+          #{updateUserId},
+          #{addUserId})
+    </insert>
+
+    <!-- 编辑会员 -->
+    <update id="editVip" parameterType="com.mx.generator.pojo.CashVip">
+        UPDATE
+        cash_vip
+        SET
+        name = #{name},
+        number = #{number},
+        type = #{type},
+        remain = #{remain},
+        point = #{point},
+        open_time = #{openTime},
+        sex = #{sex},
+        mail = #{mail},
+        phone = #{phone},
+        weixin = #{weixin},
+        qq = #{qq},
+        birthday = #{birthday},
+        memo = #{memo},
+        enablef = #{enablef},
+        update_user_id = #{updateUserId}
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 获得会员详细信息 -->
+    <select id="getVipInfoById" resultMap="VipResultMap" parameterType="Integer">
+        SELECT
+            id,
+            name,
+            number,
+            type,
+            remain,
+            point,
+            open_time,
+            sex,
+            mail,
+            phone,
+            weixin,
+            qq,
+            birthday,
+            memo,
+            enablef
+        FROM
+            cash_vip
+        WHERE
+            deletef = 0
+            AND id = #{id}
+    </select>
+
+    <!-- 获得充值会员findGrid -->
+    <select id="getVipFindGrid" resultMap="VipResultMap" parameterType="map">
+        SELECT
+        id,
+        name,
+        number,
+        type,
+        phone,
+        remain
+        FROM
+        cash_vip
+        WHERE
+        deletef = 0
+        AND enablef = 0
+    </select>
+
+    <!-- 添加充值信息 -->
+    <insert id="addRecharge" parameterType="com.mx.cash.vip.model.VipRecharge">
+        INSERT INTO cash_vip_recharge (
+            vip_id,
+            recharge_type,
+            money,
+            give_money,
+            give_point,
+            type,
+            recharge_time,
+            operator,
+            memo,
+            update_user_id,
+            add_user_id)
+        VALUES (
+            #{vipId},
+            #{rechargeType},
+            #{money},
+            #{giveMoney},
+            #{givePoint},
+            #{type},
+            #{rechargeTime},
+            #{operator},
+            #{memo},
+            #{updateUserId},
+            #{addUserId})
+    </insert>
+
+    <!-- 获得充值grid数据 -->
+    <select id="getVipRechargeGridData" resultMap="VipRechargeResultMap" parameterType="map">
+        SELECT
+          vr.id,
+          vr.vip_id,
+          vr.recharge_type,
+          vr.money,
+          vr.give_money,
+          vr.give_point,
+          vr.type,
+          vr.recharge_time,
+          vr.operator,
+          vr.memo,
+          v.name vipName,
+          v.number vipNumber,
+          v.phone vipPhone
+        FROM
+          cash_vip_recharge vr
+          LEFT JOIN cash_vip v ON v.id = vr.vip_id AND v.deletef = 0 AND v.enablef = 0
+    </select>
+
+    <!-- 获得充值详细信息 -->
+    <select id="getVipRechargeInfoById" resultMap="VipRechargeResultMap" parameterType="Integer">
+        SELECT
+          vr.id,
+          vr.vip_id,
+          vr.recharge_type,
+          vr.money,
+          vr.give_money,
+          vr.give_point,
+          vr.type,
+          vr.recharge_time,
+          vr.operator,
+          vr.memo,
+          v.name vipName,
+          v.number vipNumber,
+          v.remain vipRemain
+        FROM
+          cash_vip_recharge vr
+          LEFT JOIN cash_vip v ON v.id = vr.vip_id AND v.deletef = 0 AND v.enablef = 0
+        WHERE
+          vr.id = #{id}
+    </select>
+
+</mapper>

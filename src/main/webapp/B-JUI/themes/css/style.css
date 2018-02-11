@@ -149,7 +149,7 @@ fieldset .bjui-row{padding:0;}
 #bjui-themes > li > a:hover{background-color:#eee;}
 #bjui-sidenav-col{position:absolute; left:0; z-index:1; width:260px; border-left:1px #f1f1f1 solid; border-right:1px #f1f1f1 solid; box-shadow:0 1px 8px rgba(0,0,0,.1);}
 #bjui-sidenav{position:relative; background-color:#fff; overflow:auto;}
-#bjui-sidenav-box > .nav > li{border-bottom:0px #eee solid;}
+#bjui-sidenav-box > .nav > li{border-bottom:1px #f5f5f5 solid;}
 #bjui-sidenav-box > .nav > li.active > a{background-color:#f1f1f1;}
 #bjui-sidenav-box > .nav > li > a{padding-top:8px; padding-bottom:8px; color:#000; border-left:4px #fff solid; border-bottom:1px #fff solid;}
 #bjui-sidenav-box .nav > li.open > a,

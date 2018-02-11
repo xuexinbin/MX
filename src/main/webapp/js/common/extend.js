@@ -4,6 +4,8 @@ jQuery.fn.extend({
     formChangedCheck: formChangedCheck,
     // form是否修改
     formHasChanged: formHasChanged,
+    // form设为只读
+    setFormReadOnly: setFormReadOnly,
     // 设定form changed状态
     setChanged: setChanged,
     // 获得select下拉列表
@@ -46,7 +48,19 @@ function formHasChanged() {
 function setChanged(bool) {
     $(this.selector).data("changed", bool)
 }
-
+/**
+ * form设为只读
+ */
+function setFormReadOnly() {
+    var formId = this.selector;
+    $(formId + ' input').attr("disabled", "");
+    $(formId + ' textarea').attr("readonly", "");
+    $(formId + ' select').attr("disabled", "");
+    // 隐藏日期按钮
+    $(formId + ' a[data-toggle="datepickerbtn"]').hide();
+    // 隐藏findGrid按钮
+    $(formId + ' a[data-toggle="findgridbtn"]').hide();
+}
 /**
  * 获得select下拉列表
  * @param url 请求参数

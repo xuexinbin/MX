@@ -105,5 +105,19 @@
                enableSelectByExample="false" selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+        <table schema="" tableName="cash_vip" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <ignoreColumn column="update_time"/>
+            <ignoreColumn column="add_time"/>
+        </table>
+        <table schema="" tableName="cash_vip_recharge" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <ignoreColumn column="update_time"/>
+            <ignoreColumn column="add_time"/>
+        </table>
     </context>
 </generatorConfiguration>

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class FunctionController extends BaseWebController {
     @RequestMapping(value = "/getFunctionGridData", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
     public String getFunctionGridData(@RequestParam Map<String, String> map) {
         List<SysFunction> functionListList = functionService.getFunctionGridData(map);
-        String conditions = "type=0 order by sort";
+        String conditions = "type=0 order by parent_id asc, sort desc";
         List<SelectBean> parentList = commonService.getSelectList("sys_function", "name", "id", conditions);
         parentList.add(0, new SelectBean("无", "0"));
         HashMap<String, Object> resMap = new HashMap<>();

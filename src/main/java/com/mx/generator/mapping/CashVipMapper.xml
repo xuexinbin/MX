@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.generator.dao.CashVipMapper" >
+  <resultMap id="BaseResultMap" type="com.mx.generator.pojo.CashVip" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="remain" property="remain" jdbcType="DECIMAL" />
+    <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="open_time" property="openTime" jdbcType="TIMESTAMP" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="enablef" property="enablef" jdbcType="TINYINT" />
+    <result column="deletef" property="deletef" jdbcType="TINYINT" />
+    <result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+    <result column="add_user_id" property="addUserId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, number, type, remain, point, open_time, sex, mail, phone, weixin, qq, birthday, 
+    memo, enablef, deletef, update_user_id, add_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cash_vip
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cash_vip
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mx.generator.pojo.CashVip" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cash_vip (name, number, type, 
+      remain, point, open_time, 
+      sex, mail, phone, weixin, 
+      qq, birthday, memo, 
+      enablef, deletef, update_user_id, 
+      add_user_id)
+    values (#{name,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{remain,jdbcType=DECIMAL}, #{point,jdbcType=INTEGER}, #{openTime,jdbcType=TIMESTAMP}, 
+      #{sex,jdbcType=TINYINT}, #{mail,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}, 
+      #{enablef,jdbcType=TINYINT}, #{deletef,jdbcType=TINYINT}, #{updateUserId,jdbcType=INTEGER}, 
+      #{addUserId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mx.generator.pojo.CashVip" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cash_vip
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="remain != null" >
+        remain,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="openTime != null" >
+        open_time,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="mail != null" >
+        mail,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="weixin != null" >
+        weixin,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="enablef != null" >
+        enablef,
+      </if>
+      <if test="deletef != null" >
+        deletef,
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id,
+      </if>
+      <if test="addUserId != null" >
+        add_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="remain != null" >
+        #{remain,jdbcType=DECIMAL},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="openTime != null" >
+        #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="enablef != null" >
+        #{enablef,jdbcType=TINYINT},
+      </if>
+      <if test="deletef != null" >
+        #{deletef,jdbcType=TINYINT},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="addUserId != null" >
+        #{addUserId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mx.generator.pojo.CashVip" >
+    update cash_vip
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="remain != null" >
+        remain = #{remain,jdbcType=DECIMAL},
+      </if>
+      <if test="point != null" >
+        point = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="openTime != null" >
+        open_time = #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="enablef != null" >
+        enablef = #{enablef,jdbcType=TINYINT},
+      </if>
+      <if test="deletef != null" >
+        deletef = #{deletef,jdbcType=TINYINT},
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id = #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="addUserId != null" >
+        add_user_id = #{addUserId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mx.generator.pojo.CashVip" >
+    update cash_vip
+    set name = #{name,jdbcType=VARCHAR},
+      number = #{number,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      remain = #{remain,jdbcType=DECIMAL},
+      point = #{point,jdbcType=INTEGER},
+      open_time = #{openTime,jdbcType=TIMESTAMP},
+      sex = #{sex,jdbcType=TINYINT},
+      mail = #{mail,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      memo = #{memo,jdbcType=VARCHAR},
+      enablef = #{enablef,jdbcType=TINYINT},
+      deletef = #{deletef,jdbcType=TINYINT},
+      update_user_id = #{updateUserId,jdbcType=INTEGER},
+      add_user_id = #{addUserId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
