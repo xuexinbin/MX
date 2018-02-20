@@ -1,0 +1,107 @@
+<div class="bjui-pageContent">
+    <form id="textDialog_form" class="bjui-row col-2">
+        <label for="textDialog_label" class="row-label">lable：</label>
+        <div class="row-input">
+            <input id="textDialog_label" type="text" placeholder="请输入label值">
+        </div>
+        <label for="textDialog_id" class="row-label">id：</label>
+        <div class="row-input">
+            <input id="textDialog_id" type="text" placeholder="请输入id值">
+        </div>
+        <label for="textDialog_name" class="row-label">name：</label>
+        <div class="row-input">
+            <input id="textDialog_name" type="text" placeholder="请输入name值">
+        </div>
+        <label for="textDialog_value" class="row-label">value值：</label>
+        <div class="row-input">
+            <input id="textDialog_value" type="text" placeholder="请输入value初始值">
+        </div>
+        <label for="textDialog_placeholder" class="row-label">placeholder：</label>
+        <div class="row-input">
+            <input id="textDialog_placeholder" type="text" placeholder="请输入placeholder占位符">
+        </div>
+        <label for="textDialog_readonly" class="row-label">是否只读：</label>
+        <div class="row-input">
+            <input id="textDialog_readonly" type="checkbox" value="1" data-toggle="icheck"
+                   data-label="只读">
+        </div>
+        <label for="textDialog_disabled" class="row-label">是否禁用：</label>
+        <div class="row-input">
+            <input id="textDialog_disabled" type="checkbox" value="1" data-toggle="icheck"
+                   data-label="禁用">
+        </div>
+        <label for="textDialog_size" class="row-label">尺寸：</label>
+        <div class="row-input">
+            <select id="textDialog_size" data-toggle="selectpicker"
+                    data-width="80">
+                <option value="0" selected="">普通</option>
+                <option value="input-sm">小尺寸</option>
+                <option value="input-nm">稍大</option>
+                <option value="input-lg">较大</option>
+                <option value="1">固定尺寸</option>
+            </select>
+            <input id="textDialog_sizeNum" type="text" style="width: 70px;display: none;"
+                   placeholder="固定尺寸">
+        </div>
+        <br>
+        <div class="div-line"></div>
+        <label for="textDialog_required" class="row-label">是否必填：</label>
+        <div class="row-input">
+            <input id="textDialog_required" type="checkbox" value="1" data-toggle="icheck"
+                   data-label="必填">
+        </div>
+        <label for="textDialog_other" class="row-label">常用规则：</label>
+        <div class="row-input">
+            <select id="textDialog_other" data-toggle="selectpicker" data-width="80">
+                <option value="0" selected=""></option>
+                <option value="mobile">手机号</option>
+                <option value="email">邮箱</option>
+            </select>
+        </div>
+        <br>
+        <label for="textDialog_dataType" class="row-label">数据类型：</label>
+        <div class="row-input" style="width: 60%">
+            <select id="textDialog_dataType" data-toggle="selectpicker" data-width="55">
+                <option value="0" selected=""></option>
+                <option value="1">字符</option>
+                <option value="2">整数</option>
+                <option value="3">数值</option>
+            </select>
+            <select id="textDialog_length" data-toggle="selectpicker" data-width="100">
+                <option value="0" selected=""></option>
+                <option value="1">最多n个</option>
+                <option value="2">至少n个</option>
+                <option value="3">n个字符</option>
+                <option value="4">n1到n2个</option>
+            </select>
+            <select id="textDialog_integer" data-toggle="selectpicker" data-width="100">
+                <option value="0" selected=""></option>
+                <option value="1">整数</option>
+                <option value="2">不小于n</option>
+                <option value="3">不大于n</option>
+                <option value="4">n1到n2</option>
+            </select>
+            <select id="textDialog_range" data-toggle="selectpicker" data-width="100">
+                <option value="0" selected=""></option>
+                <option value="1">不小于n</option>
+                <option value="2">不大于n</option>
+                <option value="3">n1到n2</option>
+            </select>
+            <input id="textDialog_dataStart" type="text" style="width: 60px;" placeholder="数字">
+            <input id="textDialog_dataEnd"  type="text" style="width: 60px;" placeholder="数字">
+
+        </div>
+
+    </form>
+
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" class="btn-close" data-icon="close">取消</button>&nbsp;&nbsp;&nbsp;
+        </li>
+        <li>
+            <button id="textDialog_saveBtn" type="button" class="btn-default" data-icon="save">确定</button>&nbsp;&nbsp;&nbsp;
+        </li>
+    </ul>
+</div>

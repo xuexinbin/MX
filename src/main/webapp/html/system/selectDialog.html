@@ -1,0 +1,55 @@
+<div class="bjui-pageContent">
+    <form id="selectDialog_form" class="bjui-row col-2">
+        <label for="selectDialog_label" class="row-label">lable：</label>
+        <div class="row-input">
+            <input id="selectDialog_label" type="text" placeholder="请输入label值">
+        </div>
+        <label for="selectDialog_id" class="row-label">id：</label>
+        <div class="row-input">
+            <input id="selectDialog_id" type="text" placeholder="请输入id值">
+        </div>
+        <label for="selectDialog_name" class="row-label">name：</label>
+        <div class="row-input">
+            <input id="selectDialog_name" type="text" placeholder="请输入name值">
+        </div>
+        <label for="selectDialog_disabled" class="row-label">是否禁用：</label>
+        <div class="row-input">
+            <input id="selectDialog_disabled" type="checkbox" data-toggle="icheck"
+                   data-label="禁用">
+        </div>
+        <label for="selectDialog_multiple" class="row-label">是否多选：</label>
+        <div class="row-input">
+            <input id="selectDialog_multiple" type="checkbox" data-toggle="icheck"
+                   data-label="多选">
+        </div>
+        <label for="selectDialog_width" class="row-label">固定宽度：</label>
+        <div class="row-input">
+            <input id="selectDialog_width" type="text"
+                   placeholder="数字(例:200)">
+        </div>
+        <br>
+        <div class="div-line"></div>
+        <label for="selectDialog_required" class="row-label">是否必填：</label>
+        <div class="row-input">
+            <input id="selectDialog_required" type="checkbox" data-toggle="icheck"
+                   data-label="必填">
+        </div>
+        <br>
+        <label class="row-label">option值：</label>
+        <div class="row-input">
+            <textarea id="selectDialog_option" cols="40" placeholder='请输入option'></textarea>
+            <div style="width: 400px;color: #999;">例如：&lt;option value="" selected=""&gt;&lt;/option&gt;</div>
+        </div>
+    </form>
+
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li>
+            <button type="button" class="btn-close" data-icon="close">取消</button>&nbsp;&nbsp;&nbsp;
+        </li>
+        <li>
+            <button id="selectDialog_saveBtn" type="button" class="btn-default" data-icon="save">确定</button>&nbsp;&nbsp;&nbsp;
+        </li>
+    </ul>
+</div>
