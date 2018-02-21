@@ -13,9 +13,9 @@ public class CashVipRecharge extends BaseBean {
     private Integer vipId;
 
     /**
-     * 充值方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
+     * 0:充值 1:退款
      */
-    private Byte rechargeType;
+    private Byte type;
 
     /**
      * 充值金额/退款金额
@@ -33,9 +33,9 @@ public class CashVipRecharge extends BaseBean {
     private BigDecimal givePoint;
 
     /**
-     * 0:充值 1:退款
+     * 付款方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
      */
-    private Byte type;
+    private Byte rechargeType;
 
     /**
      * 充值日期
@@ -77,19 +77,19 @@ public class CashVipRecharge extends BaseBean {
     }
 
     /**
-     * 获得充值方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
-     * @return recharge_type 充值方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
+     * 获得0:充值 1:退款
+     * @return type 0:充值 1:退款
      */
-    public Byte getRechargeType() {
-        return rechargeType;
+    public Byte getType() {
+        return type;
     }
 
     /**
-     * 设置充值方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
-     * @param rechargeType 充值方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
+     * 设置0:充值 1:退款
+     * @param type 0:充值 1:退款
      */
-    public void setRechargeType(Byte rechargeType) {
-        this.rechargeType = rechargeType;
+    public void setType(Byte type) {
+        this.type = type;
     }
 
     /**
@@ -141,19 +141,19 @@ public class CashVipRecharge extends BaseBean {
     }
 
     /**
-     * 获得0:充值 1:退款
-     * @return type 0:充值 1:退款
+     * 获得付款方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
+     * @return recharge_type 付款方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
      */
-    public Byte getType() {
-        return type;
+    public Byte getRechargeType() {
+        return rechargeType;
     }
 
     /**
-     * 设置0:充值 1:退款
-     * @param type 0:充值 1:退款
+     * 设置付款方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
+     * @param rechargeType 付款方式：0现金 1微信 2支付宝 3网银 4刷卡 5其他
      */
-    public void setType(Byte type) {
-        this.type = type;
+    public void setRechargeType(Byte rechargeType) {
+        this.rechargeType = rechargeType;
     }
 
     /**

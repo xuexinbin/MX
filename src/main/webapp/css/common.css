@@ -225,3 +225,5 @@
 .color-blue{color: #428bca;}
 .color-darkorange{color: darkorange;}
 .color-darkgreen{color: darkgreen;}
+
+.div-line{height: 10px;width: 100%;border-top: 1px solid #e5e5e5;}

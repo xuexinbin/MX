@@ -1,43 +1,72 @@
 //@ sourceURL=code.js
-
-// 设置表单组件数据
-var setCodeForm = function (code) {
-    BJUI.ajax('doajax', {
-        url: 'system/code/addCode',
-        data: {
-            codeId: $("#code_codeId").val(),
-            code: code
-        },
-        loadingmask: true,
-        okCallback: function (res, options) {
-
-        }
-    });
-};
-
-// 模版赋值替换
+// 已存代码
+var codeList = {};
+// html模版赋值替换
 var initTemplate = function (btn, template) {
     // 遍历属性赋值
     var obj = JSON.parse(btn.getAttribute("data-code"));
+    // 未定义替换为空
     if (obj == null || obj == "") {
-        // 未定义替换为空
-        template = template.replaceAll(/#[^#]*Text#/, "")
-    } else {
-        for (var index in obj) {
-            template = template.replace("#" + index + "Text#", obj[index]);
-        }
-        // 未定义替换为空
-        template = template.replaceAll(/#[^#]*Text#/, "")
+        return template.replaceAll(/#[^#]*Text#/, "")
     }
+    for (var index in obj) {
+        template = template.replaceAll("#" + index + "Text#", obj[index]);
+    }
+    // 未定义替换为空
+    template = template.replaceAll(/#[^#]*Text#/, "")
     return template;
 }
+
+// code模版赋值替换
+var initCodeTemplate = function (btn, template) {
+    // 遍历属性赋值
+    var obj = JSON.parse(btn.getAttribute("data-code"));
+    // 未定义替换为空
+    if (obj == null || obj == "") {
+        return template.replaceAll(/#[^#]*Text#/, "")
+    }
+    for (var index in obj) {
+        var value = obj[index];
+        // 去除引号
+        value = value.replaceAll("'", "");
+        value = value.replaceAll("\"", "");
+        if (value.indexOf("=") > 0) {
+            value = value.split("=")[1];
+        }
+        // name为空取id“_”后面值
+        if (index == "name" && (value == null || value == "")) {
+            var tempId = obj["id"].replaceAll("'", "").replaceAll("\"", "");
+            if (tempId.indexOf("=") > 0) {
+                tempId = tempId.split("=")[1];
+            }
+            if (tempId != null) {
+                // id: xxDialog_name
+                var idSplit = tempId.split("_");
+                if (idSplit.length > 1) {
+                    value = idSplit[idSplit.length - 1];
+                } else {
+                    value = idSplit[0];
+                }
+            }
+        }
+        template = template.replaceAll("#" + index + "Text#", value);
+    }
+
+    // 未定义替换为空
+    template = template.replaceAll(/#[^#]*Text#/, "")
+    return template;
+}
+
 // 获得代码
-var getCode = function () {
+var getCode = function (type) {
     // 文本框
     var textTemplate = '<label #idForText# class="row-label">#labelText#</label>\n'
         + '<div class="row-input #requiredText#">\n'
         + '    <input type="text" #idText# #nameText# #placeholderText# #readonlyText# #disabledText# #classText# #sizeText# #ruleText# #valueText#>\n'
         + '</div>\n';
+    var textSet = '// #labelText#\n$("##idText#").val(obj.#nameText#);\n';
+    var textGet = '// #labelText#\n$("##idText#").val();\n';
+    var textObjGet = '#nameText#: $("##idText#").val(),\n';
     // 隐藏文本框
     var hideTextTemplate = '<input type="hidden" #idText# #nameText# #valueText#>\n';
     // 多行文本框
@@ -52,6 +81,9 @@ var getCode = function () {
         + '      #optionText#\n'
         + '    </select>\n'
         + '</div>\n';
+    var selectSet = '// #labelText#\n$("##idText#").selectpicker("val",obj.#nameText#);\n';
+    var selectGet = '// #labelText#\n$("##idText#").val();\n';
+    var selectObjGet = '#nameText#: $("##idText#").val(),\n';
     // 单选框
     var radioTemplate = '<label #idForText# class="row-label">#labelText#</label>\n'
         + '<div class="row-input">\n'
@@ -62,11 +94,16 @@ var getCode = function () {
         + '<div class="row-input">\n'
         + '    <input type="checkbox" data-toggle="icheck"  #idText# #nameText# #disabledText# #valueText# #checkedText# #dataLabelText#>\n'
         + '</div>\n';
+    var checkboxSet = '// #labelText#\n"是否选中" ? $("##idText#").iCheck("check"): $("##idText#").iCheck("uncheck");\n';
+    var checkboxGet = '// #labelText#\n$("##idText#")[0].checked ? "选中的值" : "未选中的值";\n';
+    var checkboxObjGet = '#nameText#: $("##idText#")[0].checked ? "选中的值" : "未选中的值",\n';
+
     // 日期
     var datepickerTemplate = '<label #idForText# class="row-label">#labelText#</label>\n'
         + '<div class="row-input #requiredText#">\n'
         + '    <input type="text" data-toggle="datepicker" #idText# #nameText# #placeholderText# #readonlyText# #disabledText# #patternText# #ruleText# #valueText#></input>\n'
         + '</div>\n';
+    var datepickerSet = '// #labelText#\n$("##idText#").val(new Date(obj.#nameText#).formatDate("#patternText#"));\n';
 
     // 文本框按钮前缀
     var textIdPrefix = "code_text_";
@@ -85,39 +122,75 @@ var getCode = function () {
 
     var btns = $("#code_dropDivId div button");
     var code = "";
+    var setCode = "";
+    var getCode = "";
+    var getObjCode = "";
     for (var i = 0; i < btns.length; i++) {
         // 文本框
         if (btns[i].id.startsWith(textIdPrefix)) {
             code += initTemplate(btns[i], textTemplate);
+            setCode += initCodeTemplate(btns[i], textSet);
+            getCode += initCodeTemplate(btns[i], textGet);
+            getObjCode += initCodeTemplate(btns[i], textObjGet);
         } else if ((btns[i].id.startsWith(hideTextIdPrefix))) {
             code += initTemplate(btns[i], hideTextTemplate);
+            setCode += initCodeTemplate(btns[i], textSet);
+            getCode += initCodeTemplate(btns[i], textGet);
+            getObjCode += initCodeTemplate(btns[i], textObjGet);
         } else if ((btns[i].id.startsWith(textareaIdPrefix))) {
             code += initTemplate(btns[i], textareaTemplate);
+            setCode += initCodeTemplate(btns[i], textSet);
+            getCode += initCodeTemplate(btns[i], textGet);
+            getObjCode += initCodeTemplate(btns[i], textObjGet);
         } else if ((btns[i].id.startsWith(selectIdPrefix))) {
             code += initTemplate(btns[i], selectTemplate);
-        }else if ((btns[i].id.startsWith(radioIdPrefix))) {
+            setCode += initCodeTemplate(btns[i], selectSet);
+            getCode += initCodeTemplate(btns[i], selectGet);
+            getObjCode += initCodeTemplate(btns[i], selectObjGet);
+        } else if ((btns[i].id.startsWith(radioIdPrefix))) {
             code += initTemplate(btns[i], radioTemplate);
-        }else if ((btns[i].id.startsWith(checkboxIdPrefix))) {
+            setCode += initCodeTemplate(btns[i], checkboxSet);
+            getCode += initCodeTemplate(btns[i], checkboxGet);
+            getObjCode += initCodeTemplate(btns[i], checkboxObjGet);
+        } else if ((btns[i].id.startsWith(checkboxIdPrefix))) {
             code += initTemplate(btns[i], checkboxTemplate);
-        }else if ((btns[i].id.startsWith(datepickerIdPrefix))) {
+            setCode += initCodeTemplate(btns[i], checkboxSet);
+            getCode += initCodeTemplate(btns[i], checkboxGet);
+            getObjCode += initCodeTemplate(btns[i], checkboxObjGet);
+        } else if ((btns[i].id.startsWith(datepickerIdPrefix))) {
             code += initTemplate(btns[i], datepickerTemplate);
+            setCode += initCodeTemplate(btns[i], datepickerSet);
+            getCode += initCodeTemplate(btns[i], textGet);
+            getObjCode += initCodeTemplate(btns[i], textObjGet);
         }
     }
 
-    var textTemplateStart = '<form id="demoDialog_form" class="bjui-row #colCountText#">\n';
-    var textTemplateEnd = '</form>\n';
-    // 几列
-    textTemplateStart = textTemplateStart.replace("#colCountText#", "col-" + $("#code_colCount").val());
-    code = textTemplateStart + code + textTemplateEnd;
-
+    var res;
+    if (type == 1) {
+        res = setCode;
+    } else if (type == 2) {
+        res = getCode;
+    } else if (type == 3) {
+        // 拼接头尾；截取最后,和换行符
+        getObjCode = 'var obj= {\n' + getObjCode.substring(0, getObjCode.length - 2) + '\n};\n';
+        res = getObjCode;
+    } else {
+        //type == 0
+        var formTemplateStart = '<form id="demoDialog_form" class="bjui-row #colCountText#">\n';
+        var formTemplateEnd = '</form>\n';
+        // 几列
+        formTemplateStart = formTemplateStart.replace("#colCountText#", "col-" + $("#code_colCount").val());
+        code = formTemplateStart + code + formTemplateEnd;
+        res = code;
+    }
     // 多个空格改为一个
-    code = code.replaceAll(/ {2,}/, " ");
-    return code;
+    res = res.replaceAll(/ {2,}/, " ");
+    return res;
 }
 
 // 渲染代码区
 var initCodeArea = function () {
-    var code = getCode();
+    var code = getCode(0);
     // 替换特殊字符 < > &
     code = code != "" ? code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : "";
     $("#code_codeArea").html(code);
@@ -194,12 +267,110 @@ $(function () {
                 width: 650,
                 height: 320,
                 mask: true,
-                html: getCode(),
+                html: getCode(0),
+            });
+        });
+        // 代码
+        $("#code_codeBtn").click(function () {
+            BJUI.dialog({
+                id: 'code_codeDialogId',
+                title: '代码',
+                width: 650,
+                height: 320,
+                mask: true,
+                url: 'html/system/codeDialog.html',
+                onLoad: function ($dialog) {
+                    new Clipboard('#codeDialog_copySetBtn');
+                    new Clipboard('#codeDialog_copyGetBtn');
+                    new Clipboard('#codeDialog_copyGetObjBtn');
+                    $("#codeDialog_set").html(getCode(2));
+                    $('#codeDialog_set').removeClass('prettyprinted');
+                    $("#codeDialog_get").html(getCode(1));
+                    $('#codeDialog_get').removeClass('prettyprinted');
+                    $("#codeDialog_getObj").html(getCode(3));
+                    $('#codeDialog_getObj').removeClass('prettyprinted');
+                    prettyPrint();
+                }
             });
         });
         // 刷新
         $("#code_refreshBtn").click(function () {
             initCodeArea();
+        });
+        var getCodeListFn = function () {
+            BJUI.ajax('doajax', {
+                url: 'system/code/getCode',
+                data: {
+                    type: 0
+                },
+                loadingmask: true,
+                okCallback: function (res, options) {
+                    var list = res.codeList;
+
+                    var htmlStr = "";
+                    for (var i = 0; i < list.length; i++) {
+                        codeList[list[i].id] = list[i].code;
+                        var tempStr = '<li data-id="' + list[i].id + '" data-title="' + list[i].title + '">'
+                            + '<a>' + list[i].title + '</a>'
+                            + '<i id="' + list[i].id + '" class="fa fa-minus-circle"></i>&nbsp;&nbsp;</li>';
+                        htmlStr += tempStr;
+                    }
+                    $("#code_codeList").html(htmlStr);
+
+                    // 代码点击事件
+                    $("#code_codeList li").click(function (e) {
+                        $("#code_codeList li").removeClass("active");
+                        $(this).addClass("active");
+                        var id = e.currentTarget.getAttribute("data-id");
+                        $("#code_dropDivId").html(codeList[id]);
+                        $("#code_codeId").val(id);
+                        $("#code_title").val(e.currentTarget.getAttribute("data-title"));
+                        initCodeArea();
+                    });
+
+                    // 代码删除事件
+                    $("#code_codeList li .fa-minus-circle").click(function (e) {
+                        e.stopPropagation();
+                        BJUI.alertmsg('confirm', '确定要删除该代码？', {
+                            okCall: function () {
+                                BJUI.ajax('doajax', {
+                                    url: 'system/code/deleteCode',
+                                    data: {
+                                        id: e.currentTarget.id
+                                    },
+                                    loadingmask: true,
+                                    okCallback: function (json, options) {
+                                        // 提示成功，关闭dialog
+                                        BJUI.alertmsg('ok', '删除成功！', {});
+                                        getCodeListFn();
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        };
+        // 保存
+        $("#code_saveBtn").click(function () {
+            var title = $("#code_title").val();
+            if (title == null || title == "") {
+                title = "form_" + new Date().getTime();
+            }
+            BJUI.ajax('doajax', {
+                url: 'system/code/addCode',
+                data: {
+                    id: $("#code_codeId").val(),
+                    title: title,
+                    type: 0,
+                    code: $("#code_dropDivId").html()
+                },
+                loadingmask: true,
+                okCallback: function (res, options) {
+                    $("#code_codeId").val(res.id);
+                    getCodeListFn();
+                }
+            });
         });
         // 删除选中组件
         $("#code_deleteBtn").click(function () {
@@ -219,6 +390,10 @@ $(function () {
                 $(dropDiv[i]).html("")
             }
             initCodeArea();
+        });
+        // 选择已存代码
+        $("#code_codeListTab").click(function () {
+            getCodeListFn();
         });
 
         // 获得表单通用属性
@@ -786,7 +961,7 @@ $(function () {
                 id: 'code_radioDialogId',
                 title: '单选框',
                 width: 650,
-                height:250,
+                height: 250,
                 mask: true,
                 url: 'html/system/radioDialog.html',
                 onLoad: function ($dialog) {
@@ -941,6 +1116,8 @@ $(function () {
             // 阻止冒泡
             e.stopPropagation();
         });
+        // 复制jsp代码
+        new Clipboard('#code_copyBtn');
         // 初始化方法
         initDropFn(0);
         // code插件

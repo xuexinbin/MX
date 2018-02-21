@@ -62,7 +62,7 @@
     <script src="B-JUI/plugins/kindeditor_4.1.11/kindeditor-all-min.js"></script>
     <script src="B-JUI/plugins/kindeditor_4.1.11/lang/zh-CN.js"></script>
     <!-- colorpicker -->
-    <script src="B-JUI/plugins/colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <%--<script src="B-JUI/plugins/colorpicker/js/bootstrap-colorpicker.min.js"></script>--%>
     <!-- ztree -->
     <script src="B-JUI/plugins/ztree/jquery.ztree.all-3.5.js"></script>
     <!-- nice validate -->
@@ -92,11 +92,11 @@
 
     <link href="css/plugins/loading/ball-grid-beat.css" rel="stylesheet">
 
-    <!-- highlight && ZeroClipboard -->
-    <link href="assets/prettify.css" rel="stylesheet">
-    <script src="assets/prettify.js"></script>
-    <link href="assets/ZeroClipboard.css" rel="stylesheet">
-    <script src="assets/ZeroClipboard.js"></script>
+    <!-- 代码高亮、复制黏贴 highlight && ZeroClipboard -->
+    <%--<link href="assets/prettify.css" rel="stylesheet">--%>
+    <%--<script src="assets/prettify.js"></script>--%>
+    <%--<link href="assets/ZeroClipboard.css" rel="stylesheet">--%>
+    <%--<script src="assets/ZeroClipboard.js"></script>--%>
     <!-- init -->
     <script src="js/mx.js"></script>
 </head>

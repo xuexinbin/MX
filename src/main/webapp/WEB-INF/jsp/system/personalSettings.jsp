@@ -2,12 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="bjui-pageContent">
-    <ul class="nav nav-tabs" role="tablist" style="margin-top: 5px;height: 30px;">
+    <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#personalSettings_basicInfo" data-toggle="tab">基础信息</a></li>
         <li role="presentation"><a href="#personalSettings_passwordReset" data-toggle="tab">密码重置</a></li>
     </ul>
     <button id="personalSettings_saveBtn" type="button"
-            class="btn-default" data-icon="save" style="position: absolute;right: 50px;top:5px;">保存
+            class="btn-default" data-icon="save" style="position: absolute;right: 50px;top:2px;">保存
     </button>
     <div class="tab-content" style="position: absolute;top: 30px;bottom: 10px;">
         <div id="personalSettings_basicInfo" class="tab-pane active">

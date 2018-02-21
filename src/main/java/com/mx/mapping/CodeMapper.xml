@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.system.dao.CodeMapper">
+    <resultMap id="CodeResultMap" type="com.mx.generator.pojo.SysCode">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT" />
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="add_user_id" property="addUserId" jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <select id="getCode" resultMap="CodeResultMap" parameterType="java.lang.Integer">
+        SELECT
+         id, title, type, code
+        FROM
+         sys_code
+        WHERE type = #{type}
+    </select>
+    <insert id="addCode" parameterType="com.mx.generator.pojo.SysCode" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO sys_code (
+      title,
+      type,
+      code,
+      update_user_id,
+      add_user_id
+    )VALUES (
+      #{title},
+      #{type},
+      #{code},
+      #{updateUserId},
+      #{addUserId})
+  </insert>
+  <update id="editCode" parameterType="com.mx.generator.pojo.SysCode">
+    UPDATE sys_code
+    SET
+      title = #{title},
+      code = #{code},
+      type = #{type},
+      update_user_id = #{updateUserId}
+    WHERE
+      id = #{id}
+  </update>
+</mapper>
