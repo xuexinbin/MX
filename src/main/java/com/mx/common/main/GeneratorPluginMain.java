@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class GeneratorPluginMain {
     public static void main(String[] args) throws Exception {
+
         List<String> warnings = new ArrayList<>();
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream is = classloader.getResourceAsStream("generatorConfig.xml");

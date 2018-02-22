@@ -4,11 +4,11 @@
   <resultMap id="BaseResultMap" type="com.mx.generator.pojo.CashVipRecharge" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="vip_id" property="vipId" jdbcType="INTEGER" />
-    <result column="recharge_type" property="rechargeType" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
     <result column="money" property="money" jdbcType="DECIMAL" />
     <result column="give_money" property="giveMoney" jdbcType="DECIMAL" />
     <result column="give_point" property="givePoint" jdbcType="DECIMAL" />
-    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="recharge_type" property="rechargeType" jdbcType="TINYINT" />
     <result column="recharge_time" property="rechargeTime" jdbcType="TIMESTAMP" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
     <result column="add_user_id" property="addUserId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, vip_id, recharge_type, money, give_money, give_point, type, recharge_time, operator, 
+    id, vip_id, type, money, give_money, give_point, recharge_type, recharge_time, operator, 
     memo, update_user_id, add_user_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -33,12 +33,12 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into cash_vip_recharge (vip_id, recharge_type, money, 
-      give_money, give_point, type, 
+    insert into cash_vip_recharge (vip_id, type, money, 
+      give_money, give_point, recharge_type, 
       recharge_time, operator, memo, 
       update_user_id, add_user_id)
-    values (#{vipId,jdbcType=INTEGER}, #{rechargeType,jdbcType=TINYINT}, #{money,jdbcType=DECIMAL}, 
-      #{giveMoney,jdbcType=DECIMAL}, #{givePoint,jdbcType=DECIMAL}, #{type,jdbcType=TINYINT}, 
+    values (#{vipId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{money,jdbcType=DECIMAL}, 
+      #{giveMoney,jdbcType=DECIMAL}, #{givePoint,jdbcType=DECIMAL}, #{rechargeType,jdbcType=TINYINT}, 
       #{rechargeTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
       #{updateUserId,jdbcType=INTEGER}, #{addUserId,jdbcType=INTEGER})
   </insert>
@@ -51,8 +51,8 @@
       <if test="vipId != null" >
         vip_id,
       </if>
-      <if test="rechargeType != null" >
-        recharge_type,
+      <if test="type != null" >
+        type,
       </if>
       <if test="money != null" >
         money,
@@ -63,8 +63,8 @@
       <if test="givePoint != null" >
         give_point,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="rechargeType != null" >
+        recharge_type,
       </if>
       <if test="rechargeTime != null" >
         recharge_time,
@@ -86,8 +86,8 @@
       <if test="vipId != null" >
         #{vipId,jdbcType=INTEGER},
       </if>
-      <if test="rechargeType != null" >
-        #{rechargeType,jdbcType=TINYINT},
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
       </if>
       <if test="money != null" >
         #{money,jdbcType=DECIMAL},
@@ -98,8 +98,8 @@
       <if test="givePoint != null" >
         #{givePoint,jdbcType=DECIMAL},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=TINYINT},
+      <if test="rechargeType != null" >
+        #{rechargeType,jdbcType=TINYINT},
       </if>
       <if test="rechargeTime != null" >
         #{rechargeTime,jdbcType=TIMESTAMP},
@@ -124,8 +124,8 @@
       <if test="vipId != null" >
         vip_id = #{vipId,jdbcType=INTEGER},
       </if>
-      <if test="rechargeType != null" >
-        recharge_type = #{rechargeType,jdbcType=TINYINT},
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
       </if>
       <if test="money != null" >
         money = #{money,jdbcType=DECIMAL},
@@ -136,8 +136,8 @@
       <if test="givePoint != null" >
         give_point = #{givePoint,jdbcType=DECIMAL},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=TINYINT},
+      <if test="rechargeType != null" >
+        recharge_type = #{rechargeType,jdbcType=TINYINT},
       </if>
       <if test="rechargeTime != null" >
         recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
@@ -160,11 +160,11 @@
   <update id="updateByPrimaryKey" parameterType="com.mx.generator.pojo.CashVipRecharge" >
     update cash_vip_recharge
     set vip_id = #{vipId,jdbcType=INTEGER},
-      recharge_type = #{rechargeType,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
       money = #{money,jdbcType=DECIMAL},
       give_money = #{giveMoney,jdbcType=DECIMAL},
       give_point = #{givePoint,jdbcType=DECIMAL},
-      type = #{type,jdbcType=TINYINT},
+      recharge_type = #{rechargeType,jdbcType=TINYINT},
       recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
       operator = #{operator,jdbcType=VARCHAR},
       memo = #{memo,jdbcType=VARCHAR},

@@ -114,7 +114,6 @@
             </div>
 
             <div id="code_grid" class="tab-pane">
-                456
             </div>
             <div id="code_codeListDiv" class="tab-pane panel-block" style="border:0px; margin-right:0px;">
                 <ul id="code_codeList">
